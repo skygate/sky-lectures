@@ -1,0 +1,38 @@
+version: "3.9"
+
+services:
+  db:
+    image: postgres
+    container_name: skylectures-db
+    env_file:
+      - dev.env
+    restart: always
+    volumes:
+      - ./data/db:/var/lib/postgresql/data
+  backend:
+    build: ./backend
+    env_file:
+      - dev.env
+    container_name: skylectures-backend
+    image: skylectures_backend
+    restart: always
+    volumes:
+      - static-files:/backend/skyLectures/static
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+  nginx:
+    container_name: skylectures-nginx
+    build: ./nginx
+    image: skylectures_nginx
+    ports:
+      - 80:80
+    restart: always
+    depends_on:
+      - backend
+    volumes:
+      - static-files:/backend/skyLectures/static
+
+volumes:
+  static-files:
