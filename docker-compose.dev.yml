@@ -4,4 +4,4 @@ services:
   backend:
     command: sh -c "./scripts/dev.sh"
     volumes:
-      - /backend/backend
+      - ./backend:/backend
