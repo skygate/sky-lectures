@@ -17,7 +17,7 @@ services:
     image: skylectures_backend
     restart: always
     volumes:
-      - static-files:/backend/skyLectures/static
+      - static-files:/backend/sky_lectures/static
     ports:
       - "8000:8000"
     depends_on:
@@ -32,7 +32,7 @@ services:
     depends_on:
       - backend
     volumes:
-      - static-files:/backend/skyLectures/static
+      - static-files:/backend/sky_lectures/static
 
 volumes:
   static-files:
