@@ -17,7 +17,7 @@ from django.contrib import admin
 from django.urls import path
 from drf_yasg import openapi
 from drf_yasg.views import get_schema_view
-import sky_lectures.settings.base
+from django.conf import settings
 
 schema_view = get_schema_view(
    openapi.Info(
@@ -28,12 +28,14 @@ schema_view = get_schema_view(
    public=True,
 )
 
-if (sky_lectures.settings.base.DEBUG == True):
-    urlpatterns = [
-        path('admin/', admin.site.urls),
-        path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui')
-    ]
-else:
-    urlpatterns = [
-        path('admin/', admin.site.urls),
+urlpatterns = [
+    path("admin/", admin.site.urls),
+]
+if settings.base.DEBUG:
+    urlpatterns += [
+        path(
+            "swagger/",
+            schema_view.with_ui("swagger", cache_timeout=0),
+            name="schema-swagger-ui",
+        )
     ]
