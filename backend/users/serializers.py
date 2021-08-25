@@ -27,14 +27,13 @@ class RegisterUserSerializer(serializers.ModelSerializer):
         return attrs
 
     def create(self, validated_data):
-        user = get_user_model().objects.create(
+        user = get_user_model().objects.create_user(
             username=validated_data["username"],
+            password=validated_data["password"],
             first_name=validated_data["first_name"],
             last_name=validated_data["last_name"],
             email=validated_data["email"],
         )
-
-        user.set_password(validated_data["password"])
         user.save()
 
         return user
