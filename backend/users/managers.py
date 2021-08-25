@@ -5,7 +5,7 @@ class UserManager(BaseUserManager):
     use_in_migrations = True
 
     def create_user(
-        self, username, password, first_name, last_name, email, **extra_fields
+        self, username: str, password: str, first_name: str, last_name: str, email: str, **extra_fields
     ):
         if not username:
             raise ValueError("The given username must be set")
@@ -20,7 +20,7 @@ class UserManager(BaseUserManager):
         user.save(using=self._db)
         return user
 
-    def create_superuser(self, username, password, **extra_fields):
+    def create_superuser(self, username: str, password: str, **extra_fields):
         extra_fields.setdefault("is_staff", True)
         extra_fields.setdefault("is_superuser", True)
 
