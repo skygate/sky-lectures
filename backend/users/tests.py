@@ -1,3 +1,4 @@
+from django.contrib.auth import get_user_model
 from django.urls import reverse
 from rest_framework import status
 from rest_framework.test import APITestCase
@@ -8,6 +9,7 @@ class RegisterUserTest(APITestCase):
 
     @classmethod
     def setUpTestData(cls):
+        cls.User = get_user_model()
         cls.register_url = reverse("user-register")
         cls.valid_payload = {
             "username": "test_user",
@@ -26,16 +28,18 @@ class RegisterUserTest(APITestCase):
             "last_name": "",
         }
 
-    def test_register_valid_user(self) -> None:
+    def test_register_valid_user(self):
         response = self.client.post(
             path=self.register_url,
             data=self.valid_payload,
         )
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        self.assertEqual(self.User.objects.count(), 1)
 
-    def test_register_invalid_user(self) -> None:
+    def test_register_invalid_user(self):
         response = self.client.post(
             path=self.register_url,
             data=self.invalid_payload,
         )
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertEqual(self.User.objects.count(), 0)
