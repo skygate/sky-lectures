@@ -10,7 +10,7 @@ class RegisterUserTest(APITestCase):
     @classmethod
     def setUpTestData(cls):
         cls.User = get_user_model()
-        cls.register_url = reverse("user-register")
+        cls.register_url = reverse("users:user-register")
         cls.valid_payload = {
             "username": "test_user",
             "password": "test_password",
