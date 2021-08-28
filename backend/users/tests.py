@@ -47,7 +47,7 @@ class RegisterUserTest(APITestCase):
         self.assertEqual(User.objects.count(), 0)
 
 
-class UsersEndpointsTestCase(APITestCase):
+class TestUserViewSet(APITestCase):
     @classmethod
     def setUpTestData(cls):
         cls.admin = User.objects.create_user(
@@ -78,7 +78,6 @@ class UsersEndpointsTestCase(APITestCase):
             "first_name": "user_updated",
             "last_name": "test_1_updated"
         }
-        cls.token_url = reverse("token_obtain_pair")
         cls.list_url = reverse("users:user-list")
         cls.detail_url = reverse("users:user-detail", kwargs={"pk": cls.user_1.pk})
 
@@ -103,8 +102,6 @@ class UsersEndpointsTestCase(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
 
     def test_get_user_detail_with_authentication(self):
-        # token = self.get_token(self.user_1)
-        # self.client.credentials(HTTP_AUTHORIZATION='Bearer ' + token)
         self.client.force_authenticate(user=self.user_1)
         response = self.client.get(
             path=self.detail_url,

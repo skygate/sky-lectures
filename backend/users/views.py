@@ -15,7 +15,7 @@ class UserRegisterView(CreateAPIView):
 
 
 class UserViewSet(ModelViewSet):
-    queryset = User.objects.all()
+    queryset = User.objects.filter(is_active=True)
     serializer_class = UserSerializer
     permission_classes = [IsAdminOrOwner]
     http_method_names = ['get', 'post', 'put', 'patch']
