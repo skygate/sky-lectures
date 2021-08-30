@@ -6,13 +6,11 @@ from django.db import models
 
 
 def get_file_path(instance, filename):
-    filename = f"avatar_image_{instance.user.id}.jpeg"
-
-    return os.path.join("images/", filename)
+    return os.path.join("images/", f"avatar_image_{instance.user.id}.jpeg")
 
 
 class User(AbstractUser):
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4)
 
     def __str__(self):
         return self.username
@@ -25,9 +23,8 @@ class Profile(models.Model):
     user = models.OneToOneField(
         User,
         on_delete=models.CASCADE,
-        primary_key=True,
         related_name="profile",
-        editable=False,
+        primary_key=True,
     )
 
     def __str__(self):

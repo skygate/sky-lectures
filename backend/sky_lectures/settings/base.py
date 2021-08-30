@@ -25,8 +25,8 @@ SECRET_KEY = 'zfxh=$!l0d)j2s4ym&mm$8oj5p@9rf=r#x4ni+78_0%t$1&9k5'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR + '/static/media/'
+MEDIA_URL = "/media/"
+MEDIA_ROOT = BASE_DIR + "/static/media/"
 
 STATIC_URL = '/static/'
 
@@ -44,7 +44,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'users',
+    'users.apps.UsersConfig',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
