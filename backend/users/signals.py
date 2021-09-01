@@ -19,7 +19,6 @@ def remove_old_image(sender, instance, **kwargs):
         current_profile = sender.objects.get(pk=instance.pk)
     except sender.DoesNotExist:
         return
-
     if not current_profile.file == instance.file:
         file_path = get_file_path(instance, instance.file)
         if os.path.exists(os.path.join(settings.MEDIA_ROOT, file_path)):
