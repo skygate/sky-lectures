@@ -12,7 +12,7 @@ class IsAdminOrOwner(IsAuthenticated):
         )
 
 
-class IsAdminOrCanOnlyGetPost(IsAuthenticated):
+class IsAdminOrReadOnly(IsAuthenticated):
     message = "You must be admin to delete this."
 
     def has_object_permission(self, request, view, obj):

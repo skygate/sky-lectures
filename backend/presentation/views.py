@@ -3,7 +3,7 @@ from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 
 from presentation.models import Presentation, Tag
-from presentation.permissions import IsAdminOrOwner, IsAdminOrCanOnlyGetPost
+from presentation.permissions import IsAdminOrOwner, IsAdminOrReadOnly
 from presentation.serializers import (
     InputPresentationSerializer,
     OutputPresentationSerializer,
@@ -45,4 +45,4 @@ class PresentationViewSet(ModelViewSet):
 class TagViewSet(ModelViewSet):
     queryset = Tag.objects.all()
     serializer_class = TagSerializer
-    permission_classes = [IsAdminOrCanOnlyGetPost]
+    permission_classes = [IsAdminOrReadOnly]
