@@ -14,7 +14,6 @@ class IsAdminOrOwner(IsAuthenticated):
 
 class IsAdminOrCanOnlyGetPost(IsAuthenticated):
     message = "You must be admin to delete this."
-    SAFE_METHODS = ("GET", "HEAD", "OPTIONS", "POST")
 
     def has_object_permission(self, request, view, obj):
         return request.method in SAFE_METHODS or request.user.is_superuser
