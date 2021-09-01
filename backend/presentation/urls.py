@@ -8,6 +8,4 @@ router = DefaultRouter()
 router.register("presentations", PresentationViewSet, basename="presentation")
 router.register("tags", TagViewSet, basename="tag")
 
-urlpatterns = []
-
-urlpatterns += router.urls
+urlpatterns = router.urls

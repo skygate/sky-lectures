@@ -6,7 +6,11 @@ from rest_framework import status
 from rest_framework.test import APITestCase
 
 from presentation.models import Presentation, Tag
-from presentation.serializers import PresentationSerializer, TagSerializer
+from presentation.serializers import (
+    InputPresentationSerializer,
+    OutputPresentationSerializer,
+    TagSerializer,
+)
 
 
 User = get_user_model()
@@ -83,7 +87,7 @@ class TestPresentationViewSet(APITestCase):
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(
-            response.data, PresentationSerializer(self.presentation_1).data
+            response.data, OutputPresentationSerializer(self.presentation_1).data
         )
 
     def test_post_new_presentation_without_authentication(self):
@@ -98,9 +102,8 @@ class TestPresentationViewSet(APITestCase):
         response = self.client.post(
             path=self.list_url, data=self.new_presentation_data, format="json"
         )
-
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
-        self.assertEqual(Presentation.objects.all().count(), 2)
+        self.assertEqual(Presentation.objects.count(), 2)
 
     def test_put_presentation_detail_without_authentication(self):
         response = self.client.put(
@@ -126,7 +129,7 @@ class TestPresentationViewSet(APITestCase):
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(
-            response.data, PresentationSerializer(self.presentation_1).data
+            response.data, InputPresentationSerializer(self.presentation_1).data
         )
 
     def test_put_presentation_detail_as_admin(self):
@@ -138,7 +141,7 @@ class TestPresentationViewSet(APITestCase):
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(
-            response.data, PresentationSerializer(self.presentation_1).data
+            response.data, InputPresentationSerializer(self.presentation_1).data
         )
 
     def test_patch_presentation_detail_without_authentication(self):
@@ -165,7 +168,7 @@ class TestPresentationViewSet(APITestCase):
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(
-            response.data, PresentationSerializer(self.presentation_1).data
+            response.data, InputPresentationSerializer(self.presentation_1).data
         )
 
     def test_patch_presentation_detail_as_admin(self):
@@ -177,7 +180,7 @@ class TestPresentationViewSet(APITestCase):
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(
-            response.data, PresentationSerializer(self.presentation_1).data
+            response.data, InputPresentationSerializer(self.presentation_1).data
         )
 
     def test_delete_presentation_without_auth(self):
@@ -196,14 +199,14 @@ class TestPresentationViewSet(APITestCase):
         response = self.client.delete(path=self.detail_url)
 
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
-        self.assertEqual(Presentation.objects.all().count(), 0)
+        self.assertEqual(Presentation.objects.count(), 0)
 
     def test_delete_presentation_as_admin(self):
         self.client.force_authenticate(user=self.admin)
         response = self.client.delete(path=self.detail_url)
 
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
-        self.assertEqual(Presentation.objects.all().count(), 0)
+        self.assertEqual(Presentation.objects.count(), 0)
 
 
 class TestTagViewSet(APITestCase):
@@ -265,7 +268,7 @@ class TestTagViewSet(APITestCase):
         response = self.client.post(path=self.list_url, data=self.new_tag)
 
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
-        self.assertEqual(Tag.objects.all().count(), 3)
+        self.assertEqual(Tag.objects.count(), 3)
 
     def test_put_tag_without_auth(self):
         response = self.client.put(path=self.detail_url, data=self.updated_tag)
@@ -322,4 +325,4 @@ class TestTagViewSet(APITestCase):
         response = self.client.delete(path=self.detail_url)
 
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
-        self.assertEqual(Tag.objects.all().count(), 1)
+        self.assertEqual(Tag.objects.count(), 1)
