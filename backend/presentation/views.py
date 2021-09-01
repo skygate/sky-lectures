@@ -21,25 +21,22 @@ class PresentationViewSet(ModelViewSet):
     def create(self, request, *args, **kwargs):
         serializer = InputPresentationSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        instance = self.services.create_presentation(
-            validated_data=serializer.validated_data
+        presentation = self.services.create_presentation(
+            presentation_data=serializer.validated_data
         )
-        serializer = InputPresentationSerializer(instance)
-        return Response(data=serializer.data, status=status.HTTP_201_CREATED)
+        return Response(data=self.get_serializer(presentation).data, status=status.HTTP_201_CREATED)
 
     def update(self, request, *args, **kwargs):
         partial = kwargs.pop("partial", False)
-        instance = self.get_object()
+        presentation = self.get_object()
         serializer = InputPresentationSerializer(
-            instance=instance, data=request.data, partial=partial
+            instance=presentation, data=request.data, partial=partial
         )
         serializer.is_valid(raise_exception=True)
-
-        instance = self.services.update_presentation(
-            instance=instance, validated_data=serializer.validated_data, partial=partial
+        presentation = self.services.update_presentation(
+            presentation=presentation, presentation_data=serializer.validated_data, partial=partial
         )
-        serializer = InputPresentationSerializer(instance)
-        return Response(data=serializer.data, status=status.HTTP_200_OK)
+        return Response(data=self.get_serializer(presentation).data, status=status.HTTP_200_OK)
 
 
 class TagViewSet(ModelViewSet):

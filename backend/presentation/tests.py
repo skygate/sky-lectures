@@ -2,6 +2,7 @@ from datetime import datetime
 
 from django.contrib.auth import get_user_model
 from django.urls import reverse
+import pytz
 from rest_framework import status
 from rest_framework.test import APITestCase
 
@@ -45,18 +46,18 @@ class TestPresentationViewSet(APITestCase):
         cls.presentation_1 = Presentation.objects.create(
             title="Test title 1",
             user=cls.user_1,
-            scheduled_on=datetime(2021, 8, 30, 11, 0),
+            scheduled_on=datetime(2021, 8, 30, 11, 0, tzinfo=pytz.UTC),
         )
         cls.presentation_1.tags.add(cls.tag_1)
         cls.new_presentation_data = {
             "title": "New presentation",
             "user": cls.user_1.pk,
-            "scheduled_on": datetime(2021, 8, 28, 11, 0),
+            "scheduled_on": datetime(2021, 8, 28, 11, 0, tzinfo=pytz.UTC),
             "tags": [{"name": "React"}],
         }
         cls.updated_presentation_data = {
             "title": "Title updated",
-            "scheduled_on": datetime(2021, 8, 31, 11, 0),
+            "scheduled_on": datetime(2021, 8, 31, 11, 0, tzinfo=pytz.UTC),
             "tags": [{"name": "Updated tag"}],
         }
         cls.list_url = reverse("presentation:presentation-list")
@@ -129,7 +130,7 @@ class TestPresentationViewSet(APITestCase):
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(
-            response.data, InputPresentationSerializer(self.presentation_1).data
+            response.data, OutputPresentationSerializer(self.presentation_1).data
         )
 
     def test_put_presentation_detail_as_admin(self):
@@ -141,7 +142,7 @@ class TestPresentationViewSet(APITestCase):
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(
-            response.data, InputPresentationSerializer(self.presentation_1).data
+            response.data, OutputPresentationSerializer(self.presentation_1).data
         )
 
     def test_patch_presentation_detail_without_authentication(self):
@@ -168,7 +169,7 @@ class TestPresentationViewSet(APITestCase):
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(
-            response.data, InputPresentationSerializer(self.presentation_1).data
+            response.data, OutputPresentationSerializer(self.presentation_1).data
         )
 
     def test_patch_presentation_detail_as_admin(self):
@@ -180,7 +181,7 @@ class TestPresentationViewSet(APITestCase):
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(
-            response.data, InputPresentationSerializer(self.presentation_1).data
+            response.data, OutputPresentationSerializer(self.presentation_1).data
         )
 
     def test_delete_presentation_without_auth(self):

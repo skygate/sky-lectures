@@ -17,7 +17,7 @@ class Tag(models.Model):
 class Presentation(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4)
     title = models.CharField(max_length=100)
-    description = models.TextField(blank=True, default="")
+    description = models.TextField(blank=True)
     user = models.ForeignKey(
         User,
         on_delete=models.SET_NULL,
@@ -26,7 +26,7 @@ class Presentation(models.Model):
     )
     scheduled_on = models.DateTimeField()
     created_at = models.DateTimeField(auto_now_add=True)
-    tags = models.ManyToManyField(Tag, related_name="presentations", blank=True)
+    tags = models.ManyToManyField(Tag, related_name="presentations")
 
     def __str__(self):
         return self.title
