@@ -13,6 +13,9 @@ class Tag(models.Model):
     def __str__(self):
         return self.name
 
+    class Meta:
+        ordering = ['name']
+
 
 class Presentation(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4)
@@ -30,3 +33,6 @@ class Presentation(models.Model):
 
     def __str__(self):
         return self.title
+
+    class Meta:
+        ordering = ['-created_at']

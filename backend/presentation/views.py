@@ -1,8 +1,11 @@
+from django_filters import rest_framework as filters
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 
+from presentation.filters import PresentationFilter
 from presentation.models import Presentation, Tag
+from presentation.paginations import PresentationSetPagination, TagSetPagination
 from presentation.permissions import IsAdminOrOwner, IsAdminOrReadOnly
 from presentation.serializers import (
     InputPresentationSerializer,
@@ -17,6 +20,9 @@ class PresentationViewSet(ModelViewSet):
     serializer_class = OutputPresentationSerializer
     permission_classes = [IsAdminOrOwner]
     services = PresentationService()
+    filter_backends = (filters.DjangoFilterBackend,)
+    filterset_class = PresentationFilter
+    pagination_class = PresentationSetPagination
 
     def create(self, request, *args, **kwargs):
         serializer = InputPresentationSerializer(data=request.data)
@@ -47,3 +53,4 @@ class TagViewSet(ModelViewSet):
     queryset = Tag.objects.all()
     serializer_class = TagSerializer
     permission_classes = [IsAdminOrReadOnly]
+    pagination_class = TagSetPagination

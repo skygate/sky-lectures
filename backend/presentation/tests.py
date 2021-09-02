@@ -8,7 +8,6 @@ from rest_framework.test import APITestCase
 
 from presentation.models import Presentation, Tag
 from presentation.serializers import (
-    InputPresentationSerializer,
     OutputPresentationSerializer,
     TagSerializer,
 )
@@ -78,7 +77,7 @@ class TestPresentationViewSet(APITestCase):
         response = self.client.get(path=self.list_url)
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(len(response.data), 1)
+        self.assertEqual(response.data["count"], 1)
 
     def test_get_presentation_detail_without_authentication(self):
         response = self.client.get(path=self.detail_url)
@@ -213,6 +212,138 @@ class TestPresentationViewSet(APITestCase):
         self.assertEqual(Presentation.objects.count(), 0)
 
 
+class TestFiltersPresentationViewSet(APITestCase):
+    @classmethod
+    def setUpTestData(cls):
+        cls.user_1 = User.objects.create_user(
+            username="user_1",
+            password="password123",
+            email="user_1@mail.com",
+            first_name="user",
+            last_name="test_1",
+        )
+        cls.user_2 = User.objects.create_user(
+            username="user_2",
+            password="password123",
+            email="user_2mail.com",
+            first_name="user",
+            last_name="test_2",
+        )
+        cls.tag_react = Tag.objects.create(name="React")
+        cls.tag_django = Tag.objects.create(name="Django")
+        cls.tag_java = Tag.objects.create(name="Java")
+        cls.presentation_1 = Presentation.objects.create(
+            title="Test title 1",
+            description="",
+            user=cls.user_1,
+            scheduled_on=datetime(2021, 10, 1, 12, 0, tzinfo=pytz.UTC),
+        )
+        cls.presentation_1.tags.add(cls.tag_java, cls.tag_react, cls.tag_django)
+        cls.presentation_2 = Presentation.objects.create(
+            title="Test title 2",
+            description="",
+            user=cls.user_2,
+            scheduled_on=datetime(2021, 10, 2, 12, 0, tzinfo=pytz.UTC),
+        )
+        cls.presentation_2.tags.add(cls.tag_react)
+        cls.presentation_3 = Presentation.objects.create(
+            title="Test title 3",
+            description="",
+            user=cls.user_1,
+            scheduled_on=datetime(2021, 10, 5, 7, 0, tzinfo=pytz.UTC),
+        )
+        cls.presentation_3.tags.add(cls.tag_react, cls.tag_java)
+        cls.filters_data_1 = {
+            "scheduled_on_after": datetime(2021, 10, 4, 7, 0, tzinfo=pytz.UTC),
+            "scheduled_on_before": datetime(2021, 10, 6, 7, 0, tzinfo=pytz.UTC),
+            "user": "",
+            "tags": [],
+        }
+        cls.filters_data_2 = {
+            "scheduled_on_after": "",
+            "scheduled_on_before": "",
+            "user": cls.user_1.id,
+            "tags": [],
+        }
+        cls.filters_data_3 = {
+            "scheduled_on_after": "",
+            "scheduled_on_before": "",
+            "user": "",
+            "tags": [cls.tag_java.id],
+        }
+        cls.filters_data_4 = {
+            "scheduled_on_after": "",
+            "scheduled_on_before": "",
+            "user": "",
+            "tags": [cls.tag_react.id],
+        }
+        cls.filters_data_5 = {
+            "scheduled_on_after": "",
+            "scheduled_on_before": "",
+            "user": "",
+            "tags": [cls.tag_django.id],
+        }
+        cls.filters_data_6 = {
+            "scheduled_on_after": "",
+            "scheduled_on_before": "",
+            "user": "",
+            "tags": [cls.tag_java.id, cls.tag_django.id],
+        }
+        cls.filters_data_7 = {
+            "scheduled_on_after": datetime(2021, 10, 1, 7, 0, tzinfo=pytz.UTC),
+            "scheduled_on_before": datetime(2021, 10, 3, 7, 0, tzinfo=pytz.UTC),
+            "user": "",
+            "tags": [cls.tag_java.id],
+        }
+        cls.filters_data_8 = {
+            "scheduled_on_after": datetime(2021, 10, 4, 7, 0, tzinfo=pytz.UTC),
+            "scheduled_on_before": datetime(2021, 10, 6, 7, 0, tzinfo=pytz.UTC),
+            "user": cls.user_1.id,
+            "tags": [cls.tag_java.id],
+        }
+        cls.list_url = reverse("presentation:presentation-list")
+
+    def test_get_presentation_list_filter_case_1(self):
+        self.client.force_authenticate(user=self.user_1)
+        response = self.client.get(path=self.list_url, data=self.filters_data_1)
+        self.assertEqual(response.data["count"], 1)
+
+    def test_get_presentation_list_filter_case_2(self):
+        self.client.force_authenticate(user=self.user_1)
+        response = self.client.get(path=self.list_url, data=self.filters_data_2)
+        self.assertEqual(response.data["count"], 2)
+
+    def test_get_presentation_list_filter_case_3(self):
+        self.client.force_authenticate(user=self.user_1)
+        response = self.client.get(path=self.list_url, data=self.filters_data_3)
+        self.assertEqual(response.data["count"], 2)
+
+    def test_get_presentation_list_filter_case_4(self):
+        self.client.force_authenticate(user=self.user_1)
+        response = self.client.get(path=self.list_url, data=self.filters_data_4)
+        self.assertEqual(response.data["count"], 3)
+
+    def test_get_presentation_list_filter_case_5(self):
+        self.client.force_authenticate(user=self.user_1)
+        response = self.client.get(path=self.list_url, data=self.filters_data_5)
+        self.assertEqual(response.data["count"], 1)
+
+    def test_get_presentation_list_filter_case_6(self):
+        self.client.force_authenticate(user=self.user_1)
+        response = self.client.get(path=self.list_url, data=self.filters_data_6)
+        self.assertEqual(response.data["count"], 2)
+
+    def test_get_presentation_list_filter_case_7(self):
+        self.client.force_authenticate(user=self.user_1)
+        response = self.client.get(path=self.list_url, data=self.filters_data_7)
+        self.assertEqual(response.data["count"], 1)
+
+    def test_get_presentation_list_filter_case_8(self):
+        self.client.force_authenticate(user=self.user_1)
+        response = self.client.get(path=self.list_url, data=self.filters_data_8)
+        self.assertEqual(response.data["count"], 1)
+
+
 class TestTagViewSet(APITestCase):
     @classmethod
     def setUpTestData(cls):
@@ -248,7 +379,7 @@ class TestTagViewSet(APITestCase):
         response = self.client.get(path=self.list_url)
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(len(response.data), 2)
+        self.assertEqual(response.data["count"], 2)
 
     def test_get_tag_detail_without_auth(self):
         response = self.client.get(path=self.detail_url)
