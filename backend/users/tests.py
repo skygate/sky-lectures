@@ -8,12 +8,13 @@ from rest_framework.test import APITestCase
 from users.models import User
 
 
-class ProfileEndpointsTestCase(APITestCase):
-    def generate_photo_file(self):
+class ProfileViewSetTestCase(APITestCase):
+    @staticmethod
+    def generate_photo_file():
         file = BytesIO()
-        image = Image.new("RGBA", size=(100, 100), color=(155, 0, 0))
-        image.save(file, "jpg")
-        file.name = "test.png"
+        image = Image.new("RGB", size=(100, 100), color=(155, 0, 0))
+        image.save(file, "jpeg")
+        file.name = "test.jpeg"
         file.seek(0)
         return file
 
@@ -23,9 +24,8 @@ class ProfileEndpointsTestCase(APITestCase):
         cls.test_user2 = User.objects.create_user(username="mkmkmkmmk", password="123")
         cls.test_admin = User.objects.create_superuser(username="ka", password="123")
         cls.test_data = {"description": "test description", "file": ""}
-        cls.photo_file = cls.generate_photo_file
 
-        cls.avatar_data = {"file": cls.photo_file, "description": "kkkk"}
+        cls.avatar_data = {"file": cls.generate_photo_file()}
 
         cls.url_detail = reverse("profile-detail", kwargs={"pk": cls.test_user1.id})
 

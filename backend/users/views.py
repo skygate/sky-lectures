@@ -6,6 +6,7 @@ from rest_framework.viewsets import GenericViewSet
 from users.models import Profile
 from users.permissions import IsAdminOrOwner
 from users.serializers import ProfileSerializer
+from users.services import UserService
 
 
 class ProfileViewSet(RetrieveModelMixin, UpdateModelMixin, GenericViewSet):
@@ -14,14 +15,11 @@ class ProfileViewSet(RetrieveModelMixin, UpdateModelMixin, GenericViewSet):
     permission_classes = [IsAdminOrOwner]
 
     def update(self, request, *args, **kwargs):
-        instance = self.get_object()
+        service = UserService()
+        profile = self.get_object()
         serializer = ProfileSerializer(
-            instance, data=request.data, partial=kwargs.pop("partial", False)
+            profile, data=request.data, partial=kwargs.pop("partial", False)
         )
-        serializer.is_valid()
-        instance.file = serializer.validated_data.get("file", instance.file)
-        instance.description = serializer.validated_data.get(
-            "description", instance.description
-        )
-        instance.save()
-        return Response(data=serializer.data, status=status.HTTP_200_OK)
+        serializer.is_valid(raise_exception=True)
+        profile = service.update_user_profile(profile, serializer.validated_data)
+        return Response(data=ProfileSerializer(profile).data, status=status.HTTP_200_OK)
