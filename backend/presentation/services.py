@@ -1,9 +1,9 @@
-from typing import OrderedDict, List
+from typing import OrderedDict
 
 from presentation.models import Presentation, Tag
 
 
-PresentationData = List[OrderedDict[str, str]]
+PresentationData = list[OrderedDict[str, str]]
 
 
 class PresentationService:
@@ -26,14 +26,13 @@ class PresentationService:
     def create_presentation(self, presentation_data: PresentationData) -> Presentation:
         presentation = Presentation.objects.create(
             title=presentation_data.get("title"),
-            description=presentation_data.get("description", ""),
+            description=presentation_data.get("description"),
             scheduled_on=presentation_data.get("scheduled_on"),
         )
         if (tags := presentation_data.pop("tags", None)) is not None:
             presentation = self.add_tags_to_presentation(
                 presentation=presentation, tags=tags, partial=False
             )
-
         return presentation
 
     def update_presentation(

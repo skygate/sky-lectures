@@ -24,6 +24,9 @@ class PresentationViewSet(ModelViewSet):
         presentation = self.services.create_presentation(
             presentation_data=serializer.validated_data
         )
+        presentation.user = request.user
+        presentation.save()
+
         return Response(data=self.get_serializer(presentation).data, status=status.HTTP_201_CREATED)
 
     def update(self, request, *args, **kwargs):
@@ -36,6 +39,7 @@ class PresentationViewSet(ModelViewSet):
         presentation = self.services.update_presentation(
             presentation=presentation, presentation_data=serializer.validated_data, partial=partial
         )
+
         return Response(data=self.get_serializer(presentation).data, status=status.HTTP_200_OK)
 
 

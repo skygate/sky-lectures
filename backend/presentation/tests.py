@@ -45,18 +45,21 @@ class TestPresentationViewSet(APITestCase):
         cls.tag_1 = Tag.objects.create(name="Test_tag")
         cls.presentation_1 = Presentation.objects.create(
             title="Test title 1",
+            description="",
             user=cls.user_1,
             scheduled_on=datetime(2021, 8, 30, 11, 0, tzinfo=pytz.UTC),
         )
         cls.presentation_1.tags.add(cls.tag_1)
         cls.new_presentation_data = {
             "title": "New presentation",
+            "description": "",
             "user": cls.user_1.pk,
             "scheduled_on": datetime(2021, 8, 28, 11, 0, tzinfo=pytz.UTC),
             "tags": [{"name": "React"}],
         }
         cls.updated_presentation_data = {
             "title": "Title updated",
+            "description": "",
             "scheduled_on": datetime(2021, 8, 31, 11, 0, tzinfo=pytz.UTC),
             "tags": [{"name": "Updated tag"}],
         }
