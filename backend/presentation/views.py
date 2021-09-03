@@ -16,27 +16,27 @@ class PresentationViewSet(ModelViewSet):
     queryset = Presentation.objects.all()
     serializer_class = OutputPresentationSerializer
     permission_classes = [IsAdminOrOwner]
-    services = PresentationService()
 
     def create(self, request, *args, **kwargs):
+        services = PresentationService()
         serializer = InputPresentationSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        presentation = self.services.create_presentation(
-            presentation_data=serializer.validated_data
+        presentation = services.create_presentation(
+            presentation_data=serializer.validated_data,
+            user=request.user
         )
-        presentation.user = request.user
-        presentation.save()
 
         return Response(data=self.get_serializer(presentation).data, status=status.HTTP_201_CREATED)
 
     def update(self, request, *args, **kwargs):
+        services = PresentationService()
         partial = kwargs.pop("partial", False)
         presentation = self.get_object()
         serializer = InputPresentationSerializer(
             instance=presentation, data=request.data, partial=partial
         )
         serializer.is_valid(raise_exception=True)
-        presentation = self.services.update_presentation(
+        presentation = services.update_presentation(
             presentation=presentation, presentation_data=serializer.validated_data, partial=partial
         )
 

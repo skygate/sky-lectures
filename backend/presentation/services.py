@@ -1,9 +1,12 @@
 from typing import OrderedDict
 
+from django.contrib.auth import get_user_model
+
 from presentation.models import Presentation, Tag
 
 
 PresentationData = list[OrderedDict[str, str]]
+User = get_user_model()
 
 
 class PresentationService:
@@ -23,11 +26,12 @@ class PresentationService:
         presentation.tags.add(*new_tags, *existing_tags)
         return presentation
 
-    def create_presentation(self, presentation_data: PresentationData) -> Presentation:
+    def create_presentation(self, presentation_data: PresentationData, user: User) -> Presentation:
         presentation = Presentation.objects.create(
             title=presentation_data.get("title"),
             description=presentation_data.get("description"),
             scheduled_on=presentation_data.get("scheduled_on"),
+            user=user,
         )
         if (tags := presentation_data.pop("tags", None)) is not None:
             presentation = self.add_tags_to_presentation(
