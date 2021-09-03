@@ -1,6 +1,9 @@
 from django.contrib.auth import get_user_model
 from rest_framework import serializers
 
+from users.models import Profile
+
+
 User = get_user_model()
 
 
@@ -49,3 +52,9 @@ class UserSerializer(serializers.ModelSerializer):
             "first_name",
             "last_name",
         ]
+
+        
+class ProfileSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Profile
+        fields = ["description", "file"]
