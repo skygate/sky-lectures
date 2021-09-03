@@ -18,10 +18,10 @@ class PresentationViewSet(ModelViewSet):
     permission_classes = [IsAdminOrOwner]
 
     def create(self, request, *args, **kwargs):
-        services = PresentationService()
+        service = PresentationService()
         serializer = InputPresentationSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        presentation = services.create_presentation(
+        presentation = service.create_presentation(
             presentation_data=serializer.validated_data,
             user=request.user
         )
@@ -29,14 +29,14 @@ class PresentationViewSet(ModelViewSet):
         return Response(data=self.get_serializer(presentation).data, status=status.HTTP_201_CREATED)
 
     def update(self, request, *args, **kwargs):
-        services = PresentationService()
+        service = PresentationService()
         partial = kwargs.pop("partial", False)
         presentation = self.get_object()
         serializer = InputPresentationSerializer(
             instance=presentation, data=request.data, partial=partial
         )
         serializer.is_valid(raise_exception=True)
-        presentation = services.update_presentation(
+        presentation = service.update_presentation(
             presentation=presentation, presentation_data=serializer.validated_data, partial=partial
         )
 
