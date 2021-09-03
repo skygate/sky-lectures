@@ -1,12 +1,30 @@
+from django.contrib.auth import get_user_model
 from rest_framework import status
+from rest_framework.generics import CreateAPIView
 from rest_framework.mixins import RetrieveModelMixin, UpdateModelMixin
+from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
-from rest_framework.viewsets import GenericViewSet
+from rest_framework.viewsets import GenericViewSet, ModelViewSet
 
 from users.models import Profile
-from users.permissions import IsAdminOrOwner
-from users.serializers import ProfileSerializer
+from users.serializers import ProfileSerializer, RegisterUserSerializer, UserSerializer
 from users.services import UserService
+from users.permissions import IsAdminOrOwner
+
+
+User = get_user_model()
+
+
+class UserRegisterView(CreateAPIView):
+    permission_classes = (AllowAny,)
+    serializer_class = RegisterUserSerializer
+
+
+class UserViewSet(ModelViewSet):
+    queryset = User.objects.filter(is_active=True)
+    serializer_class = UserSerializer
+    permission_classes = [IsAdminOrOwner]
+    http_method_names = ['get', 'post', 'put', 'patch']
 
 
 class ProfileViewSet(RetrieveModelMixin, UpdateModelMixin, GenericViewSet):
