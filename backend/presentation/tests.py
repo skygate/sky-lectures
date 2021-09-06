@@ -57,7 +57,6 @@ class TestPresentationViewSet(APITestCase):
     def test_get_presentations_list_with_authentication(self):
         self.client.force_authenticate(user=self.user_1)
         response = self.client.get(path=self.list_url)
-
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.data["count"], 1)
 
@@ -184,14 +183,14 @@ class TestPresentationViewSet(APITestCase):
         response = self.client.delete(path=self.detail_url)
 
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
-        self.assertEqual(Presentation.objects.count(), 0)
+        self.assertFalse(Presentation.objects.exists())
 
     def test_delete_presentation_as_admin(self):
         self.client.force_authenticate(user=self.admin)
         response = self.client.delete(path=self.detail_url)
 
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
-        self.assertEqual(Presentation.objects.count(), 0)
+        self.assertFalse(Presentation.objects.exists())
 
 
 class TestFiltersPresentationViewSet(APITestCase):
