@@ -20,7 +20,6 @@ class PresentationViewSet(ModelViewSet):
     serializer_class = OutputPresentationSerializer
     permission_classes = [IsAdminOrOwner]
     services = PresentationService()
-    filter_backends = [filters.DjangoFilterBackend]
     filterset_class = PresentationFilter
     pagination_class = StandardResultsSetPagination
 
