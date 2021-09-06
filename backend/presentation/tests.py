@@ -237,10 +237,24 @@ class TestFiltersPresentationViewSet(APITestCase):
 
         self.assertEqual(response.data["count"], 2)
 
+    def test_get_presentation_list_filter_user_username(self):
+        self.client.force_authenticate(user=self.user_1)
+        response = self.client.get(path=self.list_url, data={"user__username": self.user_1.username})
+
+        self.assertEqual(response.data["count"], 2)
+
     def test_get_presentation_list_filter_tag(self):
         self.client.force_authenticate(user=self.user_1)
         response = self.client.get(
             path=self.list_url, data={"tags": [self.tag_java.id]}
+        )
+
+        self.assertEqual(response.data["count"], 2)
+
+    def test_get_presentation_list_filter_tag_name(self):
+        self.client.force_authenticate(user=self.user_1)
+        response = self.client.get(
+            path=self.list_url, data={"tags__name": [self.tag_java.name]}
         )
 
         self.assertEqual(response.data["count"], 2)

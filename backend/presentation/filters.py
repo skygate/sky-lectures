@@ -14,4 +14,4 @@ class PresentationFilter(filters.FilterSet):
 
     class Meta:
         model = Presentation
-        fields = ["scheduled_on", "user", "tags"]
+        fields = ["scheduled_on", "user__username", "tags__name"]
