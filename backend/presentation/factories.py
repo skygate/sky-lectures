@@ -9,7 +9,7 @@ class UserFactory(factory.django.DjangoModelFactory):
         model = get_user_model()
         django_get_or_create = ("username", "password", "email", "is_superuser")
 
-    username = factory.Faker("name")
+    username = factory.Faker("first_name")
     password = factory.Faker("password")
     email = factory.Faker("email")
     is_superuser = False
