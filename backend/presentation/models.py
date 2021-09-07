@@ -3,6 +3,7 @@ import uuid
 from django.contrib.auth import get_user_model
 from django.db import models
 
+
 User = get_user_model()
 
 
@@ -12,6 +13,9 @@ class Tag(models.Model):
 
     def __str__(self):
         return self.name
+
+    class Meta:
+        ordering = ['name']
 
 
 class Presentation(models.Model):
@@ -30,3 +34,6 @@ class Presentation(models.Model):
 
     def __str__(self):
         return self.title
+
+    class Meta:
+        ordering = ['-created_at']
