@@ -26,6 +26,8 @@ class Profile(models.Model):
         related_name="profile",
         primary_key=True,
     )
+    favourite_presentations = models.ManyToManyField("presentation.Presentation", related_name="favourite_presentations")
+    favourite_tags = models.ManyToManyField("presentation.Tag", related_name="favourite_tags")
 
     def __str__(self):
         return f"Profile of user {self.user.username}"
