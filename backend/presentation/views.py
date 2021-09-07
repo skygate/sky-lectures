@@ -20,14 +20,13 @@ class PresentationViewSet(ModelViewSet):
     permission_classes = [IsAdminOrOwner]
     filterset_class = PresentationFilter
     pagination_class = StandardResultsSetPagination
-    search_fields = ["title", "description", "=user__username", "=tags__name"]
+    search_fields = ["title", "description", "user__username", "tags__name"]
     ordering_fields = ["scheduled_on", "title", "user__username"]
 
     def create(self, request, *args, **kwargs):
-        service = PresentationService()
         serializer = InputPresentationSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        presentation = service.create_presentation(
+        presentation = PresentationService().create_presentation(
             presentation_data=serializer.validated_data
         )
         presentation.user = request.user
@@ -38,14 +37,13 @@ class PresentationViewSet(ModelViewSet):
         )
 
     def update(self, request, *args, **kwargs):
-        service = PresentationService()
         partial = kwargs.pop("partial", False)
         presentation = self.get_object()
         serializer = InputPresentationSerializer(
             instance=presentation, data=request.data, partial=partial
         )
         serializer.is_valid(raise_exception=True)
-        presentation = service.update_presentation(
+        presentation = PresentationService().update_presentation(
             presentation=presentation,
             presentation_data=serializer.validated_data,
             partial=partial,
