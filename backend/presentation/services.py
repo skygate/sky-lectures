@@ -37,6 +37,7 @@ class PresentationService:
             presentation = self.add_tags_to_presentation(
                 presentation=presentation, tags=tags, partial=False
             )
+        presentation.save()
         return presentation
 
     def update_presentation(

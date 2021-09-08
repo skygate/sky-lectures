@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from presentation.models import Presentation, Tag
+from presentation.models import Presentation, Tag, Notification
 
 
 class TagSerializer(serializers.ModelSerializer):
@@ -26,3 +26,9 @@ class OutputPresentationSerializer(serializers.ModelSerializer):
         model = Presentation
         fields = ["title", "description", "scheduled_on", "user", "tags"]
         read_only_fields = fields
+
+
+class NotificationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Notification
+        fields = ["message", "reviewed"]

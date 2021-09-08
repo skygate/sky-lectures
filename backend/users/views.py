@@ -9,7 +9,7 @@ from rest_framework.viewsets import GenericViewSet, ModelViewSet
 from users.models import Profile
 from users.serializers import ProfileSerializer, RegisterUserSerializer, UserSerializer
 from users.services import UserService
-from users.permissions import IsAdminOrOwner
+from users.permissions import IsAdminOrOwner, IsAdminOrProfileOwner
 
 
 User = get_user_model()
@@ -30,7 +30,7 @@ class UserViewSet(ModelViewSet):
 class ProfileViewSet(RetrieveModelMixin, UpdateModelMixin, GenericViewSet):
     queryset = Profile.objects.all()
     serializer_class = ProfileSerializer
-    permission_classes = [IsAdminOrOwner]
+    permission_classes = [IsAdminOrProfileOwner]
 
     def update(self, request, *args, **kwargs):
         service = UserService()

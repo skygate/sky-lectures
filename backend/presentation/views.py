@@ -1,16 +1,16 @@
-from django_filters import rest_framework as filters
 from rest_framework import status
 from rest_framework.response import Response
-from rest_framework.viewsets import ModelViewSet
+from rest_framework.viewsets import ModelViewSet, ReadOnlyModelViewSet
 
 from presentation.filters import PresentationFilter
-from presentation.models import Presentation, Tag
+from presentation.models import Presentation, Tag, Notification
 from presentation.paginations import StandardResultsSetPagination
 from presentation.permissions import IsAdminOrOwner, IsAdminOrReadOnly
 from presentation.serializers import (
     InputPresentationSerializer,
     OutputPresentationSerializer,
     TagSerializer,
+    NotificationSerializer,
 )
 from presentation.services import PresentationService
 
@@ -53,4 +53,10 @@ class TagViewSet(ModelViewSet):
     queryset = Tag.objects.all()
     serializer_class = TagSerializer
     permission_classes = [IsAdminOrReadOnly]
+    pagination_class = StandardResultsSetPagination
+
+
+class NotificationViewSet(ReadOnlyModelViewSet):
+    queryset = Notification.objects.all()
+    serializer_class = NotificationSerializer
     pagination_class = StandardResultsSetPagination
