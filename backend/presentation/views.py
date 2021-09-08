@@ -17,14 +17,14 @@ class CommentViewSet(ModelViewSet):
     http_method_names = ["get", "post", "put", "patch"]
 
     def perform_create(self, serializer):
-        serializer.save(user=self.request.user)
+        CommentService().set_comment_user(serializer, self.request)
 
     def update(self, request, *args, **kwargs):
-        service = CommentService()
         comment = self.get_object()
-        serializer = CommentSerializer(comment, data=request.data)
+        serializer = CommentSerializer(comment, data=request.data, partial=True)
         serializer.is_valid(raise_exception=True)
-        comment = service.update_comment(comment, serializer.validated_data)
+        comment = CommentService().update_comment(comment, serializer.validated_data)
+
         return Response(
             data=CommentListSerializer(comment).data, status=status.HTTP_200_OK
         )

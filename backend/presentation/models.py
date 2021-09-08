@@ -18,7 +18,9 @@ class Comment(models.Model):
     reply_to = models.ForeignKey(
         "self", on_delete=models.SET_NULL, related_name="replies", blank=True, null=True
     )
-    presentation_id = models.ForeignKey(Presentation, on_delete=models.CASCADE)
+    presentation_id = models.ForeignKey(
+        Presentation, on_delete=models.CASCADE, related_name="comments"
+    )
     user = models.ForeignKey(User, on_delete=models.CASCADE, editable=False)
 
     def __str__(self):

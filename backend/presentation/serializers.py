@@ -5,7 +5,7 @@ from presentation.models import Comment
 
 class RecursiveSerializer(serializers.RelatedField):
     def to_representation(self, value):
-        serializer = CommentSerializer(value)
+        serializer = CommentListSerializer(value)
         return serializer.data
 
 
