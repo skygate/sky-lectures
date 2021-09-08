@@ -3,7 +3,6 @@ import uuid
 from django.contrib.auth import get_user_model
 from django.db import models
 
-from users.models import Profile
 
 User = get_user_model()
 
@@ -43,9 +42,10 @@ class Presentation(models.Model):
 class Notification(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4)
     message = models.CharField(max_length=200)
-    profiles = models.ManyToManyField(
-        Profile,
+    user = models.ForeignKey(
+        User,
         related_name="notifications",
+        on_delete=models.CASCADE,
     )
     reviewed = models.BooleanField(default=False)
 
