@@ -1,7 +1,7 @@
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
-from django.urls import include, path
+from django.urls import path, include
 from drf_yasg import openapi
 from drf_yasg.views import get_schema_view
 from rest_framework_simplejwt.views import (
@@ -11,12 +11,12 @@ from rest_framework_simplejwt.views import (
 
 
 schema_view = get_schema_view(
-   openapi.Info(
-      title="sky-lectures",
-      default_version='v1',
-      description="Application keeping Sky Gate presentations",
-   ),
-   public=True,
+    openapi.Info(
+        title="sky-lectures",
+        default_version='v1',
+        description="Application keeping Sky Gate presentations",
+    ),
+    public=True,
 )
 
 urlpatterns = [
@@ -29,10 +29,12 @@ urlpatterns = [
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    path("api/", include("resources.urls"))
     urlpatterns += [
         path(
             "swagger/",
             schema_view.with_ui("swagger", cache_timeout=0),
             name="schema-swagger-ui",
-        )
+        ),
     ]
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

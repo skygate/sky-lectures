@@ -22,6 +22,11 @@ STATIC_URL = "/static/"
 
 AUTH_USER_MODEL = "users.User"
 
+MEDIA_URL = "/media/"
+MEDIA_ROOT = BASE_DIR + "/static/media"
+
+STATIC_URL = "/static"
+
 ALLOWED_HOSTS = []
 
 
@@ -39,6 +44,7 @@ INSTALLED_APPS = [
     "rest_framework_simplejwt",
     "rest_framework",
     "drf_yasg",
+    'resources.apps.ResourcesConfig',
 ]
 
 MIDDLEWARE = [
