@@ -1,12 +1,14 @@
 from datetime import datetime
 
+from django.core import mail
 from django.contrib.auth import get_user_model
+from django.test import override_settings
 from django.urls import reverse
 import pytz
 from rest_framework import status
 from rest_framework.test import APITestCase
 
-from presentation.factories import UserFactory, PresentationFactory, TagFactory
+from presentation.factories import UserFactory, PresentationFactory, TagFactory, CommentFactory
 from presentation.models import Presentation, Tag, Notification, Comment
 from presentation.serializers import (
     OutputPresentationSerializer,
@@ -392,10 +394,10 @@ class TestTagViewSet(APITestCase):
 class TestNotifcationModel(APITestCase):
     @classmethod
     def setUpTestData(cls):
-        cls.user_1 = UserFactory(username="user_1")
-        cls.user_2 = UserFactory(username="user_2")
+        cls.tag = TagFactory(name="Django")
+        cls.user_1 = UserFactory.create(username="user_1", favourite_tags=[cls.tag])
+        cls.user_2 = UserFactory.create(username="user_2", favourite_tags=[cls.tag])
         cls.admin = UserFactory(is_superuser=True)
-        cls.tag_1 = TagFactory(name="Django")
         cls.presentation_1 = PresentationFactory.create(
             user=cls.user_1,
             scheduled_on=datetime(2021, 10, 1, 12, 0, tzinfo=pytz.UTC),
@@ -403,11 +405,11 @@ class TestNotifcationModel(APITestCase):
         cls.new_presentation_data = {
             "title": "New presentation",
             "description": "",
-            "user": cls.user_1.pk,
+            "user": cls.admin.pk,
             "scheduled_on": datetime(2021, 8, 28, 11, 0, tzinfo=pytz.UTC),
+            "tags": [{"name": "Django"}],
         }
-        cls.comment = Comment.objects.create(
-            text="First comment",
+        cls.comment = CommentFactory(
             presentation_id=cls.presentation_1,
             user=cls.user_1,
         )
@@ -417,25 +419,33 @@ class TestNotifcationModel(APITestCase):
             "user": cls.user_2.id,
             "reply_to": cls.comment.id,
         }
-        cls.user_1.favourite_tags.add(cls.tag_1)
-        cls.user_2.favourite_tags.add(cls.tag_1)
+
         cls.mail_body = "replies to your comment! Check this out!"
         cls.list_url = reverse("presentation:presentation-list")
         cls.comment_url = reverse("presentation:comment-list")
 
+    @override_settings(CELERY_TASK_ALWAYS_EAGER=True, CELERY_TASK_EAGER_PROPOGATES=True)
     def test_create_presentation_with_favourite_tag_and_get_notification(self):
         self.client.force_authenticate(self.admin)
-        response = self.client.post(path=self.list_url, data=self.new_presentation_data)
-        new_presentation = Presentation.objects.get(
-            title=self.new_presentation_data["title"]
+        response = self.client.post(
+            path=self.list_url, data=self.new_presentation_data, format="json"
         )
-        new_presentation.tags.add(self.tag_1)
-        new_presentation.save()
+        correct_mail = {email.to[0] for email in mail.outbox}
 
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         self.assertEqual(Presentation.objects.count(), 2)
         self.assertEqual(Notification.objects.count(), 2)
+        self.assertEqual(len(mail.outbox), 2)
+        self.assertEqual(
+            correct_mail,
+            set(
+                Notification.objects.all().values_list(
+                    "user__email", flat=True
+                )
+            ),
+        )
 
+    @override_settings(CELERY_TASK_ALWAYS_EAGER=True, CELERY_TASK_EAGER_PROPOGATES=True)
     def test_add_reply_to_comment_and_get_notification(self):
         self.client.force_authenticate(self.user_2)
         response = self.client.post(path=self.comment_url, data=self.new_comment)
@@ -443,3 +453,12 @@ class TestNotifcationModel(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         self.assertEqual(Comment.objects.count(), 2)
         self.assertEqual(Notification.objects.count(), 1)
+        self.assertEqual(len(mail.outbox), 1)
+        self.assertEqual(
+            set(mail.outbox[0].to),
+            set(
+                Notification.objects.all().values_list(
+                    "user__email", flat=True
+                )
+            ),
+        )

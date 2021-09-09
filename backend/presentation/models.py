@@ -41,7 +41,6 @@ class Presentation(models.Model):
 
 
 class Notification(models.Model):
-    objects = NotificationManager()
     id = models.UUIDField(primary_key=True, default=uuid.uuid4)
     message = models.CharField(max_length=200)
     user = models.ForeignKey(
@@ -50,6 +49,8 @@ class Notification(models.Model):
         on_delete=models.CASCADE,
     )
     reviewed = models.BooleanField(default=False)
+
+    objects = NotificationManager()
 
     def __str__(self):
         return self.message

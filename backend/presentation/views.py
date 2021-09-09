@@ -57,6 +57,8 @@ class TagViewSet(ModelViewSet):
 
 
 class NotificationViewSet(ReadOnlyModelViewSet):
-    queryset = Notification.objects.all()
     serializer_class = NotificationSerializer
     pagination_class = StandardResultsSetPagination
+
+    def get_queryset(self):
+        return Notification.objects.filter(user=self.request.user)
