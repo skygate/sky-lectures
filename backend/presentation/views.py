@@ -24,19 +24,20 @@ class PresentationViewSet(ModelViewSet):
     ordering_fields = ["scheduled_on", "title", "user__username"]
 
     def create(self, request, *args, **kwargs):
+        service = PresentationService()
         serializer = InputPresentationSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         presentation = PresentationService().create_presentation(
             presentation_data=serializer.validated_data
+            user=request.user
         )
-        presentation.user = request.user
-        presentation.save()
 
         return Response(
             data=self.get_serializer(presentation).data, status=status.HTTP_201_CREATED
         )
 
     def update(self, request, *args, **kwargs):
+        service = PresentationService()
         partial = kwargs.pop("partial", False)
         presentation = self.get_object()
         serializer = InputPresentationSerializer(

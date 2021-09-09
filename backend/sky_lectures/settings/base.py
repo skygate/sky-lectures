@@ -15,6 +15,13 @@ SECRET_KEY = config("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config("DEBUG", cast=bool)
 
+MEDIA_URL = "/media/"
+MEDIA_ROOT = BASE_DIR + "/static/media/"
+
+STATIC_URL = "/static/"
+
+AUTH_USER_MODEL = "users.User"
+
 ALLOWED_HOSTS = []
 
 
@@ -27,10 +34,12 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "django_filters",
+    "users.apps.UsersConfig",
+    "presentation.apps.PresentationConfig",
+    "rest_framework_simplejwt",
     "rest_framework",
     "drf_yasg",
-    "presentation.apps.PresentationConfig",
-    "django_filters",
 ]
 
 REST_FRAMEWORK = {
@@ -78,13 +87,13 @@ WSGI_APPLICATION = "sky_lectures.wsgi.application"
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.postgresql",
-        "NAME": config("POSTGRES_DB"),
-        "USER": config("POSTGRES_USER"),
-        "PASSWORD": config("POSTGRES_PASSWORD"),
-        "HOST": config("DB_HOST"),
-        "PORT": config("PGPORT", cast=int),
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': config('POSTGRES_DB'),
+        'USER': config('POSTGRES_USER'),
+        'PASSWORD': config('POSTGRES_PASSWORD'),
+        'HOST': config("DB_HOST"),
+        'PORT': config("PGPORT", cast=int)
     }
 }
 
@@ -107,6 +116,11 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+REST_FRAMEWORK = {
+    "DEFAULT_AUTHENTICATION_CLASSES": (
+        "rest_framework_simplejwt.authentication.JWTAuthentication",
+    )
+}
 
 # Internationalization
 # https://docs.djangoproject.com/en/2.2/topics/i18n/
@@ -124,5 +138,3 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
-
-STATIC_URL = "/static/"
