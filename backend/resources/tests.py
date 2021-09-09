@@ -7,4 +7,3 @@ from rest_framework.test import APITestCase
 
 from resources.models import Resource
 from resources.serializers import ResourceSerializer
-
