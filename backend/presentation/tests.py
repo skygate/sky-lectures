@@ -1,8 +1,6 @@
 from datetime import datetime
 
 from django.contrib.auth import get_user_model
-from django.core import mail
-from django.test import override_settings
 from django.urls import reverse
 import pytz
 from rest_framework import status
