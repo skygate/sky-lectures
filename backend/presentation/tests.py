@@ -2,6 +2,7 @@ from datetime import datetime
 
 from django.contrib.auth import get_user_model
 from django.core import mail
+from django.test import override_settings
 from django.urls import reverse
 import pytz
 from rest_framework import status
@@ -432,20 +433,10 @@ class TestNotifcationModel(APITestCase):
         )
         new_presentation.tags.add(self.tag_1)
         new_presentation.save()
-        correct_mail = {email.to[0] for email in mail.outbox}
 
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         self.assertEqual(Presentation.objects.count(), 2)
         self.assertEqual(Notification.objects.count(), 2)
-        self.assertEqual(len(mail.outbox), 2)
-        self.assertEqual(
-            correct_mail,
-            set(
-                Notification.objects.all().values_list(
-                    "user__email", flat=True
-                )
-            ),
-        )
 
     def test_add_reply_to_comment_and_get_notification(self):
         self.client.force_authenticate(self.user_2)
@@ -454,12 +445,3 @@ class TestNotifcationModel(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         self.assertEqual(Comment.objects.count(), 2)
         self.assertEqual(Notification.objects.count(), 1)
-        self.assertEqual(len(mail.outbox), 1)
-        self.assertEqual(
-            set(mail.outbox[0].to),
-            set(
-                Notification.objects.all().values_list(
-                    "user__email", flat=True
-                )
-            ),
-        )

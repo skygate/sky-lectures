@@ -3,6 +3,7 @@ import uuid
 from django.contrib.auth import get_user_model
 from django.db import models
 
+from presentation.managers import NotificationManager
 
 User = get_user_model()
 
@@ -40,6 +41,7 @@ class Presentation(models.Model):
 
 
 class Notification(models.Model):
+    objects = NotificationManager()
     id = models.UUIDField(primary_key=True, default=uuid.uuid4)
     message = models.CharField(max_length=200)
     user = models.ForeignKey(

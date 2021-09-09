@@ -1,10 +1,9 @@
-from django.conf import settings
 from django.contrib.auth import get_user_model
-from django.core.mail import send_mail
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
 from presentation.models import Presentation, Notification, Comment
+from presentation.tasks import send_email_task
 
 
 User = get_user_model()
@@ -19,12 +18,14 @@ def create_notification_about_new_presentation_with_favourite_tag(
         users_with_specific_favourite_tags = User.objects.distinct().filter(
             favourite_tags__name__in=set(presentation_tags)
         )
-        for user in users_with_specific_favourite_tags:
-            if user != instance.user:
-                Notification.objects.create(
-                    message=f"New presentation - {instance.title} - with your favourite tags has been added!",
-                    user=user
-                )
+        Notification.objects.bulk_create(
+            Notification(
+                message=f"New presentation - {instance.title} - with your favourite tags has been added!",
+                user=user,
+            )
+            for user in users_with_specific_favourite_tags
+            if user != instance.user
+        )
 
 
 @receiver(post_save, sender=Comment)
@@ -34,18 +35,15 @@ def create_notification_about_reply_to_comment(sender, instance, **kwargs):
         if comment_parent.user != instance.user:
             Notification.objects.create(
                 message=f"{instance.user} replies to your comment! Check this out!",
-                user=comment_parent.user
+                user=comment_parent.user,
             )
 
 
 @receiver(post_save, sender=Notification)
 def send_email_with_new_notification(sender, instance, created, **kwargs):
     if created:
-        subject = "Notification!"
-        send_mail(
-            subject=subject,
+        send_email_task.delay(
+            subject="Notification!",
             message=instance.message,
-            from_email=settings.EMAIL_HOST_USER,
-            recipient_list=[instance.user.email],
-            fail_silently=False,
+            email=[instance.user.email],
         )
