@@ -14,6 +14,22 @@ class UserFactory(factory.django.DjangoModelFactory):
     email = factory.Faker("email")
     is_superuser = False
 
+    @factory.post_generation
+    def favourite_tags(self, create, tags):
+        if not create:
+            return
+        if tags:
+            for tag in tags:
+                self.favourite_tags.add(tag)
+
+    @factory.post_generation
+    def favourite_presentation(self, create, presentations):
+        if not create:
+            return
+        if presentations:
+            for presentation in presentations:
+                self.favourite_presentation.add(presentation)
+
 
 class PresentationFactory(factory.django.DjangoModelFactory):
     class Meta:
@@ -23,6 +39,7 @@ class PresentationFactory(factory.django.DjangoModelFactory):
     title = factory.Faker("word")
     description = factory.Faker("text")
     user = factory.SubFactory(UserFactory)
+    scheduled_on = factory.Faker("date")
 
     @factory.post_generation
     def tags(self, create, tags):
@@ -37,3 +54,5 @@ class TagFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = Tag
         django_get_or_create = ("name",)
+
+    name = factory.Faker("word")

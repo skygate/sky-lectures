@@ -11,6 +11,12 @@ def get_file_path(instance, filename):
 
 class User(AbstractUser):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4)
+    favourite_presentations = models.ManyToManyField(
+        "presentation.Presentation", related_name="favourite_presentations", blank=True
+    )
+    favourite_tags = models.ManyToManyField(
+        "presentation.Tag", related_name="favourite_tags", blank=True
+    )
 
     def __str__(self):
         return self.username
@@ -26,8 +32,6 @@ class Profile(models.Model):
         related_name="profile",
         primary_key=True,
     )
-    favourite_presentations = models.ManyToManyField("presentation.Presentation", related_name="favourite_presentations")
-    favourite_tags = models.ManyToManyField("presentation.Tag", related_name="favourite_tags")
 
     def __str__(self):
         return f"Profile of user {self.user.username}"
