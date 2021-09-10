@@ -13,25 +13,25 @@ User = get_user_model()
 class CommentTest(APITestCase):
     @classmethod
     def setUpTestData(cls):
-        cls.user1 = UserFactory()
-        cls.user2 = UserFactory()
+        cls.user_1 = UserFactory()
+        cls.user_2 = UserFactory()
         cls.admin = UserFactory(is_superuser=True)
         cls.presentation = PresentationFactory()
-        cls.comment = CommentFactory(user=cls.user1)
-        cls.comment2 = CommentFactory(user=cls.user1)
+        cls.comment_1 = CommentFactory(user=cls.user_1)
+        cls.comment_2 = CommentFactory(user=cls.user_1)
 
         cls.valid_comment = {
             "text": "some comment",
             "presentation_id": cls.presentation.id,
-            "user": cls.user1,
-            "reply_to": cls.comment.id,
+            "user": cls.user_1,
+            "reply_to": cls.comment_1.id,
         }
 
         cls.valid_update_comment = {"text": "some new comment"}
 
         cls.list_url = reverse("presentation:comment-list")
         cls.detail_url = reverse(
-            "presentation:comment-detail", kwargs={"pk": cls.comment.pk}
+            "presentation:comment-detail", kwargs={"pk": cls.comment_1.pk}
         )
 
     def test_get_comments_list_not_authenticated(self):
@@ -40,7 +40,7 @@ class CommentTest(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
 
     def test_get_comments_list_authenticated(self):
-        self.client.force_authenticate(user=self.user2)
+        self.client.force_authenticate(user=self.user_2)
         response = self.client.get(path=self.list_url)
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
@@ -52,10 +52,10 @@ class CommentTest(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
 
     def test_post_comment_authenticated(self):
-        self.client.force_login(user=self.user1)
+        self.client.force_login(user=self.user_1)
         response = self.client.post(path=self.list_url, data=self.valid_comment)
 
-        self.comment.refresh_from_db()
+        self.comment_1.refresh_from_db()
 
         self.assertEqual(Comment.objects.count(), 3)
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
@@ -66,12 +66,12 @@ class CommentTest(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
 
     def test_put_authenticated(self):
-        self.client.force_login(user=self.user1)
+        self.client.force_login(user=self.user_1)
         response = self.client.put(path=self.detail_url, data=self.valid_update_comment)
 
-        self.comment.refresh_from_db()
+        self.comment_1.refresh_from_db()
 
-        self.assertEqual(self.comment.text, self.valid_update_comment["text"])
+        self.assertEqual(self.comment_1.text, self.valid_update_comment["text"])
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_patch_not_authenticated(self):
@@ -80,12 +80,12 @@ class CommentTest(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
 
     def test_patch_authenticated(self):
-        self.client.force_login(user=self.user1)
+        self.client.force_login(user=self.user_1)
         response = self.client.patch(
             path=self.detail_url, data=self.valid_update_comment
         )
 
-        self.comment.refresh_from_db()
+        self.comment_1.refresh_from_db()
 
-        self.assertEqual(self.comment.text, self.valid_update_comment["text"])
+        self.assertEqual(self.comment_1.text, self.valid_update_comment["text"])
         self.assertEqual(response.status_code, status.HTTP_200_OK)

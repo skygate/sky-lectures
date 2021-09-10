@@ -5,11 +5,11 @@ from presentation.models import Comment
 
 class RecursiveSerializer(serializers.RelatedField):
     def to_representation(self, value):
-        serializer = CommentListSerializer(value)
+        serializer = CommentSerializer(value)
         return serializer.data
 
 
-class CommentListSerializer(serializers.ModelSerializer):
+class CommentSerializer(serializers.ModelSerializer):
     replies = RecursiveSerializer(many=True, read_only=True)
 
     class Meta:
@@ -25,7 +25,7 @@ class CommentListSerializer(serializers.ModelSerializer):
         ]
 
 
-class CommentSerializer(serializers.ModelSerializer):
+class CommentUpdateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Comment
         fields = ["text"]
