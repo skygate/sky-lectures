@@ -3,7 +3,11 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 
 from presentation.models import Presentation, Notification, Comment
-from presentation.tasks import send_email_task, create_notifications
+from presentation.tasks import (
+    send_email_task,
+    create_notification_for_presentation,
+    create_notification_for_comment,
+)
 
 
 User = get_user_model()
@@ -13,27 +17,31 @@ User = get_user_model()
 def create_notification_about_new_presentation_with_favourite_tag(
     sender, instance, created, **kwargs
 ):
-    presentation_tags = instance.tags.values_list("name", flat=True)
-    if presentation_tags:
-        users_with_specific_favourite_tags = User.objects.distinct().filter(
-            favourite_tags__name__in=set(presentation_tags)
-        )
-        create_notifications.delay(
-            users=list(users_with_specific_favourite_tags.values_list("id", flat=True)),
-            instance_id=instance.id,
-            notification_type="Presentation",
-        )
+    if not instance.notification_sended:
+        presentation_tags = instance.tags.values_list("name", flat=True)
+        if presentation_tags:
+            users_with_specific_favourite_tags = (
+                User.objects.distinct()
+                .filter(favourite_tags__name__in=set(presentation_tags))
+                .exclude(username=instance.user)
+            )
+            create_notification_for_presentation.delay(
+                users=list(users_with_specific_favourite_tags.values_list("id", flat=True)),
+                presentation_id=instance.id,
+            )
+            instance.notification_sended = True
+            instance.save()
 
 
 @receiver(post_save, sender=Comment)
-def create_notification_about_reply_to_comment(sender, instance, **kwargs):
-    comment_parent = instance.reply_to
-    if comment_parent:
-        create_notifications.delay(
-            users=[comment_parent.user.id],
-            instance_id=instance.id,
-            notification_type="Comment",
-        )
+def create_notification_about_reply_to_comment(sender, instance, created, **kwargs):
+    if created:
+        comment_parent = instance.reply_to
+        if comment_parent:
+            create_notification_for_comment.delay(
+                users=[comment_parent.user.id],
+                comment_id=instance.id,
+            )
 
 
 @receiver(post_save, sender=Notification)
