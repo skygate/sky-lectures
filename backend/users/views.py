@@ -40,7 +40,7 @@ class UserViewSet(ModelViewSet):
         serializer.is_valid(raise_exception=True)
 
         user = UserService().add_to_favourite_presentations(
-            user=user, data=serializer.validated_data
+            user=user, validated_data=serializer.validated_data
         )
 
         return Response(data=self.get_serializer(user).data, status=status.HTTP_200_OK)
@@ -54,7 +54,7 @@ class UserViewSet(ModelViewSet):
         serializer.is_valid(raise_exception=True)
 
         user = UserService().remove_from_favourite_presentations(
-            user=user, data=serializer.validated_data
+            user=user, validated_data=serializer.validated_data
         )
 
         return Response(data=self.get_serializer(user).data, status=status.HTTP_200_OK)
@@ -66,7 +66,7 @@ class UserViewSet(ModelViewSet):
         serializer.is_valid(raise_exception=True)
 
         user = UserService().add_to_favourite_tags(
-            user=user, data=serializer.validated_data
+            user=user, validated_data=serializer.validated_data
         )
 
         return Response(data=self.get_serializer(user).data, status=status.HTTP_200_OK)
@@ -78,7 +78,7 @@ class UserViewSet(ModelViewSet):
         serializer.is_valid(raise_exception=True)
 
         user = UserService().remove_from_favourite_tags(
-            user=user, data=serializer.validated_data
+            user=user, validated_data=serializer.validated_data
         )
 
         return Response(data=self.get_serializer(user).data, status=status.HTTP_200_OK)
