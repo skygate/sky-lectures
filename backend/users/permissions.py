@@ -18,4 +18,4 @@ class IsAdminOrProfileOwner(IsAuthenticated):
         if request.method in SAFE_METHODS:
             return True
 
-        return request.user == obj or request.user.is_superuser
+        return request.user == obj.user or request.user.is_superuser

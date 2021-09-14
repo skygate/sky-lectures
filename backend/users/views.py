@@ -8,7 +8,13 @@ from rest_framework.response import Response
 from rest_framework.viewsets import GenericViewSet, ModelViewSet
 
 from users.models import Profile
-from users.serializers import ProfileSerializer, RegisterUserSerializer, UserSerializer
+from users.serializers import (
+    FavouritePresentationsSerializer,
+    FavouriteTagsSerializer,
+    ProfileSerializer,
+    RegisterUserSerializer,
+    UserSerializer,
+)
 from users.services import UserService
 from users.permissions import IsAdminOrOwner, IsAdminOrProfileOwner
 
@@ -30,36 +36,52 @@ class UserViewSet(ModelViewSet):
     @action(detail=True, methods=["put"], url_name="add_to_favourite_presentations")
     def add_to_favourite_presentations(self, request, pk):
         user = self.get_object()
-        UserService().add_to_favourite_presentations(user=user, request=request)
+        serializer = FavouritePresentationsSerializer(user, data=request.data)
+        serializer.is_valid(raise_exception=True)
 
-        return Response(status=status.HTTP_200_OK)
+        user = UserService().add_to_favourite_presentations(
+            user=user, data=serializer.validated_data
+        )
+
+        return Response(data=self.get_serializer(user).data, status=status.HTTP_200_OK)
 
     @action(
         detail=True, methods=["put"], url_name="remove_from_favourite_presentations"
     )
     def remove_from_favourite_presentations(self, request, pk):
         user = self.get_object()
-        UserService().remove_from_favourite_presentations(user=user, request=request)
+        serializer = FavouritePresentationsSerializer(user, data=request.data)
+        serializer.is_valid(raise_exception=True)
 
-        return Response(status=status.HTTP_200_OK)
+        user = UserService().remove_from_favourite_presentations(
+            user=user, data=serializer.validated_data
+        )
+
+        return Response(data=self.get_serializer(user).data, status=status.HTTP_200_OK)
 
     @action(detail=True, methods=["put"], url_name="add_to_favourite_tags")
     def add_to_favourite_tags(self, request, pk):
         user = self.get_object()
-        UserService().add_to_favourite_tags(user=user, request=request)
+        serializer = FavouriteTagsSerializer(user, data=request.data)
+        serializer.is_valid(raise_exception=True)
 
-        return Response(
-            status=status.HTTP_200_OK, data=self.serializer_class(user).data
+        user = UserService().add_to_favourite_tags(
+            user=user, data=serializer.validated_data
         )
+
+        return Response(data=self.get_serializer(user).data, status=status.HTTP_200_OK)
 
     @action(detail=True, methods=["put"], url_name="remove_from_favourite_tags")
     def remove_from_favourite_tags(self, request, pk):
         user = self.get_object()
-        UserService().remove_from_favourite_tags(user=user, request=request)
+        serializer = FavouriteTagsSerializer(user, data=request.data)
+        serializer.is_valid(raise_exception=True)
 
-        return Response(
-            status=status.HTTP_200_OK, data=self.serializer_class(user).data
+        user = UserService().remove_from_favourite_tags(
+            user=user, data=serializer.validated_data
         )
+
+        return Response(data=self.get_serializer(user).data, status=status.HTTP_200_OK)
 
 
 class ProfileViewSet(RetrieveModelMixin, UpdateModelMixin, GenericViewSet):

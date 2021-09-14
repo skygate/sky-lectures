@@ -40,6 +40,7 @@ class RegisterUserTest(APITestCase):
             path=self.register_url,
             data=self.valid_payload,
         )
+
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         self.assertEqual(User.objects.count(), 1)
 
@@ -48,6 +49,7 @@ class RegisterUserTest(APITestCase):
             path=self.register_url,
             data=self.invalid_payload,
         )
+
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertEqual(User.objects.count(), 0)
 
@@ -74,6 +76,7 @@ class TestUserViewSet(APITestCase):
         response = self.client.get(
             path=self.list_url,
         )
+
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
 
     def test_get_users_list_with_authentication(self):
@@ -89,6 +92,7 @@ class TestUserViewSet(APITestCase):
         response = self.client.get(
             path=self.detail_url,
         )
+
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
 
     def test_get_user_detail_with_authentication(self):
@@ -96,6 +100,7 @@ class TestUserViewSet(APITestCase):
         response = self.client.get(
             path=self.detail_url,
         )
+
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_patch_user_detail_as_admin(self):
@@ -104,6 +109,7 @@ class TestUserViewSet(APITestCase):
             path=self.detail_url,
             data={"username": "user_1_updated"},
         )
+
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.data["username"], "user_1_updated")
 
@@ -113,6 +119,7 @@ class TestUserViewSet(APITestCase):
             path=self.detail_url,
             data={"username": "user_1_updated"},
         )
+
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.data["username"], "user_1_updated")
 
@@ -122,6 +129,7 @@ class TestUserViewSet(APITestCase):
             path=self.detail_url,
             data={"username": "user_1_updated"},
         )
+
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
 
     def test_put_user_detail_as_admin(self):
@@ -152,6 +160,7 @@ class TestUserViewSet(APITestCase):
             path=self.detail_url,
             data=self.user_1_updated_data,
         )
+
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
 
     def test_delete_user(self):
@@ -159,6 +168,7 @@ class TestUserViewSet(APITestCase):
         response = self.client.delete(
             path=self.detail_url,
         )
+
         self.assertEqual(response.status_code, status.HTTP_405_METHOD_NOT_ALLOWED)
 
 
@@ -181,7 +191,7 @@ class ProfileViewSetTestCase(APITestCase):
 
         cls.avatar_data = {"file": cls.generate_photo_file()}
 
-        cls.url_detail = reverse("users:profile-detail", kwargs={"pk": cls.user_1.id})
+        cls.url_detail = reverse("users:profile-detail", kwargs={"pk": cls.user_1.pk})
 
     def test_get_existing_profile(self):
         response = self.client.get(self.url_detail)
@@ -304,8 +314,6 @@ class UserFavouritesTestCase(APITestCase):
         response = self.client.put(self.url_add_favourite_tags, self.tag_data)
 
         self.user_1.refresh_from_db()
-        print(response.data)
-        print(self.user_1.favourite_tags.all())
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertTrue(self.tag in self.user_1.favourite_tags.all())

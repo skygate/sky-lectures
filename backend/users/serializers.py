@@ -55,8 +55,20 @@ class UserSerializer(serializers.ModelSerializer):
             "favourite_tags",
         ]
 
-        
+
 class ProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = Profile
         fields = ["description", "file"]
+
+
+class FavouritePresentationsSerializer(serializers.Serializer):
+    favourite_presentations = serializers.ListField(
+        child=serializers.UUIDField(), allow_empty=False
+    )
+
+
+class FavouriteTagsSerializer(serializers.Serializer):
+    favourite_tags = serializers.ListField(
+        child=serializers.UUIDField(), allow_empty=False
+    )
