@@ -1,18 +1,19 @@
-from django_filters import rest_framework as filters
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 
 from presentation.filters import PresentationFilter
-from presentation.models import Presentation, Tag
+from presentation.models import Comment, Presentation, Tag
 from presentation.paginations import StandardResultsSetPagination
 from presentation.permissions import IsAdminOrOwner, IsAdminOrReadOnly
 from presentation.serializers import (
+    CommentSerializer,
+    CommentUpdateSerializer,
     InputPresentationSerializer,
     OutputPresentationSerializer,
     TagSerializer,
 )
-from presentation.services import PresentationService
+from presentation.services import CommentService, PresentationService
 
 
 class PresentationViewSet(ModelViewSet):
@@ -54,3 +55,27 @@ class TagViewSet(ModelViewSet):
     serializer_class = TagSerializer
     permission_classes = [IsAdminOrReadOnly]
     pagination_class = StandardResultsSetPagination
+
+
+class CommentViewSet(ModelViewSet):
+    queryset = Comment.objects.all()
+    serializer_class = CommentSerializer
+    permission_classes = [
+        IsAdminOrOwner,
+    ]
+    http_method_names = ["get", "post", "put", "patch"]
+
+    def perform_create(self, serializer):
+        CommentService().set_comment_user(serializer=serializer, user=self.request.user)
+
+    def update(self, request, *args, **kwargs):
+        comment = self.get_object()
+        serializer = CommentUpdateSerializer(comment, data=request.data, partial=True)
+        serializer.is_valid(raise_exception=True)
+        comment = CommentService().update_comment(
+            comment=comment, validated_data=serializer.validated_data
+        )
+
+        return Response(
+            data=self.get_serializer(comment).data, status=status.HTTP_200_OK
+        )

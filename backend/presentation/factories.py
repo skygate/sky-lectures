@@ -1,7 +1,7 @@
 from django.contrib.auth import get_user_model
 import factory
 
-from presentation.models import Presentation, Tag
+from presentation.models import Comment, Presentation, Tag
 
 
 class UserFactory(factory.django.DjangoModelFactory):
@@ -37,3 +37,13 @@ class TagFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = Tag
         django_get_or_create = ("name",)
+
+
+class CommentFactory(factory.django.DjangoModelFactory):
+    class Meta:
+        model = Comment
+        django_get_or_create = ("text",)
+
+    text = factory.Faker("text")
+    user = factory.SubFactory(UserFactory)
+    presentation_id = factory.SubFactory(PresentationFactory)
