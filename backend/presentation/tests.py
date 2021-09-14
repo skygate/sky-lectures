@@ -238,7 +238,9 @@ class TestFiltersPresentationViewSet(APITestCase):
 
     def test_get_presentation_list_filter_user_username(self):
         self.client.force_authenticate(user=self.user_1)
-        response = self.client.get(path=self.list_url, data={"user__username": self.user_1.username})
+        response = self.client.get(
+            path=self.list_url, data={"user__username": self.user_1.username}
+        )
 
         self.assertEqual(response.data["count"], 2)
 
@@ -279,6 +281,207 @@ class TestFiltersPresentationViewSet(APITestCase):
         )
 
         self.assertEqual(response.data["count"], 1)
+
+    def test_get_presentation_list_search_title(self):
+        self.client.force_authenticate(user=self.user_1)
+        response = self.client.get(
+            path=self.list_url, data={"search": self.presentation_1.title}
+        )
+
+        self.assertEqual(response.data["count"], 1)
+        self.assertEqual(
+            response.data["results"][0],
+            OutputPresentationSerializer(self.presentation_1).data,
+        )
+
+    def test_get_presentation_list_search_description(self):
+        self.client.force_authenticate(user=self.user_1)
+        response = self.client.get(
+            path=self.list_url, data={"search": self.presentation_1.description}
+        )
+
+        self.assertEqual(response.data["count"], 1)
+        self.assertEqual(
+            response.data["results"][0],
+            OutputPresentationSerializer(self.presentation_1).data,
+        )
+
+    def test_get_presentation_list_search_username(self):
+        self.client.force_authenticate(user=self.user_1)
+        response = self.client.get(
+            path=self.list_url, data={"search": self.user_1.username}
+        )
+
+        self.assertEqual(response.data["count"], 2)
+        self.assertEqual(
+            response.data["results"][1],
+            OutputPresentationSerializer(self.presentation_1).data,
+        )
+        self.assertEqual(
+            response.data["results"][0],
+            OutputPresentationSerializer(self.presentation_3).data,
+        )
+
+    def test_get_presentation_list_search_tag(self):
+        self.client.force_authenticate(user=self.user_1)
+        response = self.client.get(path=self.list_url, data={"search": "Java"})
+
+        self.assertEqual(response.data["count"], 2)
+        self.assertEqual(
+            response.data["results"][1],
+            OutputPresentationSerializer(self.presentation_1).data,
+        )
+        self.assertEqual(
+            response.data["results"][0],
+            OutputPresentationSerializer(self.presentation_3).data,
+        )
+
+
+class TestOrderingPresentationViewSet(APITestCase):
+    @classmethod
+    def setUpTestData(cls):
+        cls.user_1 = UserFactory(username="Albert")
+        cls.user_2 = UserFactory(username="Walter")
+        cls.presentation_1 = PresentationFactory.create(
+            title="A first presentation",
+            user=cls.user_1,
+            scheduled_on=datetime(2021, 10, 1, 12, 0, tzinfo=pytz.UTC),
+        )
+        cls.presentation_2 = PresentationFactory.create(
+            title="B second presentation",
+            user=cls.user_2,
+            scheduled_on=datetime(2021, 10, 2, 12, 0, tzinfo=pytz.UTC),
+        )
+        cls.presentation_3 = PresentationFactory.create(
+            title="C third presentation",
+            user=cls.user_1,
+            scheduled_on=datetime(2021, 10, 5, 7, 0, tzinfo=pytz.UTC),
+        )
+        cls.presentation_1_dict = {
+            "title": "A first presentation",
+        }
+        cls.presentation_2_dict = {
+            "title": "B second presentation",
+        }
+        cls.presentation_3_dict = {
+            "title": "C third presentation",
+        }
+        cls.list_url = reverse("presentation:presentation-list")
+
+    def setUp(self) -> None:
+        self.client.force_authenticate(user=self.user_1)
+
+    def test_get_presentation_list_ordering_date(self):
+        response = self.client.get(
+            path=self.list_url, data={"ordering": "scheduled_on"}
+        )
+        print(response.data["results"][0])
+        print(self.presentation_1_dict)
+
+        self.assertEqual(response.data["count"], Presentation.objects.all().count())
+        self.assertEqual(
+            response.data["results"][0]["title"],
+            self.presentation_1_dict["title"],
+        )
+        self.assertEqual(
+            response.data["results"][1]["title"],
+            self.presentation_2_dict["title"],
+        )
+        self.assertEqual(
+            response.data["results"][2]["title"],
+            self.presentation_3_dict["title"],
+        )
+
+    def test_get_presentation_list_ordering_neg_date(self):
+        response = self.client.get(
+            path=self.list_url, data={"ordering": "-scheduled_on"}
+        )
+
+        self.assertEqual(response.data["count"], Presentation.objects.all().count())
+        self.assertEqual(
+            response.data["results"][0]["title"],
+            self.presentation_3_dict["title"],
+        )
+        self.assertEqual(
+            response.data["results"][1]["title"],
+            self.presentation_2_dict["title"],
+        )
+        self.assertEqual(
+            response.data["results"][2]["title"],
+            self.presentation_1_dict["title"],
+        )
+
+    def test_get_presentation_list_ordering_title(self):
+        response = self.client.get(path=self.list_url, data={"ordering": "title"})
+
+        self.assertEqual(response.data["count"], Presentation.objects.all().count())
+        self.assertEqual(
+            response.data["results"][0]["title"],
+            self.presentation_1_dict["title"],
+        )
+        self.assertEqual(
+            response.data["results"][1]["title"],
+            self.presentation_2_dict["title"],
+        )
+        self.assertEqual(
+            response.data["results"][2]["title"],
+            self.presentation_3_dict["title"],
+        )
+
+    def test_get_presentation_list_ordering_neg_title(self):
+        response = self.client.get(path=self.list_url, data={"ordering": "-title"})
+
+        self.assertEqual(response.data["count"], Presentation.objects.all().count())
+        self.assertEqual(
+            response.data["results"][0]["title"],
+            self.presentation_3_dict["title"],
+        )
+        self.assertEqual(
+            response.data["results"][1]["title"],
+            self.presentation_2_dict["title"],
+        )
+        self.assertEqual(
+            response.data["results"][2]["title"],
+            self.presentation_1_dict["title"],
+        )
+
+    def test_get_presentation_list_ordering_username(self):
+        response = self.client.get(
+            path=self.list_url, data={"ordering": "user__username"}
+        )
+
+        self.assertEqual(response.data["count"], Presentation.objects.all().count())
+        self.assertEqual(
+            response.data["results"][0]["title"],
+            self.presentation_1_dict["title"],
+        )
+        self.assertEqual(
+            response.data["results"][1]["title"],
+            self.presentation_3_dict["title"],
+        )
+        self.assertEqual(
+            response.data["results"][2]["title"],
+            self.presentation_2_dict["title"],
+        )
+
+    def test_get_presentation_list_ordering_neg_username(self):
+        response = self.client.get(
+            path=self.list_url, data={"ordering": "-user__username"}
+        )
+
+        self.assertEqual(response.data["count"], Presentation.objects.all().count())
+        self.assertEqual(
+            response.data["results"][0]["title"],
+            self.presentation_2_dict["title"],
+        )
+        self.assertEqual(
+            response.data["results"][1]["title"],
+            self.presentation_1_dict["title"],
+        )
+        self.assertEqual(
+            response.data["results"][2]["title"],
+            self.presentation_3_dict["title"],
+        )
 
 
 class TestTagViewSet(APITestCase):

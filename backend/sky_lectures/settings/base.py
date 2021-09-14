@@ -34,12 +34,23 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "django_filters",
     "users.apps.UsersConfig",
     "presentation.apps.PresentationConfig",
     "rest_framework_simplejwt",
     "rest_framework",
     "drf_yasg",
 ]
+
+REST_FRAMEWORK = {
+    "DEFAULT_FILTER_BACKENDS": (
+        "django_filters.rest_framework.DjangoFilterBackend",
+        "rest_framework.filters.SearchFilter",
+        "rest_framework.filters.OrderingFilter",
+    ),
+    "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.LimitOffsetPagination",
+    "PAGE_SIZE": 100,
+}
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
