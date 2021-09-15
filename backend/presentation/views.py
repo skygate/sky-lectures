@@ -30,7 +30,7 @@ class PresentationViewSet(ModelViewSet):
         serializer = InputPresentationSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         presentation = PresentationService().create_presentation(
-            presentation_data=serializer.validated_data
+            presentation_data=serializer.validated_data,
             user=request.user
         )
 

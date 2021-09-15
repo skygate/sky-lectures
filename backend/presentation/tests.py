@@ -57,6 +57,7 @@ class TestPresentationViewSet(APITestCase):
     def test_get_presentations_list_with_authentication(self):
         self.client.force_authenticate(user=self.user_1)
         response = self.client.get(path=self.list_url)
+
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.data["count"], 1)
 
@@ -86,6 +87,7 @@ class TestPresentationViewSet(APITestCase):
         response = self.client.post(
             path=self.list_url, data=self.new_presentation_data, format="json"
         )
+
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         self.assertEqual(Presentation.objects.count(), 2)
 
@@ -634,7 +636,7 @@ class TestCommentViewSet(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
 
     def test_post_comment_authenticated(self):
-        self.client.force_login(user=self.user_1)
+        self.client.force_authenticate(user=self.user_1)
         response = self.client.post(path=self.list_url, data=self.valid_comment)
 
         self.comment_1.refresh_from_db()
@@ -648,7 +650,7 @@ class TestCommentViewSet(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
 
     def test_put_authenticated(self):
-        self.client.force_login(user=self.user_1)
+        self.client.force_authenticate(user=self.user_1)
         response = self.client.put(path=self.detail_url, data=self.valid_update_comment)
 
         self.comment_1.refresh_from_db()
@@ -662,7 +664,7 @@ class TestCommentViewSet(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
 
     def test_patch_authenticated(self):
-        self.client.force_login(user=self.user_1)
+        self.client.force_authenticate(user=self.user_1)
         response = self.client.patch(
             path=self.detail_url, data=self.valid_update_comment
         )

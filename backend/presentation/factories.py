@@ -23,6 +23,7 @@ class PresentationFactory(factory.django.DjangoModelFactory):
     title = factory.Faker("word")
     description = factory.Faker("text")
     user = factory.SubFactory(UserFactory)
+    scheduled_on = factory.Faker("date")
 
     @factory.post_generation
     def tags(self, create, tags):
