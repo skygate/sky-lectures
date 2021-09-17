@@ -1,7 +1,7 @@
 from django.contrib.auth import get_user_model
 import factory
 
-from presentation.models import Presentation, Tag, Comment
+from presentation.models import Comment, Presentation, Tag
 
 
 class UserFactory(factory.django.DjangoModelFactory):
@@ -9,7 +9,7 @@ class UserFactory(factory.django.DjangoModelFactory):
         model = get_user_model()
         django_get_or_create = ("username", "password", "email", "is_superuser")
 
-    username = factory.Faker("name")
+    username = factory.Faker("first_name")
     password = factory.Faker("password")
     email = factory.Faker("email")
     is_superuser = False
@@ -31,6 +31,7 @@ class PresentationFactory(factory.django.DjangoModelFactory):
     title = factory.Faker("word")
     description = factory.Faker("text")
     user = factory.SubFactory(UserFactory)
+    scheduled_on = factory.Faker("date")
 
     @factory.post_generation
     def tags(self, create, tags):

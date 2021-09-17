@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from presentation.models import Presentation, Tag, Notification
+from presentation.models import Presentation, Tag, Notification, Comment
 
 
 class TagSerializer(serializers.ModelSerializer):
@@ -32,3 +32,31 @@ class NotificationSerializer(serializers.ModelSerializer):
     class Meta:
         model = Notification
         fields = ["message", "reviewed"]
+
+
+class RecursiveSerializer(serializers.RelatedField):
+    def to_representation(self, value):
+        serializer = CommentSerializer(value)
+        return serializer.data
+
+
+class CommentSerializer(serializers.ModelSerializer):
+    replies = RecursiveSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = Comment
+        fields = [
+            "id",
+            "text",
+            "created_at",
+            "user",
+            "presentation_id",
+            "reply_to",
+            "replies",
+        ]
+
+
+class CommentUpdateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Comment
+        fields = ["text"]
