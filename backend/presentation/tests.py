@@ -1,18 +1,19 @@
 from datetime import datetime
 
+from django.core import mail
 from django.contrib.auth import get_user_model
+from django.test import override_settings
 from django.urls import reverse
 import pytz
 from rest_framework import status
 from rest_framework.test import APITestCase
 
-from presentation.factories import CommentFactory, UserFactory, PresentationFactory, TagFactory
-from presentation.models import Comment, Presentation, Tag
+from presentation.factories import UserFactory, PresentationFactory, TagFactory, CommentFactory
+from presentation.models import Presentation, Tag, Notification, Comment
 from presentation.serializers import (
     OutputPresentationSerializer,
     TagSerializer,
 )
-
 
 User = get_user_model()
 
@@ -52,7 +53,7 @@ class TestPresentationViewSet(APITestCase):
     def test_get_presentations_list_without_authentication(self):
         response = self.client.get(path=self.list_url)
 
-        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
 
     def test_get_presentations_list_with_authentication(self):
         self.client.force_authenticate(user=self.user_1)
@@ -64,7 +65,7 @@ class TestPresentationViewSet(APITestCase):
     def test_get_presentation_detail_without_authentication(self):
         response = self.client.get(path=self.detail_url)
 
-        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
 
     def test_get_presentation_detail(self):
         self.client.force_authenticate(user=self.user_1)
@@ -80,7 +81,7 @@ class TestPresentationViewSet(APITestCase):
             path=self.list_url, data=self.new_presentation_data, format="json"
         )
 
-        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
 
     def test_post_new_presentation(self):
         self.client.force_authenticate(user=self.user_1)
@@ -96,7 +97,7 @@ class TestPresentationViewSet(APITestCase):
             path=self.detail_url, data=self.updated_presentation_data, format="json"
         )
 
-        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
 
     def test_put_presentation_detail_as_not_owner(self):
         self.client.force_authenticate(user=self.user_2)
@@ -135,7 +136,7 @@ class TestPresentationViewSet(APITestCase):
             path=self.detail_url, data=self.updated_presentation_data, format="json"
         )
 
-        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
 
     def test_patch_presentation_detail_as_not_owner(self):
         self.client.force_authenticate(user=self.user_2)
@@ -172,7 +173,7 @@ class TestPresentationViewSet(APITestCase):
     def test_delete_presentation_without_auth(self):
         response = self.client.delete(path=self.detail_url)
 
-        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
 
     def test_delete_presentation_as_not_owner(self):
         self.client.force_authenticate(user=self.user_2)
@@ -503,7 +504,7 @@ class TestTagViewSet(APITestCase):
     def test_get_tag_list_without_auth(self):
         response = self.client.get(path=self.list_url)
 
-        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
 
     def test_get_tag_list(self):
         self.client.force_authenticate(user=self.user_1)
@@ -515,7 +516,7 @@ class TestTagViewSet(APITestCase):
     def test_get_tag_detail_without_auth(self):
         response = self.client.get(path=self.detail_url)
 
-        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
 
     def test_get_tag_detail(self):
         self.client.force_authenticate(user=self.user_1)
@@ -527,7 +528,7 @@ class TestTagViewSet(APITestCase):
     def test_post_new_tag_without_auth(self):
         response = self.client.post(path=self.list_url)
 
-        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
 
     def test_post_new_tag(self):
         self.client.force_authenticate(user=self.user_1)
@@ -539,7 +540,7 @@ class TestTagViewSet(APITestCase):
     def test_put_tag_without_auth(self):
         response = self.client.put(path=self.detail_url, data=self.updated_tag)
 
-        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
 
     def test_put_tag_as_user(self):
         self.client.force_authenticate(user=self.user_1)
@@ -558,7 +559,7 @@ class TestTagViewSet(APITestCase):
     def test_patch_tag_without_auth(self):
         response = self.client.patch(path=self.detail_url, data=self.updated_tag)
 
-        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
 
     def test_patch_tag_as_user(self):
         self.client.force_authenticate(user=self.user_1)
@@ -578,7 +579,7 @@ class TestTagViewSet(APITestCase):
     def test_delete_tag_without_auth(self):
         response = self.client.delete(path=self.detail_url)
 
-        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
 
     def test_delete_tag_as_user(self):
         self.client.force_authenticate(user=self.user_1)
@@ -592,6 +593,79 @@ class TestTagViewSet(APITestCase):
 
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
         self.assertEqual(Tag.objects.count(), 1)
+
+
+class TestNotifcationModel(APITestCase):
+    @classmethod
+    def setUpTestData(cls):
+        cls.tag = TagFactory(name="Django")
+        cls.user_1 = UserFactory.create(username="user_1", favourite_tags=[cls.tag])
+        cls.user_2 = UserFactory.create(username="user_2", favourite_tags=[cls.tag])
+        cls.admin = UserFactory(is_superuser=True)
+        cls.presentation_1 = PresentationFactory.create(
+            user=cls.user_1,
+            scheduled_on=datetime(2021, 10, 1, 12, 0, tzinfo=pytz.UTC),
+        )
+        cls.new_presentation_data = {
+            "title": "New presentation",
+            "description": "",
+            "user": cls.admin.pk,
+            "scheduled_on": datetime(2021, 8, 28, 11, 0, tzinfo=pytz.UTC),
+            "tags": [{"name": "Django"}],
+        }
+        cls.comment = CommentFactory(
+            presentation_id=cls.presentation_1,
+            user=cls.user_1,
+        )
+        cls.new_comment = {
+            "text": "reply to first comment",
+            "presentation_id": cls.presentation_1.id,
+            "user": cls.user_2.id,
+            "reply_to": cls.comment.id,
+        }
+
+        cls.mail_body = "replies to your comment! Check this out!"
+        cls.list_url = reverse("presentation:presentation-list")
+        cls.comment_url = reverse("presentation:comment-list")
+
+    @override_settings(CELERY_TASK_ALWAYS_EAGER=True, CELERY_TASK_EAGER_PROPOGATES=True)
+    def test_create_presentation_with_favourite_tag_and_get_notification(self):
+        self.client.force_authenticate(self.admin)
+        response = self.client.post(
+            path=self.list_url, data=self.new_presentation_data, format="json"
+        )
+        correct_mail = {email.to[0] for email in mail.outbox}
+
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        self.assertEqual(Presentation.objects.count(), 2)
+        self.assertEqual(Notification.objects.count(), 2)
+        self.assertEqual(len(mail.outbox), 2)
+        self.assertEqual(
+            correct_mail,
+            set(
+                Notification.objects.all().values_list(
+                    "user__email", flat=True
+                )
+            ),
+        )
+
+    @override_settings(CELERY_TASK_ALWAYS_EAGER=True, CELERY_TASK_EAGER_PROPOGATES=True)
+    def test_add_reply_to_comment_and_get_notification(self):
+        self.client.force_authenticate(self.user_2)
+        response = self.client.post(path=self.comment_url, data=self.new_comment)
+
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        self.assertEqual(Comment.objects.count(), 2)
+        self.assertEqual(Notification.objects.count(), 1)
+        self.assertEqual(len(mail.outbox), 1)
+        self.assertEqual(
+            set(mail.outbox[0].to),
+            set(
+                Notification.objects.all().values_list(
+                    "user__email", flat=True
+                )
+            ),
+        )
 
 
 class TestCommentViewSet(APITestCase):

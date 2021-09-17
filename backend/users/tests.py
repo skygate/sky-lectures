@@ -194,7 +194,7 @@ class ProfileViewSetTestCase(APITestCase):
     def test_get_existing_profile(self):
         response = self.client.get(self.url_detail)
 
-        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
 
     def test_get_existing_profile_logged_owner(self):
         self.client.force_authenticate(user=self.user_1)
@@ -217,7 +217,7 @@ class ProfileViewSetTestCase(APITestCase):
     def test_put_existing_profile(self):
         response = self.client.put(self.url_detail, self.data)
 
-        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
 
     def test_put_existing_profile_logged_owner(self):
         self.client.force_authenticate(user=self.user_1)
@@ -240,7 +240,7 @@ class ProfileViewSetTestCase(APITestCase):
     def test_patch_existing_profile(self):
         response = self.client.patch(self.url_detail, self.data)
 
-        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
 
     def test_patch_existing_profile_logged_owner(self):
         self.client.force_authenticate(user=self.user_1)
@@ -269,7 +269,7 @@ class ProfileViewSetTestCase(APITestCase):
     def test_patch_existing_avatar_not_logged(self):
         response = self.client.patch(self.url_detail, self.avatar_data)
 
-        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
 
     def test_patch_existing_avatar_logged_owner(self):
         self.client.force_authenticate(user=self.user_1)

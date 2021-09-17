@@ -1,9 +1,9 @@
 from rest_framework import status
 from rest_framework.response import Response
-from rest_framework.viewsets import ModelViewSet
+from rest_framework.viewsets import ModelViewSet, ReadOnlyModelViewSet
 
 from presentation.filters import PresentationFilter
-from presentation.models import Comment, Presentation, Tag
+from presentation.models import Presentation, Tag, Notification, Comment
 from presentation.paginations import StandardResultsSetPagination
 from presentation.permissions import IsAdminOrOwner, IsAdminOrReadOnly
 from presentation.serializers import (
@@ -12,6 +12,7 @@ from presentation.serializers import (
     InputPresentationSerializer,
     OutputPresentationSerializer,
     TagSerializer,
+    NotificationSerializer,
 )
 from presentation.services import CommentService, PresentationService
 
@@ -86,3 +87,11 @@ class CommentViewSet(ModelViewSet):
         return Response(
             data=self.get_serializer(comment).data, status=status.HTTP_200_OK
         )
+
+
+class NotificationViewSet(ReadOnlyModelViewSet):
+    serializer_class = NotificationSerializer
+    pagination_class = StandardResultsSetPagination
+
+    def get_queryset(self):
+        return Notification.objects.filter(user=self.request.user)

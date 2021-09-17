@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from presentation.models import Comment, Presentation, Tag
+from presentation.models import Comment, Presentation, Tag, Notification
 
 
 class CommentAdmin(admin.ModelAdmin):
@@ -11,3 +11,4 @@ class CommentAdmin(admin.ModelAdmin):
 admin.site.register(Comment, CommentAdmin)
 admin.site.register(Tag)
 admin.site.register(Presentation)
+admin.site.register(Notification)

@@ -14,6 +14,14 @@ class UserFactory(factory.django.DjangoModelFactory):
     email = factory.Faker("email")
     is_superuser = False
 
+    @factory.post_generation
+    def favourite_tags(self, create, tags):
+        if not create:
+            return
+        if tags:
+            for tag in tags:
+                self.favourite_tags.add(tag)
+
 
 class PresentationFactory(factory.django.DjangoModelFactory):
     class Meta:

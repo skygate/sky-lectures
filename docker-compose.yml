@@ -33,6 +33,21 @@ services:
       - backend
     volumes:
       - static-files:/backend/sky_lectures/static
+  redis:
+    container_name: skylectures-redis
+    image: redis:latest
+  celery:
+    restart: always
+    build: ./backend
+    container_name: skylectures-celery
+    command: celery -A sky_lectures worker -l info
+    env_file:
+      - dev.env
+    depends_on:
+      - db
+      - redis
+      - backend
+
 
 volumes:
   static-files:
