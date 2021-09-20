@@ -8,6 +8,12 @@ export const fontSize = {
   extraLarge: '2rem',
 };
 
-export const colors = {};
+export const colors = {
+  background: '#2F4858',
+  darkMain: '#0B4F5A',
+  main: '#3C727B',
+  lightMain: '#6D959C',
+  border: '#CEDCDE',
+};
 
 export const breakpoints = {};
