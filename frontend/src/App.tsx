@@ -1,5 +1,9 @@
-function App() {
-  return <div className="App"></div>;
-}
+import { GlobalStyles } from 'core/GlobalStyles';
+
+const App = () => (
+  <>
+    <GlobalStyles />
+  </>
+);
 
 export default App;
