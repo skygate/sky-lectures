@@ -2,35 +2,37 @@ import { Formik } from 'formik';
 
 import * as S from '../styles';
 
-const LoginForm = () => {
+const RegisterForm = () => {
   return (
     <S.FormWrapper>
-      <S.FormHeading>Hello!</S.FormHeading>
-      <S.FormSubheading>Let's study</S.FormSubheading>
+      <S.FormHeading>Let's get started!</S.FormHeading>
+      <S.FormSubheading>It's pleasure to meet you</S.FormSubheading>
       <Formik
         initialValues={{
           login: '',
+          email: '',
           password: '',
         }}
         onSubmit={values => {
-          //There is gonna be a request
+          //There is gonna be be a request
           console.log('Sending request...');
         }}
       >
         {formik => (
           <S.InputFieldWrapper onSubmit={formik.handleSubmit}>
             <S.InputField name="login" type="text" placeholder="login" />
+            <S.InputField name="email" type="e-mail" placeholder="e-mail" />
             <S.InputField name="password" type="password" placeholder="password" />
-            <S.SubmitButton type="submit">Sign in</S.SubmitButton>
+            <S.SubmitButton type="submit">Sign up</S.SubmitButton>
           </S.InputFieldWrapper>
         )}
       </Formik>
       <S.RedirectWrapper>
-        <S.RedirectMessage>Don't have an account yet?</S.RedirectMessage>
-        <S.RedirectButton to="/register">Sign up</S.RedirectButton>
+        <S.RedirectMessage>Already have an account?</S.RedirectMessage>
+        <S.RedirectButton to="/login">Sign up</S.RedirectButton>
       </S.RedirectWrapper>
     </S.FormWrapper>
   );
 };
 
-export default LoginForm;
+export default RegisterForm;
