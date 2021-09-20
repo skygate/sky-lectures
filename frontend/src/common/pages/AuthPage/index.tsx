@@ -1,11 +1,14 @@
-import { PageWrapper, AuthPageImg } from './styles';
+import { PageWrapper, AuthWrapper, AuthPageImg } from './styles';
 
+import LoginForm from 'common/components/AuthPageComponents/LoginForm';
 import AuthPageImage from 'assets/images/auth-page-img.svg';
 
 const AuthPage = () => {
   return (
     <PageWrapper>
-      Login
+      <AuthWrapper>
+        <LoginForm />
+      </AuthWrapper>
       <AuthPageImg src={AuthPageImage} />
     </PageWrapper>
   );
