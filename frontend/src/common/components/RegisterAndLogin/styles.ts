@@ -3,8 +3,10 @@ import { fontSize, colors, fontWeight } from 'config/stylesConfig';
 
 import { Form, Field } from 'formik';
 import { Link } from 'react-router-dom';
+import SVG from 'react-inlinesvg';
 
 export const FormWrapper = styled.div`
+  position: relative;
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -35,7 +37,7 @@ export const InputField = styled(Field)`
   width: 350px;
   display: flex;
   margin: 5px 0px;
-  padding: 5px 20px;
+  padding: 5px 45px 5px 30px;
   background: ${colors.white};
   border: 1px solid ${colors.border};
   border-radius: 25px;
@@ -80,4 +82,14 @@ export const RedirectButton = styled(Link)`
   font-weight: ${fontWeight.extraMedium};
   color: ${colors.darkMain};
   letter-spacing: 0.03em;
+`;
+
+export const PasswordInputFieldWrapper = styled.div`
+  position: relative;
+`;
+
+export const PasswordIcon = styled(SVG)`
+  position: absolute;
+  left: 90%;
+  margin-top: -35px;
 `;

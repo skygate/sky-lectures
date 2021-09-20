@@ -1,21 +1,16 @@
-import { useLocation } from 'react-router-dom';
+import * as S from './styles';
 
-import { PageWrapper, AuthWrapper, AuthPageImg } from './styles';
-
-import RegisterForm from 'common/components/AuthPageComponents/RegisterForm';
-import LoginForm from 'common/components/AuthPageComponents/LoginForm';
+import RegisterAndLogin from 'common/components/RegisterAndLogin';
 import AuthPageImage from 'assets/images/auth-page-img.svg';
 
 const AuthPage = () => {
-  const currentUrl = useLocation();
-
   return (
-    <PageWrapper>
-      <AuthWrapper>
-        {currentUrl.pathname === '/register' ? <RegisterForm /> : <LoginForm />}
-      </AuthWrapper>
-      <AuthPageImg src={AuthPageImage} />
-    </PageWrapper>
+    <S.PageWrapper>
+      <S.AuthWrapper>
+        <RegisterAndLogin />
+      </S.AuthWrapper>
+      <S.AuthPageImg src={AuthPageImage} />
+    </S.PageWrapper>
   );
 };
 
