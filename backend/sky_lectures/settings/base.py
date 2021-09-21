@@ -15,17 +15,12 @@ SECRET_KEY = config("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config("DEBUG", cast=bool)
 
+AUTH_USER_MODEL = "users.User"
+
 MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR + "/static/media/"
 
 STATIC_URL = "/static/"
-
-AUTH_USER_MODEL = "users.User"
-
-MEDIA_URL = "/media/"
-MEDIA_ROOT = BASE_DIR + "/static/media"
-
-STATIC_URL = "/static"
 
 ALLOWED_HOSTS = []
 
@@ -114,7 +109,14 @@ AUTH_PASSWORD_VALIDATORS = [
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
         "rest_framework_simplejwt.authentication.JWTAuthentication",
-    )
+    ),
+    "DEFAULT_FILTER_BACKENDS": (
+            "django_filters.rest_framework.DjangoFilterBackend",
+            "rest_framework.filters.SearchFilter",
+            "rest_framework.filters.OrderingFilter",
+        ),
+    "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.LimitOffsetPagination",
+    "PAGE_SIZE": 100,
 }
 
 # Internationalization

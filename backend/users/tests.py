@@ -96,7 +96,7 @@ class TestUserViewSet(APITestCase):
             path=self.list_url,
         )
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(len(response.data), 3)
+        self.assertEqual(response.data["count"], 3)
 
     def test_get_user_detail_without_authentication(self):
         response = self.client.get(
@@ -190,12 +190,12 @@ class ProfileViewSetTestCase(APITestCase):
 
         cls.avatar_data = {"file": cls.generate_photo_file()}
 
-        cls.url_detail = reverse("profile-detail", kwargs={"pk": cls.test_user1.id})
+        cls.url_detail = reverse("users:profile-detail", kwargs={"pk": cls.test_user1.id})
 
     def test_get_existing_profile(self):
         response = self.client.get(self.url_detail)
 
-        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
 
     def test_get_existing_profile_logged_owner(self):
         self.client.force_authenticate(user=self.test_user1)
@@ -218,7 +218,7 @@ class ProfileViewSetTestCase(APITestCase):
     def test_put_existing_profile(self):
         response = self.client.put(self.url_detail, self.test_data)
 
-        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
 
     def test_put_existing_profile_logged_owner(self):
         self.client.force_authenticate(user=self.test_user1)
@@ -241,7 +241,7 @@ class ProfileViewSetTestCase(APITestCase):
     def test_patch_existing_profile(self):
         response = self.client.patch(self.url_detail, self.test_data)
 
-        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
 
     def test_patch_existing_profile_logged_owner(self):
         self.client.force_authenticate(user=self.test_user1)
@@ -270,7 +270,7 @@ class ProfileViewSetTestCase(APITestCase):
     def test_patch_existing_avatar_not_logged(self):
         response = self.client.patch(self.url_detail, self.avatar_data)
 
-        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
 
     def test_patch_existing_avatar_logged_owner(self):
         self.client.force_authenticate(user=self.test_user1)

@@ -1,49 +1,32 @@
 from rest_framework import serializers
 
-from resources.models import Resource, Presentation
+from resources.models import Resource
+from presentation.models import Presentation
 
 
-class ResourceSerializer(serializers.ModelSerializer):
+class UpdateResourceSerializer(serializers.ModelSerializer):
 
-    def create(self, validated_data):
-        instance = Resource.object.create(
-            name=validated_data.get("name"),
-            description=validated_data.get("description"),
-            path=validated_data.get("path"),
-            uploaded_on=validated_data.get("uploaded_on"),
-        )
-        if validated_data.get("resource", None):
-            resources = validated_data.pop("resources")
-            for res in resources:
-                res = Resource.objects.get_or_create(name=res["name"])[0]
-                instance.resources.add(res)
-            instance.save()
+    name = serializers.CharField(max_length=20)
+    description = serializers.CharField(max_length=100)
+    uploaded_on = serializers.DateTimeField()
 
-        return instance
-
-    def update(self, instance, validated_data):
-        instance.name = validated_data.get("name", instance.name)
-        instance.description = validated_data.get("description", instance.description)
-        instance.uploaded_on = validated_data.get("uploaded_on", instance.uploaded_on)
-        instance.user = validated_data.get("user", instance.user)
-        if validated_data.get("resources", None):
-            resources = validated_data.pop("resources")
-            if not self.partial:
-                instance.resources.clear()
-            for res in resources:
-                res = Resource.objects.get_or_create(name=res["name"])[0]
-                instance.resources.add(res)
-        instance.save()
-
-        return instance
+    class Meta:
+        model = Resource
+        fields = ['name', 'description', 'uploaded_on']
 
 
-class PresentationSerializer(serializers.ModelSerializer):
+class CreateResourceSerializer(serializers.ModelSerializer):
+
+    name = serializers.CharField(max_length=20)
+    description = serializers.CharField(max_length=100)
+    path = serializers.ImageField()
+    uploaded_on = serializers.DateTimeField()
+    fk_pres_id = serializers.UUIDField()
+
+    class Meta:
+        model = Resource
+        fields = ['name', 'description', 'path', 'uploaded_on', 'fk_pres_id']
 
     def create(self, validated_data):
-        instance = Presentation.object.create(
-            name=validated_data.get("name")
-        )
-        instance.save()
-
-        return instance
+        validated_data['fk_pres_id'] = Presentation.objects.get(validated_data['fk_pres_id'])
+        return super().create(validated_data)

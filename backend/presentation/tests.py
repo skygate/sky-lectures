@@ -52,7 +52,7 @@ class TestPresentationViewSet(APITestCase):
     def test_get_presentations_list_without_authentication(self):
         response = self.client.get(path=self.list_url)
 
-        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
 
     def test_get_presentations_list_with_authentication(self):
         self.client.force_authenticate(user=self.user_1)
@@ -63,7 +63,7 @@ class TestPresentationViewSet(APITestCase):
     def test_get_presentation_detail_without_authentication(self):
         response = self.client.get(path=self.detail_url)
 
-        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
 
     def test_get_presentation_detail(self):
         self.client.force_authenticate(user=self.user_1)
@@ -79,7 +79,7 @@ class TestPresentationViewSet(APITestCase):
             path=self.list_url, data=self.new_presentation_data, format="json"
         )
 
-        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
 
     def test_post_new_presentation(self):
         self.client.force_authenticate(user=self.user_1)
@@ -94,7 +94,7 @@ class TestPresentationViewSet(APITestCase):
             path=self.detail_url, data=self.updated_presentation_data, format="json"
         )
 
-        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
 
     def test_put_presentation_detail_as_not_owner(self):
         self.client.force_authenticate(user=self.user_2)
@@ -133,7 +133,7 @@ class TestPresentationViewSet(APITestCase):
             path=self.detail_url, data=self.updated_presentation_data, format="json"
         )
 
-        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
 
     def test_patch_presentation_detail_as_not_owner(self):
         self.client.force_authenticate(user=self.user_2)
@@ -170,7 +170,7 @@ class TestPresentationViewSet(APITestCase):
     def test_delete_presentation_without_auth(self):
         response = self.client.delete(path=self.detail_url)
 
-        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
 
     def test_delete_presentation_as_not_owner(self):
         self.client.force_authenticate(user=self.user_2)
@@ -298,7 +298,7 @@ class TestTagViewSet(APITestCase):
     def test_get_tag_list_without_auth(self):
         response = self.client.get(path=self.list_url)
 
-        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
 
     def test_get_tag_list(self):
         self.client.force_authenticate(user=self.user_1)
@@ -310,7 +310,7 @@ class TestTagViewSet(APITestCase):
     def test_get_tag_detail_without_auth(self):
         response = self.client.get(path=self.detail_url)
 
-        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
 
     def test_get_tag_detail(self):
         self.client.force_authenticate(user=self.user_1)
@@ -322,7 +322,7 @@ class TestTagViewSet(APITestCase):
     def test_post_new_tag_without_auth(self):
         response = self.client.post(path=self.list_url)
 
-        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
 
     def test_post_new_tag(self):
         self.client.force_authenticate(user=self.user_1)
@@ -334,7 +334,7 @@ class TestTagViewSet(APITestCase):
     def test_put_tag_without_auth(self):
         response = self.client.put(path=self.detail_url, data=self.updated_tag)
 
-        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
 
     def test_put_tag_as_user(self):
         self.client.force_authenticate(user=self.user_1)
@@ -353,7 +353,7 @@ class TestTagViewSet(APITestCase):
     def test_patch_tag_without_auth(self):
         response = self.client.patch(path=self.detail_url, data=self.updated_tag)
 
-        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
 
     def test_patch_tag_as_user(self):
         self.client.force_authenticate(user=self.user_1)
@@ -373,7 +373,7 @@ class TestTagViewSet(APITestCase):
     def test_delete_tag_without_auth(self):
         response = self.client.delete(path=self.detail_url)
 
-        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
 
     def test_delete_tag_as_user(self):
         self.client.force_authenticate(user=self.user_1)
