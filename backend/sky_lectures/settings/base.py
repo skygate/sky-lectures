@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     "django_filters",
     "users.apps.UsersConfig",
     "presentation.apps.PresentationConfig",
+    "survey.apps.SurveyConfig",
     "rest_framework_simplejwt",
     "rest_framework",
     "drf_yasg",
