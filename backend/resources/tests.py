@@ -10,7 +10,7 @@ from rest_framework.test import APITestCase
 
 from resources.factories import ResourceFactory
 from presentation.factories import PresentationFactory, UserFactory, TagFactory
-from resources.serializers import UpdateResourceSerializer, CreateResourceSerializer
+from resources.serializers import CreateResourceSerializer
 from resources.models import Resource
 
 
@@ -92,7 +92,6 @@ class TestResourceViewSet(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.data, CreateResourceSerializer(self.res_1).data)
 
-    # error v2
     def test_post_new_resource_with_authentication(self):
         self.client.force_authenticate(user=self.user_1)
         response = self.client.post(
