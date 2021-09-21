@@ -23,12 +23,7 @@ const RegisterAndLogin = () => {
       </S.FormSubheading>
       <Formik
         initialValues={
-          isRegisterPage
-            ? { login: '', email: '', password: '' }
-            : {
-                login: '',
-                password: '',
-              }
+          isRegisterPage ? { login: '', email: '', password: '' } : { login: '', password: '' }
         }
         onSubmit={values => {
           //There is gonna be a request
@@ -42,7 +37,7 @@ const RegisterAndLogin = () => {
             <S.PasswordInputFieldWrapper>
               <S.InputField
                 name="password"
-                type={isPasswordHidden ? 'password' : 'test'}
+                type={isPasswordHidden ? 'password' : 'text'}
                 placeholder="password"
               />
               <S.PasswordIcon src={EyePasswordIcon} onClick={() => togglePasswordVisibility()} />
