@@ -9,7 +9,9 @@ const AuthPage = () => {
       <S.AuthWrapper>
         <RegisterAndLogin />
       </S.AuthWrapper>
-      <S.AuthPageImg src={AuthPageImage} />
+      <S.AuthPageImgWrapper>
+        <S.AuthPageImg src={AuthPageImage} />
+      </S.AuthPageImgWrapper>
     </S.PageWrapper>
   );
 };

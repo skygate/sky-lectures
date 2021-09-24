@@ -41,6 +41,10 @@ export const InputField = styled(Field)`
   background: ${colors.white};
   border: 1px solid ${colors.border};
   border-radius: 25px;
+  font-weight: ${fontWeight.extraMedium};
+  font-size: ${fontSize.small};
+  color: ${colors.lightMain};
+  letter-spacing: 0.03em;
 `;
 
 export const SubmitButton = styled.button`
@@ -79,7 +83,7 @@ export const RedirectButton = styled(Link)`
 
   margin-left: 15px;
   font-size: ${fontSize.small};
-  font-weight: ${fontWeight.extraMedium};
+  font-weight: ${fontWeight.semiBold};
   color: ${colors.darkMain};
   letter-spacing: 0.03em;
 `;
@@ -89,7 +93,8 @@ export const PasswordInputFieldWrapper = styled.div`
 `;
 
 export const PasswordIcon = styled(SVG)`
+  cursor: pointer;
   position: absolute;
   left: 90%;
-  margin-top: -35px;
+  margin-top: calc(-35 * 0.0625rem);
 `;

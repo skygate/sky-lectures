@@ -6,14 +6,10 @@ import * as S from './styles';
 import EyePasswordIcon from 'assets/images/eye-password-icon.svg';
 
 const RegisterAndLogin = () => {
-  const [isPasswordHidden, setIsPasswordHidden] = useState(true);
+  const [isPasswordHidden, setIsPasswordHidden] = useState<boolean>(true);
 
   const currentUrl = useLocation();
   const isRegisterPage = currentUrl.pathname === '/register';
-
-  const togglePasswordVisibility = () => {
-    setIsPasswordHidden(isPasswordHidden => !isPasswordHidden);
-  };
 
   return (
     <S.FormWrapper>
@@ -40,7 +36,10 @@ const RegisterAndLogin = () => {
                 type={isPasswordHidden ? 'password' : 'text'}
                 placeholder="password"
               />
-              <S.PasswordIcon src={EyePasswordIcon} onClick={() => togglePasswordVisibility()} />
+              <S.PasswordIcon
+                src={EyePasswordIcon}
+                onClick={() => setIsPasswordHidden(isPasswordHidden => !isPasswordHidden)}
+              />
             </S.PasswordInputFieldWrapper>
             <S.SubmitButton type="submit">{isRegisterPage ? 'Sign up' : 'Sign in'}</S.SubmitButton>
           </S.InputFieldWrapper>
