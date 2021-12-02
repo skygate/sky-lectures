@@ -1,6 +1,11 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import type { RootState } from "../store/store";
 
+interface UserCredentials {
+  email: string;
+  password: string;
+}
+
 interface AuthError {
   message: string;
 }
@@ -23,7 +28,7 @@ const initialState: AuthState = {
 
 export const register = createAsyncThunk(
   "auth/register",
-  async ({ email, password }: { email: string; password: string }) => {
+  async ({ email, password }: UserCredentials) => {
     try {
       // const response = await
       console.log("async call", email, password);
@@ -35,7 +40,7 @@ export const register = createAsyncThunk(
 
 export const login = createAsyncThunk(
   "auth/login",
-  async ({ email, password }: { email: string; password: string }) => {
+  async ({ email, password }: UserCredentials) => {
     try {
       // const response = await
       console.log("async", email, password);
