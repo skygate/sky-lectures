@@ -2,10 +2,10 @@ import { useState } from "react";
 import eye from "../../assets/showPassword.svg";
 import "./Inputs.modules.scss";
 const PasswordInput = (props: {
-  name: any;
-  value: any;
+  name: string;
+  value: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  placeholder?: any;
+  placeholder?: string;
 }): JSX.Element => {
   const [passwordShown, setPasswordShown] = useState(false);
 

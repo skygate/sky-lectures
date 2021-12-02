@@ -1,9 +1,9 @@
 import "./Inputs.modules.scss";
 const TextInput = (props: {
-  name: any;
-  value: any;
+  name: string;
+  value: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  placeholder?: any;
+  placeholder?: string;
 }): JSX.Element => {
   return (
     <div>
