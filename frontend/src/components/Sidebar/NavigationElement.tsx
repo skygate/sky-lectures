@@ -9,10 +9,12 @@ interface ElementProps {
 
 const NavigationElement = ({ Icon, path }: ElementProps) => {
   return (
-    <li className="sidebar__navigation--element">
+    <li className="navigation__element">
       <NavLink
         to={path}
-        className={({ isActive }) => (isActive ? " active" : "")}
+        className={({ isActive }) =>
+          "navigation__element--link" + (isActive ? " active" : "")
+        }
       >
         {Icon}
       </NavLink>
