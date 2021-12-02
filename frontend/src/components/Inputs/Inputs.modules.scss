@@ -9,8 +9,13 @@
 .container-input {
   border: 0;
 }
+.container-input::placeholder {
+  padding-left: 0.4rem;
+  color: #6d959c;
+}
 .container-input:focus {
   outline-width: 0;
 }
 .container-eye {
+  padding-right: 0.4rem;
 }

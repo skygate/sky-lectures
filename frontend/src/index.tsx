@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import SignUp from "./screens/SignUp/SingUp";
+import SignIn from "./screens/SignIn/SignIn";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
@@ -10,7 +11,7 @@ ReactDOM.render(
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<App />} />
-        <Route path="/SignIn" element={<div>SignIn</div>} />
+        <Route path="/SignIn" element={<SignIn />} />
         <Route path="/SignUp" element={<SignUp />} />
       </Routes>
     </BrowserRouter>

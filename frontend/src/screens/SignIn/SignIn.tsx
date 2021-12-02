@@ -1,4 +1,4 @@
-import "./SignUp.modules.scss";
+import "../SignUp/SignUp.modules.scss";
 import background from "../../assets/background.svg";
 import PasswordInput from "../../components/Inputs/PasswordInput";
 import TextInput from "../../components/Inputs/TextInput";
@@ -8,7 +8,6 @@ const SignUp = () => {
   const formik = useFormik({
     initialValues: {
       login: "",
-      email: "",
       password: "",
     },
 
@@ -20,8 +19,8 @@ const SignUp = () => {
     <div className="main-container">
       <div className="sign-container">
         <div className="sign-fields">
-          <div className="title">Let's get started!</div>
-          <div className="subtitle">It's pleasure to meet you</div>
+          <div className="title">Hello!</div>
+          <div className="subtitle">Let's study</div>
           <form onSubmit={formik.handleSubmit}>
             <TextInput
               placeholder="login"
@@ -29,12 +28,7 @@ const SignUp = () => {
               value={formik.values.login}
               onChange={formik.handleChange}
             ></TextInput>
-            <TextInput
-              placeholder="email"
-              name="email"
-              value={formik.values.email}
-              onChange={formik.handleChange}
-            ></TextInput>
+
             <PasswordInput
               placeholder="password"
               name="password"
@@ -43,11 +37,11 @@ const SignUp = () => {
             />
 
             <button type="submit" className="submit-btn">
-              Sign Up
+              Sign In
             </button>
           </form>
           <div className="redirect">
-            Already have an account <Link to="/SignIn">Sign In</Link>
+            Don't have an account yet? <Link to="/SignUp">Sign Up</Link>
           </div>
         </div>
       </div>
