@@ -1,0 +1,42 @@
+.navigation__element {
+  text-align: center;
+  position: relative;
+
+  .navigation__element--link {
+    padding: 15px 10px;
+
+    svg {
+      path {
+        fill: #6d959c;
+      }
+    }
+
+    &.active {
+      svg {
+        path {
+          fill: #0b4f5a;
+        }
+      }
+
+      &:before {
+        top: -10px;
+        left: 0;
+        position: absolute;
+        content: "";
+        background-color: #0b4f5a;
+        width: 3px;
+        height: 41px;
+        border-top-right-radius: 5px;
+        border-bottom-right-radius: 5px;
+      }
+    }
+
+    &:hover {
+      svg {
+        path {
+          fill: #0b4f5a;
+        }
+      }
+    }
+  }
+}
