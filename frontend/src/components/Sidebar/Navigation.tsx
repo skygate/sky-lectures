@@ -3,10 +3,9 @@ import { ReactComponent as HeartIcon } from "../../assets/icons/heart.svg";
 import { ReactComponent as UploadIcon } from "../../assets/icons/upload.svg";
 import { ReactComponent as FileIcon } from "../../assets/icons/file.svg";
 import { ReactComponent as ClockIcon } from "../../assets/icons/clock.svg";
+import NavigationElement from "./NavigationElement";
 
 import "./Navigation.modules.scss";
-
-import NavigationElement from "./NavigationElement";
 
 function Navigation() {
   return (

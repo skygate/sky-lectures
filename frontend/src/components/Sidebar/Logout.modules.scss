@@ -1,0 +1,23 @@
+.sidebar__logout {
+  height: 76px;
+  margin-bottom: 21px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+
+  a {
+    padding: 10px 15px;
+    border: none;
+    background: none;
+
+    &:hover {
+      cursor: pointer;
+
+      svg {
+        path {
+          fill: #0b4f5a;
+        }
+      }
+    }
+  }
+}

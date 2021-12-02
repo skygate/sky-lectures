@@ -1,5 +1,5 @@
 import Navigation from "./Navigation";
-import Footer from "./Footer";
+import Logout from "./Logout";
 import Logo from "./Logo";
 
 import "./Sidebar.modules.scss";
@@ -9,7 +9,7 @@ function Sidebar() {
     <nav className="sidebar">
       <Logo />
       <Navigation />
-      <Footer />
+      <Logout />
     </nav>
   );
 }
