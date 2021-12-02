@@ -8,4 +8,5 @@ services:
   frontend:
     volumes:
       - static-files:/frontend/sky_lectures/static
+      - ./frontend:/frontend
       - /frontend/node_modules
