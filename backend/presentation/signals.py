@@ -17,7 +17,7 @@ User = get_user_model()
 def create_notification_about_new_presentation_with_favourite_tag(
     sender, instance, created, **kwargs
 ):
-    if not instance.notification_sended:
+    if not instance.notification_sent:
         presentation_tags = instance.tags.values_list("name", flat=True)
         if presentation_tags:
             users_with_specific_favourite_tags = (
@@ -29,7 +29,7 @@ def create_notification_about_new_presentation_with_favourite_tag(
                 users=list(users_with_specific_favourite_tags.values_list("id", flat=True)),
                 presentation_id=instance.id,
             )
-            instance.notification_sended = True
+            instance.notification_sent = True
             instance.save()
 
 
