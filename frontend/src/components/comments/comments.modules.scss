@@ -1,0 +1,45 @@
+.comment-input {
+  width: 100%;
+  border: 1px solid #cedcde;
+  box-sizing: border-box;
+  border-radius: 10px;
+  padding: 1rem;
+  height: 1rem;
+  margin: auto 0;
+}
+::placeholder {
+  color: #3c727b;
+}
+.new-comment {
+  img {
+    margin: 1rem;
+  }
+  display: flex;
+}
+.buttons-container {
+  a {
+    font-family: Roboto;
+    border-radius: 10px;
+    font-size: 15px;
+    line-height: 18px;
+
+    padding: 0.5rem 2rem;
+    text-align: center;
+  }
+  :first-child {
+    background: #cedcde;
+    color: #0b4f5a;
+  }
+  :last-child {
+    background: #0b4f5a;
+    color: white;
+  }
+  width: 100%;
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-end;
+}
+
+.comments-container {
+  margin-right: 1.5rem;
+}

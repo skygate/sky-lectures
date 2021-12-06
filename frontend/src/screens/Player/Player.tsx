@@ -4,6 +4,7 @@ import person from "../../assets/icons/person.svg";
 import heart from "../../assets/icons/heart.svg";
 import clock from "../../assets/icons/clock.svg";
 import share from "../../assets/icons/share.svg";
+import Comments from "../../components/comments/comments";
 import { useState } from "react";
 const Player = () => {
   const [visible, setVisibility] = useState(false);
@@ -17,7 +18,7 @@ const Player = () => {
         <div className="video-player">s</div>
         <div className="video-info">
           <div className="video-name">
-            presentation's name
+            Presentation's name
             <div className="video-actions">
               <img src={heart} alt="heart" />
               <img src={clock} alt="clock" />
@@ -64,8 +65,12 @@ const Player = () => {
             </div>
           </div>
           <a onClick={showMore} className="show-more-btn">
-            Show more
+            {visible ? "hide" : "show more"}
           </a>
+        </div>
+        <div className="comments-section">
+          <p>Comments</p>
+          <Comments />
         </div>
       </div>
     </>
