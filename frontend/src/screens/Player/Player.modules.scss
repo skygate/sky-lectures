@@ -1,0 +1,70 @@
+.player-content {
+  margin-left: 5rem;
+  margin-top: 3rem;
+  height: 200vh;
+}
+.video-player {
+  width: 100%;
+  background: rgb(199, 73, 73);
+  height: 40rem;
+}
+.video-name {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: Roboto;
+  font-size: 32px;
+  font-weight: 500;
+  line-height: 38px;
+  color: #0b4f5a;
+  padding: 1rem 0;
+
+  border-bottom: 1px solid #cedcde;
+}
+.video-actions {
+  display: flex;
+  gap: 1rem;
+}
+.video-info {
+  border-bottom: 1px solid #cedcde;
+  margin-right: 1.5rem;
+  padding-bottom: 1rem;
+}
+.author {
+  display: flex;
+  margin: 1rem 0;
+  gap: 1rem;
+}
+.author-info {
+  font-family: Roboto;
+  font-size: 20px;
+  line-height: 23px;
+  color: #3c727b;
+}
+
+.video-description {
+  font-family: Roboto;
+  font-size: 20px;
+  line-height: 23px;
+  color: #3c727b;
+  margin-bottom: 1rem;
+}
+.video-description-less {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.show-more-btn {
+  text-decoration-line: underline;
+
+  color: #0b4f5a;
+  font-family: Roboto;
+
+  font-weight: 500;
+  font-size: 15px;
+  line-height: 18px;
+  cursor: pointer;
+}

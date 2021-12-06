@@ -1,5 +1,5 @@
 import "../SignUp/SignUp.modules.scss";
-import background from "../../assets/background.svg";
+import background from "../../assets/icons/background.svg";
 import PasswordInput from "../../components/Inputs/PasswordInput";
 import TextInput from "../../components/Inputs/TextInput";
 import { useFormik } from "formik";
