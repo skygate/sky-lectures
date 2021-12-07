@@ -4,7 +4,8 @@ import { ReactComponent as FilterIcon } from "../../assets/icons/filter.svg";
 
 import SearchBarModal from "../Modal/SearchBarModal";
 import SearchBarModalContent from "./SearchBarModalContent";
-import CustomButton from "./CustomButton";
+import Filter from "./Filter";
+
 import "./Searchbar.modules.scss";
 
 const presentationList = [
@@ -15,17 +16,21 @@ const presentationList = [
 ];
 
 function Searchbar() {
-  const [showFilter, setShowFilter] = useState(false);
-  const [showModal, setShowModal] = useState(false);
   const [searchValue, setSearchValue] = useState("");
   const [type, setType] = useState("presentation");
   const [category, setCategory] = useState("back-end");
   const [searchList, setSearchList] = useState<string[]>([]);
+  const [searchbarState, setSearchbarState] = useState({
+    showFilter: false,
+    showModal: false,
+  });
 
   function handleChange(e: React.FormEvent<HTMLInputElement>) {
-    setShowFilter(false);
+    setSearchbarState({
+      showFilter: false,
+      showModal: true,
+    });
     setSearchValue(e.currentTarget.value);
-    setShowModal(true);
     setSearchList(
       presentationList.filter((item) =>
         item.toLocaleLowerCase().includes(searchValue.toLowerCase())
@@ -34,12 +39,17 @@ function Searchbar() {
   }
 
   function toggleFilter() {
-    if (!showFilter) {
-      setShowModal(true);
+    if (!searchbarState.showFilter) {
+      setSearchbarState((prevState) => ({
+        showFilter: !prevState.showFilter,
+        showModal: true,
+      }));
     } else {
-      setShowModal(false);
+      setSearchbarState((prevState) => ({
+        showFilter: !prevState.showFilter,
+        showModal: false,
+      }));
     }
-    setShowFilter((state) => !state);
     setSearchList([]);
     setSearchValue("");
   }
@@ -53,15 +63,19 @@ function Searchbar() {
   }
 
   function modalHandler() {
-    setShowFilter(false);
+    setSearchbarState({
+      showFilter: false,
+      showModal: false,
+    });
     setSearchList([]);
     setSearchValue("");
-    setShowModal(false);
   }
 
   function clickCaptureHandler() {
-    setShowModal(true);
-    setShowFilter(false);
+    setSearchbarState({
+      showFilter: false,
+      showModal: true,
+    });
     setSearchList([]);
     setSearchValue("");
   }
@@ -74,7 +88,7 @@ function Searchbar() {
           name="search"
           className="searchbar__form--input"
           placeholder="Search"
-          autoComplete='off'
+          autoComplete="off"
           value={searchValue}
           onChange={handleChange}
           onClickCapture={clickCaptureHandler}
@@ -88,6 +102,7 @@ function Searchbar() {
             ))}
           </div>
         )}
+
         <div className="searchbar__container">
           <button
             className="searchbar__container--btn filter"
@@ -99,89 +114,15 @@ function Searchbar() {
             <SearchIcon />
           </button>
         </div>
-        <div
-          className={`searchbar__filter--container ${showFilter && "active"} `}
-        >
-          <div className="searchbar__filterType">
-            <p className="searchbar__filterType--header">Type:</p>
-            <div className="searchbar__filterType--group">
-              <div className="searchbar__filterType--button">
-                <CustomButton
-                  handleClick={selectTypeHandler}
-                  value="presentation"
-                  filter={type}
-                >
-                  Presentation
-                </CustomButton>
-              </div>
-              <div className="searchbar__filterType--button">
-                <CustomButton
-                  handleClick={selectTypeHandler}
-                  value="video"
-                  filter={type}
-                >
-                  Video
-                </CustomButton>
-              </div>
-            </div>
-          </div>
-          <div className="searchbar__filterCategory">
-            <p className="searchbar__filterCategory--header">Category:</p>
-            <div className="searchbar__filterCategory--group">
-              <div className="searchbar__filterCategory--button">
-                <CustomButton
-                  handleClick={selectCategoryHandler}
-                  value="back-end"
-                  filter={category}
-                >
-                  Back-End
-                </CustomButton>
-              </div>
-              <div className="searchbar__filterCategory--button">
-                <CustomButton
-                  handleClick={selectCategoryHandler}
-                  value="front-end"
-                  filter={category}
-                >
-                  Front-End
-                </CustomButton>
-              </div>
-            </div>
-            <div className="searchbar__filterCategory--group">
-              <div className="searchbar__filterCategory--button">
-                <CustomButton
-                  handleClick={selectCategoryHandler}
-                  value="design"
-                  filter={category}
-                >
-                  Design
-                </CustomButton>
-              </div>
-              <div className="searchbar__filterCategory--button">
-                <CustomButton
-                  handleClick={selectCategoryHandler}
-                  value="trending"
-                  filter={category}
-                >
-                  Trednding
-                </CustomButton>
-              </div>
-            </div>
-            <div className="searchbar__filterCategory--group">
-              <div className="searchbar__filterCategory--button">
-                <CustomButton
-                  handleClick={selectCategoryHandler}
-                  value="ml"
-                  filter={category}
-                >
-                  ML
-                </CustomButton>
-              </div>
-            </div>
-          </div>
-        </div>
+        <Filter
+          selectTypeHandler={selectTypeHandler}
+          selectCategoryHandler={selectCategoryHandler}
+          showFilter={searchbarState.showFilter}
+          type={type}
+          category={category}
+        />
       </div>
-      <SearchBarModal modalOpen={showModal}>
+      <SearchBarModal modalOpen={searchbarState.showModal}>
         <SearchBarModalContent clickHandler={modalHandler} />
       </SearchBarModal>
     </div>
