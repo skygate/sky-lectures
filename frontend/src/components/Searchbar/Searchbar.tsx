@@ -74,6 +74,7 @@ function Searchbar() {
           name="search"
           className="searchbar__form--input"
           placeholder="Search"
+          autoComplete='off'
           value={searchValue}
           onChange={handleChange}
           onClickCapture={clickCaptureHandler}
