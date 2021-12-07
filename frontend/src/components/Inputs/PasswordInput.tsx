@@ -1,6 +1,6 @@
 import { useState } from "react";
 import eye from "../../assets/icons/showPassword.svg";
-import "./Inputs.modules.scss";
+import styles from "./Inputs.module.scss";
 const PasswordInput = (props: {
   name: string;
   value: string;
@@ -11,14 +11,14 @@ const PasswordInput = (props: {
 
   return (
     <div>
-      <div className="container">
+      <div className={styles["container"]}>
         <input
           name={props.name}
           type={passwordShown ? "text" : "password"}
           placeholder={props.placeholder ? props.placeholder : "Password"}
           value={props.value}
           onChange={props.onChange}
-          className="container-input"
+          className={styles["container-input"]}
         />
         <div>
           <img

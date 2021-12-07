@@ -1,4 +1,4 @@
-import "./Inputs.modules.scss";
+import styles from "./Inputs.module.scss";
 const TextInput = (props: {
   name: string;
   value: string;
@@ -7,13 +7,13 @@ const TextInput = (props: {
 }): JSX.Element => {
   return (
     <div>
-      <div className="container">
+      <div className={styles["container"]}>
         <input
           name={props.name}
           placeholder={props.placeholder}
           value={props.value}
           onChange={props.onChange}
-          className="container-input"
+          className={styles["container-input"]}
         />
       </div>
     </div>

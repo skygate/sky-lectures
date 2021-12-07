@@ -9,18 +9,18 @@ import { ReactComponent as FileIcon } from "../../assets/icons/file.svg";
 import { ReactComponent as ClockIcon } from "../../assets/icons/clock.svg";
 import { ReactComponent as QuitIcon } from "../../assets/icons/quit.svg";
 
-import "./Sidebar.modules.scss";
+import styles from "./Sidebar.module.scss";
 
 function Sidebar() {
   return (
-    <nav className="sidebar">
-      <div className="sidebar__logo">
-        <Link to="/" className="sidebar__logo--link">
+    <nav className={styles["sidebar"]}>
+      <div className={styles["sidebar__logo"]}>
+        <Link to="/" className={styles["sidebar__logo--link"]}>
           <LogoIcon />
         </Link>
       </div>
-      <div className="sidebar__navigation">
-        <ul className="sidebar__navigation--list">
+      <div className={styles["sidebar__navigation"]}>
+        <ul className={styles["sidebar__navigation--list"]}>
           <NavigationElement Icon={<HomeIcon />} path="/" />
           <NavigationElement Icon={<HeartIcon />} path="/favourites" />
           <NavigationElement Icon={<UploadIcon />} path="/uploads" />
@@ -28,8 +28,8 @@ function Sidebar() {
           <NavigationElement Icon={<ClockIcon />} path="/history" />
         </ul>
       </div>
-      <div className="sidebar__foter">
-        <Link to="/signout" className="sidebar__footer--link">
+      <div className={styles["sidebar__foter"]}>
+        <Link to="/signout" className={styles["sidebar__footer--link"]}>
           <QuitIcon />
         </Link>
       </div>
