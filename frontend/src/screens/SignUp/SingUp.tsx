@@ -1,5 +1,5 @@
-import "./SignUp.modules.scss";
-import background from "../../assets/background.svg";
+import styles from "./SignUp.module.scss";
+import background from "../../assets/icons/background.svg";
 import PasswordInput from "../../components/Inputs/PasswordInput";
 import TextInput from "../../components/Inputs/TextInput";
 import { useFormik } from "formik";
@@ -17,11 +17,11 @@ const SignUp = () => {
     },
   });
   return (
-    <div className="main-container">
-      <div className="sign-container">
-        <div className="sign-fields">
-          <div className="title">Let's get started!</div>
-          <div className="subtitle">It's pleasure to meet you</div>
+    <div className={styles["main-container"]}>
+      <div className={styles["sign-container"]}>
+        <div className={styles["sign-fields"]}>
+          <div className={styles["title"]}>Let's get started!</div>
+          <div className={styles["subtitle"]}>It's pleasure to meet you</div>
           <form onSubmit={formik.handleSubmit}>
             <TextInput
               placeholder="login"
@@ -42,17 +42,21 @@ const SignUp = () => {
               onChange={formik.handleChange}
             />
 
-            <button type="submit" className="submit-btn">
+            <button type="submit" className={styles["submit-btn"]}>
               Sign Up
             </button>
           </form>
-          <div className="redirect">
+          <div className={styles["redirect"]}>
             Already have an account <Link to="/SignIn">Sign In</Link>
           </div>
         </div>
       </div>
-      <div className="background-container">
-        <img src={background} className="background" alt="background" />
+      <div className={styles["background-container"]}>
+        <img
+          src={background}
+          className={styles["background"]}
+          alt="background"
+        />
       </div>
     </div>
   );

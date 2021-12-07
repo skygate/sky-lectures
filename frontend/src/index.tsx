@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
-
+import Player from "./screens/Player/Player";
 import SignUp from "./screens/SignUp/SingUp";
 import SignIn from "./screens/SignIn/SignIn";
 import App from "./App";
@@ -17,6 +17,7 @@ ReactDOM.render(
           <Route path="/" element={<App />} />
           <Route path="/SignIn" element={<SignIn/>} />
           <Route path="/SignUp" element={<SignUp/>} />
+          <Route path='/Player' element={<Player/>} />
         </Routes>
       </BrowserRouter>
     </Provider>
