@@ -1,19 +1,18 @@
 import { ReactComponent as Person } from "../../assets/icons/person.svg";
-import "./NewComment.modules.scss";
+import styles from "./NewComment.module.scss";
 const NewComment = () => {
   return (
-    <div className="comments-container">
+    <div className={styles["comments-container"]}>
       <form>
-        <div className="new-comment">
+        <div className={styles["new-comment"]}>
           <Person />
           <input
             type="text"
-            className="comment-input"
+            className={styles["comment-input"]}
             placeholder="type something nice"
           />
         </div>
-
-        <button type="submit" className="submit-comment-btn">
+        <button type="submit" className={styles["submit-comment-btn"]}>
           Comment
         </button>
       </form>

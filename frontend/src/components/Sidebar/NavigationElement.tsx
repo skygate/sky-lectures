@@ -1,6 +1,6 @@
 import { NavLink } from "react-router-dom";
 
-import "./NavigationElement.modules.scss";
+import styles from "./NavigationElement.module.scss";
 
 interface ElementProps {
   Icon: React.SVGProps<SVGElement>;
@@ -9,11 +9,11 @@ interface ElementProps {
 
 const NavigationElement = ({ Icon, path }: ElementProps) => {
   return (
-    <li className="navigation__element">
+    <li className={styles["navigation__element"]}>
       <NavLink
         to={path}
         className={({ isActive }) =>
-          "navigation__element--link" + (isActive ? " active" : "")
+          styles["navigation__element--link"] + (isActive ? " active" : "")
         }
       >
         {Icon}

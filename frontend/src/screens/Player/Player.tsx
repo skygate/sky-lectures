@@ -1,5 +1,5 @@
 import Sidebar from "../../components/Sidebar/Sidebar";
-import "./Player.modules.scss";
+import styles from "./Player.module.scss";
 import { ReactComponent as PersonIcon } from "../../assets/icons/person.svg";
 import { ReactComponent as HeartIcon } from "../../assets/icons/heart.svg";
 import { ReactComponent as ClockIcon } from "../../assets/icons/clock.svg";
@@ -14,28 +14,30 @@ const Player = () => {
   return (
     <>
       <Sidebar />
-      <div className="player-content">
-        <div className="video-player"></div>
-        <div className="video-info">
-          <div className="video-name">
+      <div className={styles["player-content"]}>
+        <div className={styles["video-player"]}></div>
+        <div className={styles["video-info"]}>
+          <div className={styles["video-name"]}>
             Presentation's name
-            <div className="video-actions">
+            <div className={styles["video-actions"]}>
               <HeartIcon />
               <ClockIcon />
               <ShareIcon />
             </div>
           </div>
-          <div className="author">
+          <div className={styles["author"]}>
             <PersonIcon />
-            <div className="author-info">
-              <div className="author-name">Janek</div>
-              <div className="author-works">5 works</div>
+            <div className={styles["author-info"]}>
+              <div className={styles["author-name"]}>Janek</div>
+              <div className={styles["author-works"]}>5 works</div>
             </div>
           </div>
-          <div className="video-description">
+          <div className={styles["video-description"]}>
             <div
               className={
-                visible ? "video-description-more" : "video-description-less"
+                visible
+                  ? styles["video-description-more"]
+                  : styles["video-description-less"]
               }
             >
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit
@@ -64,11 +66,11 @@ const Player = () => {
               doloribus natus eligendi ratione deleniti.
             </div>
           </div>
-          <a onClick={showMore} className="show-more-btn">
+          <a onClick={showMore} className={styles["show-more-btn"]}>
             {visible ? "hide" : "show more"}
           </a>
         </div>
-        <div className="comments-section">
+        <div className={styles["comments-section"]}>
           <p>Comments</p>
           <NewComment />
         </div>
