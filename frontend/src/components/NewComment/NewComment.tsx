@@ -1,20 +1,22 @@
-import person from "../../assets/icons/person.svg";
+import { ReactComponent as Person } from "../../assets/icons/person.svg";
 import "./NewComment.modules.scss";
 const NewComment = () => {
   return (
     <div className="comments-container">
-      <div className="new-comment">
-        <img src={person} alt="person" />
-        <input
-          type="text"
-          className="comment-input"
-          placeholder="type something nice"
-        />
-      </div>
-      <div className="buttons-container">
-        <a>Cancel</a>
-        <a>Comment</a>
-      </div>
+      <form>
+        <div className="new-comment">
+          <Person />
+          <input
+            type="text"
+            className="comment-input"
+            placeholder="type something nice"
+          />
+        </div>
+
+        <button type="submit" className="submit-comment-btn">
+          Comment
+        </button>
+      </form>
     </div>
   );
 };

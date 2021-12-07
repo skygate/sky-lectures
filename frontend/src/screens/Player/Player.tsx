@@ -1,9 +1,9 @@
 import Sidebar from "../../components/Sidebar/Sidebar";
 import "./Player.modules.scss";
-import person from "../../assets/icons/person.svg";
-import heart from "../../assets/icons/heart.svg";
-import clock from "../../assets/icons/clock.svg";
-import share from "../../assets/icons/share.svg";
+import { ReactComponent as PersonIcon } from "../../assets/icons/person.svg";
+import { ReactComponent as HeartIcon } from "../../assets/icons/heart.svg";
+import { ReactComponent as ClockIcon } from "../../assets/icons/clock.svg";
+import { ReactComponent as ShareIcon } from "../../assets/icons/share.svg";
 import NewComment from "../../components/NewComment/NewComment";
 import { useState } from "react";
 const Player = () => {
@@ -15,18 +15,18 @@ const Player = () => {
     <>
       <Sidebar />
       <div className="player-content">
-        <div className="video-player">s</div>
+        <div className="video-player"></div>
         <div className="video-info">
           <div className="video-name">
             Presentation's name
             <div className="video-actions">
-              <img src={heart} alt="heart" />
-              <img src={clock} alt="clock" />
-              <img src={share} alt="share" />
+              <HeartIcon />
+              <ClockIcon />
+              <ShareIcon />
             </div>
           </div>
           <div className="author">
-            <img src={person} alt="person" />
+            <PersonIcon />
             <div className="author-info">
               <div className="author-name">Janek</div>
               <div className="author-works">5 works</div>

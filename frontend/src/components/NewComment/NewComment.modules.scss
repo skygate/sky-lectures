@@ -11,32 +11,23 @@
   color: #3c727b;
 }
 .new-comment {
-  img {
+  svg {
     margin: 1rem;
   }
   display: flex;
 }
-.buttons-container {
-  a {
-    cursor: pointer;
-    font-family: Roboto;
-    border-radius: 10px;
-    font-size: 15px;
-    line-height: 18px;
-    padding: 0.5rem 2rem;
-  }
-  :first-child {
-    background: #cedcde;
-    color: #0b4f5a;
-  }
-  :last-child {
-    background: #0b4f5a;
-    color: white;
-  }
-  width: 100%;
-  display: flex;
-  gap: 1rem;
-  justify-content: flex-end;
+
+.submit-comment-btn {
+  font-family: Roboto;
+  border-radius: 10px;
+  font-size: 15px;
+  line-height: 18px;
+  padding: 0.5rem 2rem;
+  background: #0b4f5a;
+  color: white;
+  margin-right: 0;
+  margin-left: auto;
+  display: block;
 }
 
 .comments-container {
