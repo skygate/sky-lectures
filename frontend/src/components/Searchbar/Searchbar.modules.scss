@@ -1,7 +1,9 @@
+@import "../../sass/main.module.scss";
+
 .searchbar {
   max-width: 443px;
   width: 100%;
-  border: 1px solid #cedcde;
+  border: 1px solid $border-color;
   border-radius: 5px;
 
   .searchbar__form {
@@ -15,14 +17,14 @@
       flex: 1;
       padding: 10px;
       background: transparent;
-      color: #6d959c;
+      color: $text-secondary;
 
       &:focus-visible {
         outline: none;
       }
 
       &::placeholder {
-        color: #6d959c;
+        color: $text-secondary;
       }
     }
 
@@ -37,19 +39,19 @@
       position: absolute;
       left: -1px;
       top: 33px;
-      background-color: #ffffff;
-      border: 1px solid #cedcde;
+      background-color: $white;
+      border: 1px solid $border-color;
       border-bottom-right-radius: 10px;
       border-bottom-left-radius: 10px;
       width: 100%;
       z-index: 999;
 
       .searchbar__form--searchItem {
-        color: #6d959c;
+        color: $text-secondary;
         padding: 10px;
 
         &:nth-child(n + 2) {
-          border-top: 1px solid #cedcde;
+          border-top: 1px solid $border-color;
         }
       }
     }
@@ -65,7 +67,7 @@
           cursor: pointer;
           svg {
             path {
-              fill: #6d959c;
+              fill: $text-secondary;
             }
           }
         }
@@ -81,7 +83,7 @@
       position: absolute;
       top: 40px;
       right: 75px;
-      border: 1px solid #cedcde;
+      border: 1px solid $border-color;
       border-radius: 5px;
       padding: 11px;
 
@@ -91,7 +93,7 @@
 
       .searchbar__filterType {
         .searchbar__filterType--header {
-          color: #6d959c;
+          color: $text-secondary;
           font-size: 16px;
           margin: 0;
         }
@@ -112,7 +114,7 @@
       .searchbar__filterCategory {
         margin-top: 11px;
         .searchbar__filterCategory--header {
-          color: #6d959c;
+          color: $text-secondary;
           font-size: 16px;
           margin: 0;
         }
@@ -135,6 +137,5 @@
   .searchbar__modal {
     width: 100%;
     height: 100%;
-    background-color: red;
   }
 }

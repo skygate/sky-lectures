@@ -1,7 +1,9 @@
+@import "../../sass/main.module.scss";
+
 .customButton {
-  background-color: #ffffff;
-  color: #6d959c;
-  border: 1px solid #cedcde;
+  background-color: $white;
+  color: $text-secondary;
+  border: 1px solid $border-color;
   padding: 7px 11px;
   border-radius: 10px;
   width: 100%;
@@ -9,14 +11,14 @@
   cursor: pointer;
 
   &:hover {
-    background-color: #0b4f5a;
-    color: #ffffff;
-    border-color: #0b4f5a;
+    background-color: $primary-color;
+    color: $white;
+    border-color: $primary-color;
   }
 
   &.active {
-    background-color: #0b4f5a;
-    color: #ffffff;
-    border-color: #0b4f5a;
+    background-color: $primary-color;
+    color: $white;
+    border-color: $primary-color;
   }
 }
