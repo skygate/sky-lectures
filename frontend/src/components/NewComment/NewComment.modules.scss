@@ -1,0 +1,35 @@
+.comment-input {
+  width: 100%;
+  border: 1px solid #cedcde;
+  box-sizing: border-box;
+  border-radius: 10px;
+  padding: 1rem;
+  height: 1rem;
+  margin: auto 0;
+}
+::placeholder {
+  color: #3c727b;
+}
+.new-comment {
+  svg {
+    margin: 1rem;
+  }
+  display: flex;
+}
+
+.submit-comment-btn {
+  font-family: Roboto;
+  border-radius: 10px;
+  font-size: 15px;
+  line-height: 18px;
+  padding: 0.5rem 2rem;
+  background: #0b4f5a;
+  color: white;
+  margin-right: 0;
+  margin-left: auto;
+  display: block;
+}
+
+.comments-container {
+  margin-right: 1.5rem;
+}

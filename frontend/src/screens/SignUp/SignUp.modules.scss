@@ -38,9 +38,12 @@ body {
   line-height: 23px;
   color: #0b4f5a;
 }
-form > * {
-  width: 30rem;
+.sign-fields {
+  form > * {
+    width: 30rem;
+  }
 }
+
 .submit-btn {
   color: white;
   background: #0b4f5a;

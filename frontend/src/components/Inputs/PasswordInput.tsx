@@ -1,5 +1,5 @@
 import { useState } from "react";
-import eye from "../../assets/showPassword.svg";
+import eye from "../../assets/icons/showPassword.svg";
 import "./Inputs.modules.scss";
 const PasswordInput = (props: {
   name: string;
