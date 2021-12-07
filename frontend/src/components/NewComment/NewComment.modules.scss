@@ -18,13 +18,12 @@
 }
 .buttons-container {
   a {
+    cursor: pointer;
     font-family: Roboto;
     border-radius: 10px;
     font-size: 15px;
     line-height: 18px;
-
     padding: 0.5rem 2rem;
-    text-align: center;
   }
   :first-child {
     background: #cedcde;

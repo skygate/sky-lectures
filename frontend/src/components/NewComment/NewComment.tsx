@@ -1,7 +1,6 @@
-import TextInput from "../Inputs/TextInput";
 import person from "../../assets/icons/person.svg";
-import "./comments.modules.scss";
-const Comments = () => {
+import "./NewComment.modules.scss";
+const NewComment = () => {
   return (
     <div className="comments-container">
       <div className="new-comment">
@@ -19,4 +18,4 @@ const Comments = () => {
     </div>
   );
 };
-export default Comments;
+export default NewComment;

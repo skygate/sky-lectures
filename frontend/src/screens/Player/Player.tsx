@@ -4,7 +4,7 @@ import person from "../../assets/icons/person.svg";
 import heart from "../../assets/icons/heart.svg";
 import clock from "../../assets/icons/clock.svg";
 import share from "../../assets/icons/share.svg";
-import Comments from "../../components/comments/comments";
+import NewComment from "../../components/NewComment/NewComment";
 import { useState } from "react";
 const Player = () => {
   const [visible, setVisibility] = useState(false);
@@ -70,7 +70,7 @@ const Player = () => {
         </div>
         <div className="comments-section">
           <p>Comments</p>
-          <Comments />
+          <NewComment />
         </div>
       </div>
     </>
