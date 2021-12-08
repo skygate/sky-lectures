@@ -1,6 +1,8 @@
+@import "../../sass/main.module.scss";
+
 .comment-input {
   width: 100%;
-  border: 1px solid #cedcde;
+  border: 1px solid $border-color;
   box-sizing: border-box;
   border-radius: 10px;
   padding: 1rem;
@@ -8,7 +10,7 @@
   margin: auto 0;
 }
 ::placeholder {
-  color: #3c727b;
+  color: $text-primary;
 }
 .new-comment {
   svg {
@@ -23,8 +25,8 @@
   font-size: 15px;
   line-height: 18px;
   padding: 0.5rem 2rem;
-  background: #0b4f5a;
-  color: white;
+  background: $primary-color;
+  color: $white;
   margin-right: 0;
   margin-left: auto;
   display: block;

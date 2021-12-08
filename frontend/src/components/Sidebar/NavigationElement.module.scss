@@ -1,3 +1,5 @@
+@import "../../sass/main.module.scss";
+
 .navigation__element {
   text-align: center;
   position: relative;
@@ -7,14 +9,14 @@
 
     svg {
       path {
-        fill: #6d959c;
+        fill: $text-secondary;
       }
     }
 
     &.active {
       svg {
         path {
-          fill: #0b4f5a;
+          fill: $primary-color;
         }
       }
 
@@ -23,7 +25,7 @@
         left: 0;
         position: absolute;
         content: "";
-        background-color: #0b4f5a;
+        background-color: $primary-color;
         width: 3px;
         height: 41px;
         border-top-right-radius: 5px;
@@ -34,7 +36,7 @@
     &:hover {
       svg {
         path {
-          fill: #0b4f5a;
+          fill: $primary-color;
         }
       }
     }

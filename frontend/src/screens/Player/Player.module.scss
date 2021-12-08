@@ -1,3 +1,5 @@
+@import "../../sass/main.module.scss";
+
 .player-content {
   margin-left: 5rem;
   margin-top: 3rem;
@@ -15,16 +17,16 @@
   font-size: 32px;
   font-weight: 500;
   line-height: 38px;
-  color: #0b4f5a;
+  color: $primary-color;
   padding: 1rem 0;
-  border-bottom: 1px solid #cedcde;
+  border-bottom: 1px solid $border-color;
 }
 .video-actions {
   display: flex;
   gap: 1rem;
 }
 .video-info {
-  border-bottom: 1px solid #cedcde;
+  border-bottom: 1px solid $border-color;
   margin-right: 1.5rem;
   padding-bottom: 1rem;
 }
@@ -37,14 +39,14 @@
   font-family: Roboto;
   font-size: 20px;
   line-height: 23px;
-  color: #3c727b;
+  color: $text-primary;
 }
 
 .video-description {
   font-family: Roboto;
   font-size: 20px;
   line-height: 23px;
-  color: #3c727b;
+  color: $text-primary;
   margin-bottom: 1rem;
 }
 .video-description-less {
@@ -57,7 +59,7 @@
 
 .show-more-btn {
   text-decoration-line: underline;
-  color: #0b4f5a;
+  color: $primary-color;
   font-family: Roboto;
   font-weight: 500;
   font-size: 15px;
@@ -69,6 +71,6 @@
     font-family: Roboto;
     font-size: 25px;
     line-height: 29px;
-    color: #3c727b;
+    color: $text-primary;
   }
 }

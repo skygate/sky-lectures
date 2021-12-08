@@ -117,6 +117,7 @@ function Searchbar() {
         <Filter
           selectTypeHandler={selectTypeHandler}
           selectCategoryHandler={selectCategoryHandler}
+          // showFilter={true}
           showFilter={searchbarState.showFilter}
           type={type}
           category={category}
