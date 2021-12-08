@@ -1,9 +1,11 @@
+@import "../../sass/main.module.scss";
+
 .container {
   margin: 1rem 0;
   display: flex;
   padding: 0.5rem;
   justify-content: space-between;
-  border: 1px solid #cedcde;
+  border: 1px solid $border-color;
   border-radius: 25px;
 }
 .container-input {
@@ -11,7 +13,7 @@
 }
 .container-input::placeholder {
   padding-left: 0.4rem;
-  color: #6d959c;
+  color: $text-secondary;
 }
 .container-input:focus {
   outline-width: 0;

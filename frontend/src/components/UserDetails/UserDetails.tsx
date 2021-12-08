@@ -1,14 +1,14 @@
-import "./UserDetails.modules.scss";
-
 import { ReactComponent as UserIcon } from "../../assets/icons/user.svg";
+
+import styles from "./UserDetails.module.scss";
 
 function UserDetails() {
   return (
-    <div className="userDetails">
-      <button className="userDetails--button">
+    <div className={styles["userDetails"]}>
+      <button className={styles["userDetails--button"]}>
         <UserIcon />
       </button>
-      <p className="userDetails--name">User</p>
+      <p className={styles["userDetails--name"]}>User</p>
     </div>
   );
 }

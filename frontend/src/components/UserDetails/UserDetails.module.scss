@@ -1,3 +1,5 @@
+@import "../../sass/main.module.scss";
+
 .userDetails {
   display: flex;
   justify-content: space-between;
@@ -12,13 +14,13 @@
       cursor: pointer;
       svg {
         path {
-          fill: #6d959c;
+          fill: $text-secondary;
         }
       }
     }
   }
   .userDetails--name {
     margin-left: 21px;
-    color: #0b4f5a;
+    color: $primary-color;
   }
 }

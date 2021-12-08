@@ -1,6 +1,6 @@
 import React from "react";
 
-import "./CustomButton.modules.scss";
+import styles from "./CustomButton.module.scss";
 
 interface Props {
   children: string;
@@ -12,7 +12,9 @@ interface Props {
 function CustomButton({ children, value = "", filter, handleClick }: Props) {
   return (
     <button
-      className={`customButton ${filter === value && "active"}`}
+      className={`${styles["customButton"]} ${
+        filter === value && styles["active"]
+      }`}
       onClick={handleClick}
       value={value}
     >

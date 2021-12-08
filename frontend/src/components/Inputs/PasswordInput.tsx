@@ -22,10 +22,11 @@ const PasswordInput = (props: {
         />
         <div>
           <img
-            className="container-eye"
+            className={styles["container-eye"]}
             draggable="false"
             src={eye}
             onClick={() => setPasswordShown(!passwordShown)}
+            alt="img"
           />
         </div>
       </div>
