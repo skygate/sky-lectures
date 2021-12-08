@@ -1,5 +1,5 @@
 import styles from "./SignUp.module.scss";
-import background from "../../assets/icons/background.svg";
+import { ReactComponent as Background } from "../../assets/icons/background.svg";
 import PasswordInput from "../../components/Inputs/PasswordInput";
 import TextInput from "../../components/Inputs/TextInput";
 import { useFormik } from "formik";
@@ -52,11 +52,7 @@ const SignUp = () => {
         </div>
       </div>
       <div className={styles["background-container"]}>
-        <img
-          src={background}
-          className={styles["background"]}
-          alt="background"
-        />
+        <Background className={styles["background"]} />
       </div>
     </div>
   );
