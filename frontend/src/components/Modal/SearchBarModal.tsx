@@ -1,7 +1,7 @@
 import React from "react";
 import { createPortal } from "react-dom";
 
-import "./SearchBarModal.modules.scss";
+import styles from "./SearchBarModal.module.scss";
 
 type Props = {
   modalOpen: boolean;
@@ -11,7 +11,7 @@ const Modal: React.FC<Props> = ({ modalOpen, children }) => {
   if (!modalOpen) return null;
 
   return createPortal(
-    <div className="modal">{children}</div>,
+    <div className={styles["modal"]}>{children}</div>,
     document.getElementById("searchBarModal")!
   );
 };

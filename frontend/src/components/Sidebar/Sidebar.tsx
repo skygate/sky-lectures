@@ -28,7 +28,7 @@ function Sidebar() {
           <NavigationElement Icon={<ClockIcon />} path="/history" />
         </ul>
       </div>
-      <div className={styles["sidebar__foter"]}>
+      <div className={styles["sidebar__footer"]}>
         <Link to="/signout" className={styles["sidebar__footer--link"]}>
           <QuitIcon />
         </Link>

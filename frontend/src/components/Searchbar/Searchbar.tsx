@@ -6,7 +6,7 @@ import SearchBarModal from "../Modal/SearchBarModal";
 import SearchBarModalContent from "./SearchBarModalContent";
 import Filter from "./Filter";
 
-import "./Searchbar.modules.scss";
+import styles from "./Searchbar.module.scss";
 
 const presentationList = [
   "react presentation",
@@ -81,12 +81,12 @@ function Searchbar() {
   }
 
   return (
-    <div className="searchbar">
-      <div className="searchbar__form">
+    <div className={styles["searchbar"]}>
+      <div className={styles["searchbar__form"]}>
         <input
           type="search"
           name="search"
-          className="searchbar__form--input"
+          className={styles["searchbar__form--input"]}
           placeholder="Search"
           autoComplete="off"
           value={searchValue}
@@ -94,30 +94,34 @@ function Searchbar() {
           onClickCapture={clickCaptureHandler}
         />
         {searchList.length > 0 && searchValue && (
-          <div className="searchbar__form--searchList">
+          <div className={styles["searchbar__form--searchList"]}>
             {searchList.slice(0, 5).map((item, index) => (
-              <div className="searchbar__form--searchItem" key={index}>
+              <div
+                className={styles["searchbar__form--searchItem"]}
+                key={index}
+              >
                 {item}
               </div>
             ))}
           </div>
         )}
 
-        <div className="searchbar__container">
+        <div className={styles["searchbar__container"]}>
           <button
-            className="searchbar__container--btn filter"
+            className={`${styles["searchbar__container--btn"]} ${styles["filter"]}`}
             onClick={toggleFilter}
           >
             <FilterIcon />
           </button>
-          <button className="searchbar__container--btn search">
+          <button
+            className={`${styles["searchbar__container--btn"]} ${styles["search"]}`}
+          >
             <SearchIcon />
           </button>
         </div>
         <Filter
           selectTypeHandler={selectTypeHandler}
           selectCategoryHandler={selectCategoryHandler}
-          // showFilter={true}
           showFilter={searchbarState.showFilter}
           type={type}
           category={category}

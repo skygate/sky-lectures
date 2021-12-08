@@ -1,6 +1,8 @@
 import React from "react";
 import CustomButton from "./CustomButton";
 
+import styles from "./Filter.module.scss";
+
 interface Props {
   selectTypeHandler: (e: React.MouseEvent<HTMLButtonElement>) => void;
   selectCategoryHandler: (e: React.MouseEvent<HTMLButtonElement>) => void;
@@ -17,11 +19,11 @@ function Filter({
   category,
 }: Props) {
   return (
-    <div className={`searchbar__filter--container ${showFilter && "active"} `}>
-      <div className="searchbar__filterType">
-        <p className="searchbar__filterType--header">Type:</p>
-        <div className="searchbar__filterType--group">
-          <div className="searchbar__filterType--button">
+    <div className={`${styles["filter"]} ${showFilter && styles["active"]}`}>
+      <div className={styles["filter__type"]}>
+        <p className={styles["filter__type--header"]}>Type:</p>
+        <div className={styles["filter__type--group"]}>
+          <div className={styles["filter__type--button"]}>
             <CustomButton
               handleClick={selectTypeHandler}
               value="presentation"
@@ -30,7 +32,7 @@ function Filter({
               Presentation
             </CustomButton>
           </div>
-          <div className="searchbar__filterType--button">
+          <div className={styles["filter__type--button"]}>
             <CustomButton
               handleClick={selectTypeHandler}
               value="video"
@@ -41,10 +43,10 @@ function Filter({
           </div>
         </div>
       </div>
-      <div className="searchbar__filterCategory">
-        <p className="searchbar__filterCategory--header">Category:</p>
-        <div className="searchbar__filterCategory--group">
-          <div className="searchbar__filterCategory--button">
+      <div className={styles["filter__category"]}>
+        <p className={styles["filter__category--header"]}>Category:</p>
+        <div className={styles["filter__category--group"]}>
+          <div className={styles["filter__category--button"]}>
             <CustomButton
               handleClick={selectCategoryHandler}
               value="back-end"
@@ -53,7 +55,7 @@ function Filter({
               Back-End
             </CustomButton>
           </div>
-          <div className="searchbar__filterCategory--button">
+          <div className={styles["filter__category--button"]}>
             <CustomButton
               handleClick={selectCategoryHandler}
               value="front-end"
@@ -63,8 +65,8 @@ function Filter({
             </CustomButton>
           </div>
         </div>
-        <div className="searchbar__filterCategory--group">
-          <div className="searchbar__filterCategory--button">
+        <div className={styles["filter__category--group"]}>
+          <div className={styles["filter__category--button"]}>
             <CustomButton
               handleClick={selectCategoryHandler}
               value="design"
@@ -73,7 +75,7 @@ function Filter({
               Design
             </CustomButton>
           </div>
-          <div className="searchbar__filterCategory--button">
+          <div className={styles["filter__category--button"]}>
             <CustomButton
               handleClick={selectCategoryHandler}
               value="trending"
@@ -83,8 +85,8 @@ function Filter({
             </CustomButton>
           </div>
         </div>
-        <div className="searchbar__filterCategory--group">
-          <div className="searchbar__filterCategory--button">
+        <div className={styles["filter__category--group"]}>
+          <div className={styles["filter__category--button"]}>
             <CustomButton
               handleClick={selectCategoryHandler}
               value="ml"
