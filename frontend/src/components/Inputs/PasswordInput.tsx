@@ -18,11 +18,11 @@ const PasswordInput = (props: {
           placeholder={props.placeholder ? props.placeholder : "Password"}
           value={props.value}
           onChange={props.onChange}
-          className={styles["container-input"]}
+          className={styles["container_input"]}
         />
         <div>
           <img
-            className="container-eye"
+            className="container_eye"
             draggable="false"
             src={eye}
             onClick={() => setPasswordShown(!passwordShown)}

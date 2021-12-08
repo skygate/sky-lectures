@@ -13,7 +13,7 @@ const TextInput = (props: {
           placeholder={props.placeholder}
           value={props.value}
           onChange={props.onChange}
-          className={styles["container-input"]}
+          className={`${styles.container_input} ${styles.eye}`}
         />
       </div>
     </div>

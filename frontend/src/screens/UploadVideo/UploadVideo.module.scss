@@ -1,0 +1,37 @@
+.main-content {
+  margin-left: 5rem;
+  margin-right: 1rem;
+}
+.drag-drop {
+  border: 1px solid red;
+  height: 20rem;
+}
+.upload {
+  display: flex;
+  justify-content: space-between;
+  justify-items: center;
+  color: #0b4f5a;
+  font-family: Roboto;
+  h1 {
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 23px;
+  }
+  p {
+    font-size: 15px;
+    font-weight: 400;
+
+    line-height: 18px;
+  }
+  button {
+    color: white;
+    background: #0b4f5a;
+    border-radius: 25px;
+    padding: 0.5rem;
+    height: 2rem;
+    outline: none;
+    display: block;
+    margin-top: auto;
+    margin-bottom: auto;
+  }
+}

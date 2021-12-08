@@ -3,6 +3,7 @@ import ReactDOM from "react-dom";
 import Player from "./screens/Player/Player";
 import SignUp from "./screens/SignUp/SingUp";
 import SignIn from "./screens/SignIn/SignIn";
+import UploadVideo from "./screens/UploadVideo/UploadVideo";
 import App from "./App";
 import { store } from "./store/store";
 import { Provider } from "react-redux";
@@ -15,13 +16,13 @@ ReactDOM.render(
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<App />} />
-          <Route path="/SignIn" element={<SignIn/>} />
-          <Route path="/SignUp" element={<SignUp/>} />
-          <Route path='/Player' element={<Player/>} />
+          <Route path="/SignIn" element={<SignIn />} />
+          <Route path="/SignUp" element={<SignUp />} />
+          <Route path="/Player" element={<Player />} />
+          <Route path="/Upload" element={<UploadVideo />} />
         </Routes>
       </BrowserRouter>
     </Provider>
-
   </React.StrictMode>,
   document.getElementById("root")
 );

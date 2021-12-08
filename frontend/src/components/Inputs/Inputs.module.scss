@@ -6,16 +6,21 @@
   border: 1px solid #cedcde;
   border-radius: 25px;
 }
-.container-input {
+.container_input {
   border: 0;
+  width: 100%;
 }
-.container-input::placeholder {
+.container_input::placeholder {
   padding-left: 0.4rem;
   color: #6d959c;
+  overflow: visible;
 }
-.container-input:focus {
+.container_input:focus {
   outline-width: 0;
 }
-.container-eye {
+.container_eye {
   padding-right: 0.4rem;
+}
+.eye {
+  background: red;
 }
