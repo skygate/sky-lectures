@@ -1,9 +1,11 @@
+@import "../../sass/main.module.scss";
+
 .filter {
   display: none;
   position: absolute;
   top: 40px;
   right: 75px;
-  border: 1px solid #cedcde;
+  border: 1px solid $border-color;
   border-radius: 5px;
   padding: 11px;
 
@@ -13,7 +15,7 @@
 
   .filter__type {
     .filter__type--header {
-      color: #6d959c;
+      color: $text-secondary;
       font-size: 16px;
       margin: 0;
     }
@@ -34,7 +36,7 @@
   .filter__category {
     margin-top: 11px;
     .filter__category--header {
-      color: #6d959c;
+      color: $text-secondary;
       font-size: 16px;
       margin: 0;
     }
