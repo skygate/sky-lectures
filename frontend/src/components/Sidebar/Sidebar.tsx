@@ -22,7 +22,7 @@ function Sidebar() {
       <div className={styles["sidebar__navigation"]}>
         <ul className={styles["sidebar__navigation--list"]}>
           <NavigationElement Icon={<HomeIcon />} path="/" />
-          <NavigationElement Icon={<HeartIcon />} path="/favourites" />
+          <NavigationElement Icon={<HeartIcon />} path="/favorites" />
           <NavigationElement Icon={<UploadIcon />} path="/uploads" />
           <NavigationElement Icon={<FileIcon />} path="/schedule" />
           <NavigationElement Icon={<ClockIcon />} path="/history" />
