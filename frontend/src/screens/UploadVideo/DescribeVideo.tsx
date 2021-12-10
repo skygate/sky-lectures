@@ -23,12 +23,15 @@ const DescribeVideo = () => {
             name="videoName"
             value={formik.values.videoName}
             onChange={formik.handleChange}
+            containerStyles={styles.input_container}
           />
           <TextInput
             placeholder="Write something more about your work"
             name="videoDescription"
-            value={formik.values.videoName}
+            value={formik.values.videoDescription}
             onChange={formik.handleChange}
+            inputStyle={styles.input}
+            containerStyles={styles.input_container}
           />
         </form>
       </div>
