@@ -1,23 +1,66 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import { Provider } from "react-redux";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+
+import App from "./App";
+import Page from "./components/Page/Page";
 import Player from "./screens/Player/Player";
+import { store } from "./store/store";
 import SignUp from "./screens/SignUp/SingUp";
 import SignIn from "./screens/SignIn/SignIn";
-import App from "./App";
-import { store } from "./store/store";
-import { Provider } from "react-redux";
+import Favorites from "./screens/Favorites/Favorites";
+import History from "./screens/History/History";
+import Schedule from "./screens/Schedule/Schedule";
 import reportWebVitals from "./reportWebVitals";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<App />} />
+          <Route
+            path="/"
+            element={
+              <Page>
+                <App />
+              </Page>
+            }
+          />
           <Route path="/SignIn" element={<SignIn />} />
           <Route path="/SignUp" element={<SignUp />} />
-          <Route path="/Player" element={<Player />} />
+          <Route
+            path="/player"
+            element={
+              <Page>
+                <Player />
+              </Page>
+            }
+          />
+          <Route
+            path="/favorites"
+            element={
+              <Page>
+                <Favorites />
+              </Page>
+            }
+          />
+          <Route
+            path="/history"
+            element={
+              <Page>
+                <History />
+              </Page>
+            }
+          />
+          <Route
+            path="/schedule"
+            element={
+              <Page>
+                <Schedule />
+              </Page>
+            }
+          />
         </Routes>
       </BrowserRouter>
     </Provider>
