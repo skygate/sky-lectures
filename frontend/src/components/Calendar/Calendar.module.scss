@@ -1,0 +1,10 @@
+.calendar {
+  height: 80vh;
+
+  .container {
+    display: grid;
+    grid-template-columns: 1fr repeat(7, 2fr);
+    height: 100%;
+    border-right: 1px solid lightgray;
+  }
+}

@@ -1,0 +1,8 @@
+.week {
+  display: grid;
+  grid-template-columns: 1fr repeat(7, 2fr);
+
+  .day {
+    text-align: center;
+  }
+}
