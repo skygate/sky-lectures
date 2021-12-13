@@ -56,7 +56,7 @@ ReactDOM.render(
           <Route
             path="/schedule"
             element={
-              <Page>
+              <Page showHeader={false}>
                 <Schedule />
               </Page>
             }

@@ -11,21 +11,29 @@ interface Props {
   children: React.ReactNode;
   showSearchbar?: boolean;
   textHeader?: string;
+  showHeader?: boolean;
 }
 
-function Page({ children, showSearchbar = true, textHeader }: Props) {
+function Page({
+  children,
+  showSearchbar = true,
+  textHeader,
+  showHeader = true,
+}: Props) {
   return (
     <div className={styles.page}>
       <Sidebar />
       <div className={styles.wrapper}>
-        <Header>
-          {showSearchbar ? (
-            <Searchbar />
-          ) : (
-            <span className={styles.textHeader}>{textHeader}</span>
-          )}
-          <UserDetails />
-        </Header>
+        {showHeader && (
+          <Header>
+            {showSearchbar ? (
+              <Searchbar />
+            ) : (
+              <span className={styles.textHeader}>{textHeader}</span>
+            )}
+            <UserDetails />
+          </Header>
+        )}
         <div className={styles.container}>{children}</div>
       </div>
     </div>

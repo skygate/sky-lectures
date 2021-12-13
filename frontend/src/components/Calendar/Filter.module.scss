@@ -1,4 +1,33 @@
+@import "../../sass/main.module.scss";
+
 .filter {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  align-items: center;
+
+  .name {
+    font-size: 20px;
+    color: $primary-color;
+  }
+
+  .container {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+
+    .week {
+      color: $primary-color;
+    }
+
+    .btn {
+      background: none;
+      border: none;
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+      padding: 5px;
+      margin: 0 10px;
+    }
+  }
 }

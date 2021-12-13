@@ -1,14 +1,26 @@
+import { startOfWeek, format, addDays } from "date-fns";
+
 import styles from "./Week.module.scss";
 
-const DAY_OF_WEEK = ["mon", "tue", "wen", "thu", "fri", "sat", "sun"];
+interface Props {
+  currentDate: Date;
+}
 
-function Week() {
+function Week({ currentDate }: Props) {
+  const days = [];
+  let startDate = startOfWeek(currentDate, { weekStartsOn: 1 });
+
+  for (let i = 0; i < 7; i++) {
+    days.push(addDays(startDate, i));
+  }
+
   return (
     <div className={styles.week}>
       <div></div>
-      {DAY_OF_WEEK.map((item, i) => (
+      {days.map((day, i) => (
         <div className={styles.day} key={i}>
-          {item}
+          <span className={styles.number}>{format(day, "dd")}</span>
+          <span className={styles.name}>{format(day, "EEE")}</span>
         </div>
       ))}
     </div>

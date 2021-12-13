@@ -1,45 +1,40 @@
 import { useState, useRef, useEffect } from "react";
-
-import styles from "./Day.module.scss";
+import { compareAsc } from "date-fns";
 
 import Presentation from "./Presentation";
 
-// interface Props {
-//   author: string;
-//   title: string;
-//   startDate: string;
-//   endDate: string;
-// }
+import styles from "./Day.module.scss";
 
-const presentation = [
-  {
-    id: "01",
-    author: "Author",
-    title: "presentation name",
-    startTime: new Date("2021-12-10T10:40:00"),
-    endTime: new Date("2021-12-10T11:40:00"),
-  },
-  {
-    id: "02",
-    author: "Author",
-    title: "presentation name",
-    startTime: new Date("2021-12-10T16:40:00"),
-    endTime: new Date("2021-12-10T19:40:00"),
-  },
-  // {
-  //   id: "03",
-  //   author: "Author",
-  //   title: "presentation name",
-  //   startTime: "15:30",
-  //   endTime: "16:30",
-  // },
-];
+interface Props {
+  presentations: PresentationData[];
+  date: Date;
+}
 
-function Day() {
+interface PresentationData {
+  id: string;
+  author: string;
+  title: string;
+  startTime: Date;
+  endTime: Date;
+}
+
+function Day({ presentations, date }: Props) {
   const [height, setHight] = useState(0);
   const divRef = useRef<HTMLDivElement>(null);
 
+  const filteredPresentations = presentations.filter(
+    (item) =>
+      compareAsc(
+        new Date(item.startTime).setHours(0, 0, 0, 0),
+        date.setHours(0, 0, 0, 0)
+      ) === 0
+  );
+
   const items = [];
+
+  for (let i = 8; i < 21; i++) {
+    items.push(<div key={i} className={styles.hour}></div>);
+  }
 
   useEffect(() => {
     if (divRef.current) {
@@ -47,14 +42,11 @@ function Day() {
     }
   }, [divRef]);
 
-  for (let i = 8; i < 21; i++) {
-    items.push(<div key={i} className={styles.hour}></div>);
-  }
   return (
     <div className={styles.day} ref={divRef}>
       {items}
 
-      {presentation.map((item, i) => (
+      {filteredPresentations.map((item, i) => (
         <Presentation key={i} item={item} height={height} />
       ))}
     </div>
