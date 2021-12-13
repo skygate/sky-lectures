@@ -1,4 +1,4 @@
-import TextInput from "../../components/Inputs/TextInput";
+import TextInput from "../../components/Inputs/TextInputs/TextInput";
 import { useFormik } from "formik";
 import styles from "./AddTags.module.scss";
 
@@ -15,14 +15,23 @@ const AddTag = () => {
   });
   return (
     <div className={styles["last-step"]}>
-      <h1 className={styles["last-step_title"]}>Last step</h1>
-      <h2>Add some tags to help viewers find your content.</h2>
-      <TextInput
-        placeholder="Type your tag"
-        name="videoDescription"
-        value={formik.values.videoDescription}
-        onChange={formik.handleChange}
-      />
+      <div className={styles["last-step_title"]}>Last step</div>
+      <div className={styles["last-step_sub_title"]}>
+        Add some tags to help viewers find your content.
+      </div>
+      <form className={styles["last-step_tag_form"]}>
+        <TextInput
+          placeholder="Type your tag"
+          name="videoDescription"
+          value={formik.values.videoDescription}
+          onChange={formik.handleChange}
+          inputStyle={styles.input}
+          containerStyles={styles.input_container}
+        />
+        <div className={styles["last-step_tag_form_btn_container"]}>
+          <button className={styles["submit_btn"]}>Upload</button>
+        </div>
+      </form>
     </div>
   );
 };

@@ -1,10 +1,13 @@
 .main-content {
   margin-left: 5rem;
   margin-right: 1rem;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  margin-bottom: 5rem;
 }
 .drag-drop {
-  border: 1px solid red;
-  height: 20rem;
+  flex: 1 1 auto;
 }
 .upload {
   display: flex;
@@ -40,7 +43,6 @@
   z-index: 1; /* Sit on top */
   left: 0;
   top: 0;
-
   width: 100%; /* Full width */
   height: 100%; /* Full height */
   overflow: auto; /* Enable scroll if needed */
@@ -49,15 +51,27 @@
 
 .modal-content {
   background-color: #fefefe;
-  padding: 20px;
+
   border: 1px solid #888;
-  width: 40%;
   border-radius: 10px;
-  margin-top: 15%;
+  width: 40rem;
+  height: 25rem;
+  position: relative;
+  left: 50%;
+  top: 50%;
+  margin-left: -20rem;
+  margin-top: -12.5rem;
 }
 .modal_opened {
   display: block;
 }
 .modal_closed {
   display: none;
+}
+.modal-exit_button {
+  position: absolute;
+  top: 1.5rem;
+  right: 1.5rem;
+  width: 16px;
+  height: 16px;
 }

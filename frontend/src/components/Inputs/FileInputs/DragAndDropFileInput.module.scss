@@ -1,0 +1,32 @@
+.dropzone {
+  border: 1px dashed #cedcde;
+  border-radius: 10px;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: Roboto;
+}
+.dropzone_title {
+  color: #0b4f5a;
+  width: 10rem;
+
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 23px;
+  text-align: center;
+}
+.dropzone_items {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+.dropzone_btn {
+  background: #0b4f5a;
+  border-radius: 10px;
+  color: white;
+  border: none;
+  width: 14rem;
+  height: 2rem;
+}

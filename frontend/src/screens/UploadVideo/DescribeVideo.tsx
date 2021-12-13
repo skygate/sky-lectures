@@ -1,5 +1,5 @@
 import styles from "./DescribeVideo.module.scss";
-import TextInput from "../../components/Inputs/TextInput";
+import TextInput from "../../components/Inputs/TextInputs/TextInput";
 import { useFormik } from "formik";
 
 const DescribeVideo = () => {

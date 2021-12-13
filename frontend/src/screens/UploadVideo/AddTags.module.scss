@@ -1,5 +1,56 @@
 .last-step {
+  height: 100%;
+  display: flex;
+  gap: 1rem;
+  flex-direction: column;
+  flex: 1 1 auto;
   .last-step_title {
-    color: aqua;
+    color: #0b4f5a;
+    font-family: Roboto;
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 23px;
   }
+  .last-step_sub_title {
+    font-family: Roboto;
+    font-size: 15px;
+    font-weight: 400;
+    line-height: 18px;
+    color: #0b4f5a;
+  }
+  .last-step_tag_form_btn_container {
+    margin-left: auto;
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+
+    .submit_btn {
+      width: 5rem;
+      height: 2rem;
+      border-radius: 10px;
+      border: none;
+      color: white;
+      background: #0b4f5a;
+    }
+  }
+}
+.last-step > * {
+  margin: 0 1.25rem;
+}
+.last-step:first-child {
+  margin-top: 1.25rem;
+}
+
+.input::placeholder {
+  position: absolute;
+  top: 0;
+}
+
+.input_container {
+  border-radius: 10px;
+  height: 100%;
+}
+.last-step_tag_form {
+  flex: auto;
+  margin-bottom: 7rem;
 }

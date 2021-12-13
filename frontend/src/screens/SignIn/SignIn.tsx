@@ -1,7 +1,7 @@
 import styles from "../SignUp/SignUp.module.scss";
 import background from "../../assets/icons/background.svg";
-import PasswordInput from "../../components/Inputs/PasswordInput";
-import TextInput from "../../components/Inputs/TextInput";
+import PasswordInput from "../../components/Inputs/TextInputs/PasswordInput";
+import TextInput from "../../components/Inputs/TextInputs/TextInput";
 import { useFormik } from "formik";
 import { Link } from "react-router-dom";
 const SignUp = () => {
