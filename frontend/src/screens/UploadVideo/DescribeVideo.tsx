@@ -2,17 +2,21 @@ import styles from "./DescribeVideo.module.scss";
 import TextInput from "../../components/Inputs/TextInputs/TextInput";
 import { useFormik } from "formik";
 
-const DescribeVideo = () => {
+const DescribeVideo = (props: { setUploadForm: Function }) => {
   const formik = useFormik({
     initialValues: {
       videoName: "",
       videoDescription: "",
     },
 
-    onSubmit: async (values) => {
-      console.log(values);
+    onSubmit: (values) => {
+      props.setUploadForm({
+        videoName: values.videoName,
+        videoDescription: values.videoDescription,
+      });
     },
   });
+
   return (
     <div className={styles["content"]}>
       <div className={styles["thumbnail"]}></div>

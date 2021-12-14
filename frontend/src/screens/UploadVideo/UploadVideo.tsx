@@ -6,16 +6,29 @@ import AddTags from "./AddTags";
 import { ReactComponent as CloseBtn } from "../../assets/icons/close.svg";
 import Dropzone from "../../components/Inputs/FileInputs/DragAndDropFileInput";
 const UploadVideo = () => {
+  interface UploadForm {
+    file: any;
+    tags: Array<string>;
+    videoName: string;
+    videoDesciption: string;
+  }
+  const [isVisible, setModalVisibility] = useState(false);
+  const [UploadStep, setUploadStep] = useState(0);
+  const [uploadForm, setUploadForm] = useState<UploadForm>({
+    file: null,
+    tags: [],
+    videoName: "",
+    videoDesciption: "",
+  });
   function nextPage(): void {
     if (UploadStep === 1) {
+      console.log(uploadForm);
       setModalVisibility(true);
     } else {
       setUploadStep(UploadStep + 1);
     }
   }
 
-  const [isVisible, setModalVisibility] = useState(false);
-  const [UploadStep, setUploadStep] = useState(0);
   return (
     <div className={styles["main-content"]}>
       <div
@@ -43,16 +56,18 @@ const UploadVideo = () => {
               "Upload your work. First show will be used as thumbnail"}
           </p>
         </div>
-        <button onClick={nextPage}>continue</button>
+        <button type="submit" onClick={nextPage}>
+          continue
+        </button>
       </div>
       {UploadStep === 0 && (
         <div className={styles["drag-drop"]}>
-          <Dropzone />
+          <Dropzone setUploadForm={setUploadForm} />
         </div>
       )}
       {UploadStep === 1 && (
         <div>
-          <DescribeVideo />
+          <DescribeVideo setUploadForm={setUploadForm} />
         </div>
       )}
     </div>
