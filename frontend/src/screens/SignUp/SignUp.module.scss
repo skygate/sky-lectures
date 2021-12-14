@@ -11,8 +11,16 @@ body {
   height: 100vh;
 }
 .background {
-  margin-left: auto;
   display: block;
+  margin-left: auto;
+  height: 95%;
+  padding: 2.5% 0;
+}
+.background-container {
+  margin: 0 1rem;
+  flex: 1;
+
+  height: 100%;
 }
 .sign-container {
   flex: 1;
@@ -20,10 +28,7 @@ body {
   align-items: center;
   flex-direction: column;
 }
-.background-container {
-  margin-right: 1rem;
-  flex: 1;
-}
+
 .sign-fields > * {
   margin-bottom: 1rem;
 }
@@ -62,4 +67,19 @@ body {
 Link {
   color: $primary-color;
   font-weight: 500;
+}
+@media (max-width: 900px) {
+  .background-container {
+    display: none;
+  }
+  .main-container {
+    overflow: hidden;
+    margin: 0 2rem;
+  }
+  .sign-fields {
+    form > * {
+      width: 100%;
+    }
+    width: 100%;
+  }
 }
