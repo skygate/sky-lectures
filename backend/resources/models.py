@@ -15,7 +15,7 @@ class Resource(models.Model):
     description = models.CharField(max_length=100)
     path = models.FileField(upload_to=get_file_path, blank=True)
     uploaded_on = models.DateTimeField()
-    fk_pres_id = models.ForeignKey(Presentation, on_delete=models.CASCADE)
+    presentation = models.ForeignKey(Presentation, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.name

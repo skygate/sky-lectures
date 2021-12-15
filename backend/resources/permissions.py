@@ -8,7 +8,7 @@ class IsAdminOrOwner(IsAuthenticated):
     def has_object_permission(self, request, view, obj):
         return (
             request.method in SAFE_METHODS
-            or request.user == obj.fk_pres_id.user
+            or request.user == obj.presentation.user
             or request.user.is_superuser
         )
 

@@ -46,14 +46,14 @@ class TestResourceViewSet(APITestCase):
         )
         cls.res_1 = ResourceFactory(
             uploaded_on=datetime(2021, 8, 15, 8, 15, 12, tzinfo=pytz.UTC),
-            fk_pres_id=cls.pres_1
+            presentation=cls.pres_1
         )
         cls.new_resource = {
             "name": "New resource",
             "description": "New test resource",
             "path": cls.generate_photo_file(),
             "uploaded_on": datetime(2021, 9, 1, 12, 0, 0, tzinfo=pytz.UTC),
-            "fk_pres_id":  cls.pres_1.id
+            "presentation":  cls.pres_1.id,
         }
         cls.updated_resource = {
             "name": "Updated",
