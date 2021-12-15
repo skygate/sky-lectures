@@ -1,17 +1,19 @@
 import { endOfWeek, format, startOfWeek } from "date-fns";
 
+import UserDetails from "../UserDetails/UserDetails";
+import { ReactComponent as Add } from "../../assets/icons/add.svg";
 import { ReactComponent as LeftArrow } from "../../assets/icons/leftArrow.svg";
 import { ReactComponent as RightArrow } from "../../assets/icons/rightArrow.svg";
-import UserDetails from "../UserDetails/UserDetails";
 
 import styles from "./Filter.module.scss";
 
 interface Props {
+  showModalHandle: () => void;
   changeWeekHandle: (btnType: string) => void;
   currentDate: Date;
 }
 
-function Filter({ changeWeekHandle, currentDate }: Props) {
+function Filter({ showModalHandle, changeWeekHandle, currentDate }: Props) {
   const startDayFormat = "dd MMMM";
   const lastDayFormat = "dd MMMM yyyy";
 
@@ -32,7 +34,12 @@ function Filter({ changeWeekHandle, currentDate }: Props) {
           <RightArrow />
         </button>
       </div>
-      <UserDetails />
+      <div className={styles.userContainer}>
+        <button onClick={showModalHandle} className={styles.add}>
+          <Add />
+        </button>
+        <UserDetails />
+      </div>
     </div>
   );
 }

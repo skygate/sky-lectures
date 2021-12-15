@@ -5,6 +5,8 @@ import Sidebar from "./Sidebar";
 import Day from "./Day";
 import Filter from "./Filter";
 import Week from "./Week";
+import CalendarForm from "./CalendarForm";
+import FormModal from "../Modal/FormModal";
 
 import Styles from "./Calendar.module.scss";
 
@@ -14,7 +16,7 @@ const presentation = [
     author: "Author",
     title: "presentation name",
     startTime: new Date("2021-12-10T10:40:00"),
-    endTime: new Date("2021-12-10T11:10:00"),
+    endTime: new Date("2021-12-10T10:55:00"),
   },
   {
     id: "02",
@@ -26,6 +28,10 @@ const presentation = [
 ];
 
 function Calendar() {
+  const [formState, setFormState] = useState({
+    showForm: false,
+    showModal: false,
+  });
   const [currentDate, setCurrentDate] = useState(new Date());
   const startDate = startOfWeek(currentDate, { weekStartsOn: 1 });
 
@@ -45,9 +51,27 @@ function Calendar() {
     }
   }
 
+  function showModalHandle() {
+    setFormState({
+      showForm: true,
+      showModal: true,
+    });
+  }
+
+  function hideModalHandle() {
+    setFormState({
+      showForm: false,
+      showModal: false,
+    });
+  }
+
   return (
     <div className={Styles.calendar}>
-      <Filter changeWeekHandle={changeWeekHandle} currentDate={currentDate} />
+      <Filter
+        showModalHandle={showModalHandle}
+        changeWeekHandle={changeWeekHandle}
+        currentDate={currentDate}
+      />
       <Week currentDate={currentDate} />
       <div className={Styles.container}>
         <Sidebar />
@@ -55,6 +79,11 @@ function Calendar() {
           <Day key={i} presentations={presentation} date={day} />
         ))}
       </div>
+      {formState.showForm && <CalendarForm hideModal={hideModalHandle} />}
+      <FormModal
+        handleClick={hideModalHandle}
+        modalOpen={formState.showModal}
+      ></FormModal>
     </div>
   );
 }

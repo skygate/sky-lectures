@@ -1,0 +1,113 @@
+@import "../../sass/main.module.scss";
+
+.calendarForm {
+  position: absolute;
+  width: 483px;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: $white;
+  z-index: 700;
+  padding: 20px;
+  border-radius: 10px;
+
+  .titleContainer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+
+    .title {
+      margin: 0;
+      color: $primary-color;
+      font-weight: 500;
+    }
+
+    .close {
+      background: none;
+      border: none;
+      cursor: pointer;
+    }
+  }
+
+  .form {
+    display: flex;
+    flex-direction: column;
+
+    .inputTitle {
+      border: 1px solid $border-color;
+      padding: 9px 10px;
+      border-radius: 10px;
+      color: $text-secondary;
+      font-size: 15px;
+
+      &:focus-visible {
+        outline: none;
+      }
+    }
+
+    .errorTitle {
+      color: $warning;
+      margin-top: 5px;
+      margin-left: 5px;
+    }
+
+    .date {
+      display: grid;
+      align-items: center;
+      grid-template-columns: 2fr 12fr;
+      margin-top: 20px;
+      font-weight: normal;
+
+      .name {
+        font-size: 15px;
+        color: $text-primary;
+      }
+    }
+
+    .time {
+      display: grid;
+      align-items: center;
+      grid-template-columns: 2fr 12fr;
+      margin-top: 20px;
+      font-weight: normal;
+
+      .name {
+        font-size: 15px;
+        color: $text-primary;
+      }
+
+      .timeContainer {
+        display: grid;
+        align-items: center;
+        grid-template-columns: 2fr 1fr 2fr 4fr;
+      }
+    }
+
+    .notification {
+      margin-top: 10px;
+
+      .title {
+        font-size: 15px;
+        color: $primary-color;
+        font-weight: 400;
+      }
+
+      .container {
+        margin-top: 10px;
+        display: flex;
+        justify-content: space-between;
+      }
+    }
+
+    .btnContainer {
+      display: flex;
+      justify-content: flex-end;
+      margin-top: 21px;
+
+      .cancel {
+        margin-right: 17px;
+      }
+    }
+  }
+}

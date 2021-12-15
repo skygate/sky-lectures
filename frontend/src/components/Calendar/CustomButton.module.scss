@@ -1,0 +1,31 @@
+@import "../../sass/main.module.scss";
+
+.customButton {
+  background-color: $primary-color;
+  color: $white;
+  border: 1px solid $border-color;
+  padding: 9px 9px;
+  border-radius: 10px;
+  font-size: 15px;
+  min-width: 102px;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: bold;
+
+  &.reverseColor {
+    background: $border-color;
+    color: $primary-color;
+  }
+
+  &:hover {
+    background-color: $white;
+    color: $primary-color;
+    border-color: $primary-color;
+  }
+
+  &.active {
+    background-color: $primary-color;
+    color: $white;
+    border-color: $primary-color;
+  }
+}
