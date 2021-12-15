@@ -1,0 +1,142 @@
+@import "../../sass/main.module.scss";
+
+.searchbar {
+  max-width: 443px;
+  width: 100%;
+  border: 1px solid $border-color;
+  border-radius: 5px;
+  margin-left: 21px;
+
+  .searchbar__form {
+    display: flex;
+    align-items: center;
+    position: relative;
+    z-index: 200;
+
+    .searchbar__form--input {
+      border: none;
+      flex: 1;
+      padding: 10px;
+      background: transparent;
+      color: $text-secondary;
+
+      &:focus-visible {
+        outline: none;
+      }
+
+      &::placeholder {
+        color: $text-secondary;
+      }
+    }
+
+    input[type="search"]::-webkit-search-decoration,
+    input[type="search"]::-webkit-search-cancel-button,
+    input[type="search"]::-webkit-search-results-button,
+    input[type="search"]::-webkit-search-results-decoration {
+      display: none;
+    }
+
+    .searchbar__form--searchList {
+      position: absolute;
+      left: -1px;
+      top: 33px;
+      background-color: $white;
+      border: 1px solid $border-color;
+      border-bottom-right-radius: 10px;
+      border-bottom-left-radius: 10px;
+      width: 100%;
+      z-index: 999;
+
+      .searchbar__form--searchItem {
+        color: $text-secondary;
+        padding: 10px;
+
+        &:nth-child(n + 2) {
+          border-top: 1px solid $border-color;
+        }
+      }
+    }
+
+    .searchbar__container {
+      margin-right: 10px;
+
+      .searchbar__container--btn {
+        background: none;
+        border: none;
+
+        &:hover {
+          cursor: pointer;
+          svg {
+            path {
+              fill: $text-secondary;
+            }
+          }
+        }
+
+        &.filter {
+          margin-right: 10px;
+        }
+      }
+    }
+
+    .searchbar__filter--container {
+      display: none;
+      position: absolute;
+      top: 40px;
+      right: 75px;
+      border: 1px solid $border-color;
+      border-radius: 5px;
+      padding: 11px;
+
+      &.active {
+        display: block;
+      }
+
+      .searchbar__filterType {
+        .searchbar__filterType--header {
+          color: $text-secondary;
+          font-size: 16px;
+          margin: 0;
+        }
+
+        .searchbar__filterType--group {
+          margin-top: 11px;
+          display: flex;
+
+          .searchbar__filterType--button {
+            width: 110px;
+            &:nth-child(2n) {
+              margin-left: 11px;
+            }
+          }
+        }
+      }
+
+      .searchbar__filterCategory {
+        margin-top: 11px;
+        .searchbar__filterCategory--header {
+          color: $text-secondary;
+          font-size: 16px;
+          margin: 0;
+        }
+
+        .searchbar__filterCategory--group {
+          margin-top: 11px;
+          display: flex;
+
+          .searchbar__filterCategory--button {
+            width: 110px;
+            &:nth-child(2n) {
+              margin-left: 11px;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .searchbar__modal {
+    width: 100%;
+    height: 100%;
+  }
+}

@@ -1,0 +1,72 @@
+@import "../../sass/main.module.scss";
+
+.video-player {
+  width: 100%;
+  background: $red-1;
+  height: 40rem;
+}
+.video-name {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: Roboto;
+  font-size: 32px;
+  font-weight: 500;
+  line-height: 38px;
+  color: $primary-color;
+  padding: 1rem 0;
+  border-bottom: 1px solid $border-color;
+}
+.video-actions {
+  display: flex;
+  gap: 1rem;
+}
+.video-info {
+  border-bottom: 1px solid $border-color;
+  margin-right: 1.5rem;
+  padding-bottom: 1rem;
+}
+.author {
+  display: flex;
+  margin: 1rem 0;
+  gap: 1rem;
+}
+.author-info {
+  font-family: Roboto;
+  font-size: 20px;
+  line-height: 23px;
+  color: $text-primary;
+}
+
+.video-description {
+  font-family: Roboto;
+  font-size: 20px;
+  line-height: 23px;
+  color: $text-primary;
+  margin-bottom: 1rem;
+}
+.video-description-less {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.show-more-btn {
+  text-decoration-line: underline;
+  color: $primary-color;
+  font-family: Roboto;
+  font-weight: 500;
+  font-size: 15px;
+  line-height: 18px;
+  cursor: pointer;
+}
+.comments-section {
+  p {
+    font-family: Roboto;
+    font-size: 25px;
+    line-height: 29px;
+    color: $text-primary;
+  }
+}

@@ -1,0 +1,65 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap");
+@import "../../sass/main.module.scss";
+
+body {
+  margin: 0;
+}
+.main-container {
+  font-family: Roboto;
+  display: flex;
+  align-items: center;
+  height: 100vh;
+}
+.background {
+  margin-left: auto;
+  display: block;
+}
+.sign-container {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+.background-container {
+  margin-right: 1rem;
+  flex: 1;
+}
+.sign-fields > * {
+  margin-bottom: 1rem;
+}
+.title {
+  text-align: left;
+  font-size: 32px;
+  font-weight: 500;
+  line-height: 38px;
+  color: $primary-color;
+}
+.subtitle {
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 23px;
+  color: $primary-color;
+}
+.sign-fields {
+  form > * {
+    width: 30rem;
+  }
+}
+
+.submit-btn {
+  color: $white;
+  background: $primary-color;
+  border-radius: 25px;
+  padding: 0.5rem;
+}
+.redirect {
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 18px;
+  letter-spacing: 0.03em;
+  color: $text-secondary;
+}
+Link {
+  color: $primary-color;
+  font-weight: 500;
+}

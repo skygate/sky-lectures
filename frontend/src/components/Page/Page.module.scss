@@ -1,0 +1,18 @@
+@import "../../sass/main.module.scss";
+
+.page {
+  .wrapper {
+    margin-left: 68px;
+    margin-right: 20px;
+
+    .textHeader {
+      font-size: 20px;
+      color: $primary-color;
+      font-weight: 500;
+    }
+
+    .container {
+      margin-top: 10px;
+    }
+  }
+}
