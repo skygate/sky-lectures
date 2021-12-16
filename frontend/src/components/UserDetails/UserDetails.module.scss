@@ -1,0 +1,25 @@
+@import "../../sass/main.module.scss";
+
+.userDetails {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  .userDetails--button {
+    background: none;
+    border: none;
+
+    &:hover {
+      cursor: pointer;
+      svg {
+        path {
+          fill: $text-secondary;
+        }
+      }
+    }
+  }
+  .userDetails--name {
+    margin-left: 21px;
+    color: $primary-color;
+  }
+}

@@ -1,0 +1,57 @@
+@import "../../sass/main.module.scss";
+
+.filter {
+  display: none;
+  position: absolute;
+  background-color: $white;
+  top: 40px;
+  right: 75px;
+  border: 1px solid $border-color;
+  border-radius: 5px;
+  padding: 11px;
+
+  &.active {
+    display: block;
+  }
+
+  .filter__type {
+    .filter__type--header {
+      color: $text-secondary;
+      font-size: 16px;
+      margin: 0;
+    }
+
+    .filter__type--group {
+      margin-top: 11px;
+      display: flex;
+
+      .filter__type--button {
+        width: 110px;
+        &:nth-child(2n) {
+          margin-left: 11px;
+        }
+      }
+    }
+  }
+
+  .filter__category {
+    margin-top: 11px;
+    .filter__category--header {
+      color: $text-secondary;
+      font-size: 16px;
+      margin: 0;
+    }
+
+    .filter__category--group {
+      margin-top: 11px;
+      display: flex;
+
+      .filter__category--button {
+        width: 110px;
+        &:nth-child(2n) {
+          margin-left: 11px;
+        }
+      }
+    }
+  }
+}

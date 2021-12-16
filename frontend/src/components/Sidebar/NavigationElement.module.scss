@@ -1,0 +1,44 @@
+@import "../../sass/main.module.scss";
+
+.navigation__element {
+  text-align: center;
+  position: relative;
+
+  .navigation__element--link {
+    padding: 15px 10px;
+
+    svg {
+      path {
+        fill: $text-secondary;
+      }
+    }
+
+    &.active {
+      svg {
+        path {
+          fill: $primary-color;
+        }
+      }
+
+      &:before {
+        top: -10px;
+        left: 0;
+        position: absolute;
+        content: "";
+        background-color: $primary-color;
+        width: 3px;
+        height: 41px;
+        border-top-right-radius: 5px;
+        border-bottom-right-radius: 5px;
+      }
+    }
+
+    &:hover {
+      svg {
+        path {
+          fill: $primary-color;
+        }
+      }
+    }
+  }
+}
