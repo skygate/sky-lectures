@@ -1,3 +1,5 @@
+import { useRef, useCallback, useState, useEffect } from "react";
+
 import styles from "./Presentation.module.scss";
 
 interface Props {
@@ -46,16 +48,72 @@ function calculateBottom(height: number, date: Date) {
 }
 
 function Presentation({ item, height }: Props) {
+  const [anchorPoint, setAnchorPoint] = useState({ x: 0, y: 0 });
+  const [showMenu, setShowMenu] = useState(false);
+  const presentationDiv = useRef<HTMLHeadingElement>(null);
   const top = calculateTop(height, item.startTime);
   const bottom = calculateBottom(height, item.endTime);
 
+  const handleClick = useCallback(
+    () => (showMenu ? setShowMenu(false) : null),
+    [showMenu]
+  );
+
+  console.log(anchorPoint);
+
+  const handleContextMenu = useCallback(
+    (event) => {
+      event.preventDefault();
+      setAnchorPoint({ x: event.pageX, y: event.pageY });
+      setShowMenu(true);
+      console.log("HELLO");
+    },
+    [setShowMenu]
+  );
+
+  useEffect(() => {
+    const div = presentationDiv.current;
+
+    if (div) {
+      document.addEventListener("click", handleClick);
+      div.addEventListener("contextmenu", handleContextMenu);
+
+      return () => {
+        document.removeEventListener("click", handleClick);
+        div.removeEventListener("contextmenu", handleContextMenu);
+      };
+    }
+  });
+
   return (
     <div
-      className={styles.presentation}
+      className={styles.presentationContainer}
       style={{ top: top, height: bottom - top }}
+      ref={presentationDiv}
     >
-      <p>{item.author}</p>
-      <p>{item.title}</p>
+      <div
+        className={`${styles.presentation} ${bottom - top < 20 && styles.hide}`}
+      >
+        <p>{item.title}</p>
+        <p>{item.author}</p>
+      </div>
+      {!showMenu && (
+        <div
+          className={`${styles.hoverBlock} ${bottom - top > 20 && styles.hide}`}
+          style={{ top: bottom - top + 5, right: 0 }}
+        >
+          <p>{item.title}</p>
+          <p>{item.author}</p>
+        </div>
+      )}
+      {showMenu ? (
+        <div className={styles.menu}>
+          <button className={styles.button}>Edit</button>
+          <button className={styles.button}>Delete</button>
+        </div>
+      ) : (
+        <> </>
+      )}
     </div>
   );
 }

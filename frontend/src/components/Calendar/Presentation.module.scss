@@ -1,21 +1,73 @@
 @import "../../sass/main.module.scss";
 
-.presentation {
+.presentationContainer {
+  position: absolute;
+  top: 0;
+  width: 80%;
+  place-self: center;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
   border: 1px solid $text-primary;
   padding: 2px 5px;
-  place-self: center;
-  position: absolute;
-  top: 0;
-  width: 80%;
   font-size: 12px;
   background-color: $text-primary;
   border-radius: 10px;
 
-  p {
-    color: $white;
-    margin: 0;
+  .presentation {
+    p {
+      color: $white;
+      margin: 0;
+    }
+
+    &.hide {
+      display: none;
+    }
+  }
+
+  .hoverBlock {
+    display: none;
+  }
+
+  &:hover {
+    .hoverBlock {
+      position: absolute;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      border: 1px solid $text-primary;
+      padding: 5px;
+      font-size: 12px;
+      background-color: $text-primary;
+      border-radius: 10px;
+      width: 100%;
+
+      p {
+        color: $white;
+        margin: 0;
+      }
+
+      &.hide {
+        display: none;
+      }
+    }
+  }
+
+  .menu {
+    position: absolute;
+    right: -60px;
+    top: -5px;
+    z-index: 200;
+    display: flex;
+    flex-direction: column;
+
+    .button {
+      background: $primary-color;
+      color: $white;
+      // border-radius: 10px;
+      border: 1px solid $border-color;
+      padding: 5px;
+      cursor: pointer;
+    }
   }
 }
