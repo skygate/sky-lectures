@@ -1,21 +1,22 @@
 import axios from "axios";
-const Register = ()=>{
+const Register = (values:any)=>{
+  const {username, password,confirmedPassword,email,firstName,lastName}= values
     axios.post('http://localhost:8000/api/register/', {
         
         
-            "username": "asd",
-            "password": "asd",
-            "password2": "asd",
-            "email": "asd",
-            "first_name": "asd",
-            "last_name": "asd"
+            username,
+            password,
+            password2:confirmedPassword,
+            email,
+            first_name:firstName,
+            last_name:lastName
         
       })
       .then(function (response) {
         console.log(response);
       })
-      .catch(function (response) {
-        console.log(response);
+      .catch(function (error) {
+        console.log(error.response);
       });
 }
 

@@ -5,6 +5,7 @@ const PasswordInput = (props: {
   name: string;
   value: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onFocus?:(e: React.ChangeEvent<HTMLInputElement>) => void;
   placeholder?: string;
 }): JSX.Element => {
   const [passwordShown, setPasswordShown] = useState(false);
@@ -18,6 +19,7 @@ const PasswordInput = (props: {
           placeholder={props.placeholder ? props.placeholder : "Password"}
           value={props.value}
           onChange={props.onChange}
+          onFocus={props.onFocus}
           className={styles["container-input"]}
         />
         <div>
