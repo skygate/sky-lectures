@@ -32,7 +32,7 @@ class Presentation(models.Model):
     scheduled_on = models.DateTimeField()
     created_at = models.DateTimeField(auto_now_add=True)
     tags = models.ManyToManyField(Tag, related_name="presentations")
-    notification_sent = models.BooleanField()
+    notification_sent = models.BooleanField(default=False)
 
     def __str__(self):
         return self.title
