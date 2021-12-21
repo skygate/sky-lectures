@@ -67,6 +67,7 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "corsheaders.middleware.CorsMiddleware",
     "django.middleware.common.CommonMiddleware",
+    "CORS_ALLOW_ALL_ORIGINS",
 ]
 
 ROOT_URLCONF = "sky_lectures.urls"
