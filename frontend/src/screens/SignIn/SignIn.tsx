@@ -4,6 +4,7 @@ import PasswordInput from "../../components/Inputs/PasswordInput";
 import TextInput from "../../components/Inputs/TextInput";
 import { useFormik } from "formik";
 import { Link } from "react-router-dom";
+import { LogIn } from "../../services/Register";
 const SignUp = () => {
   const formik = useFormik({
     initialValues: {
@@ -13,6 +14,7 @@ const SignUp = () => {
 
     onSubmit: async (values) => {
       console.log(values);
+      LogIn()
     },
   });
   return (

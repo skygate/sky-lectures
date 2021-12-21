@@ -4,7 +4,7 @@ import PasswordInput from "../../components/Inputs/PasswordInput";
 import TextInput from "../../components/Inputs/TextInput";
 import { useFormik } from "formik";
 import { Link } from "react-router-dom";
-import Register from "../../services/Register";
+import {Register} from "../../services/Register";
 const SignUp = () => {
   const formik = useFormik({
     initialValues: {

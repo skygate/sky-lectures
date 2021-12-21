@@ -18,4 +18,18 @@ const Register = ()=>{
         console.log(response);
       });
 }
-export default Register
+
+
+const LogIn = ()=> {
+    axios.get('http://localhost:8000/presentations'
+
+    
+  )
+  .then(function (response) {
+    console.log(response);
+  })
+  .catch(function (response) {
+    console.log(response);
+  });
+}
+export {Register, LogIn}
