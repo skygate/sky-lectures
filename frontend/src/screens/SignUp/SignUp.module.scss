@@ -40,11 +40,6 @@ body {
   line-height: 23px;
   color: $primary-color;
 }
-.sign-fields {
-  form > * {
-    width: 30rem;
-  }
-}
 
 .submit-btn {
   color: $white;
@@ -62,4 +57,21 @@ body {
 Link {
   color: $primary-color;
   font-weight: 500;
+}
+
+.field-error {
+  padding-left: 0.5rem;
+  font-size: 12px;
+}
+.field-error-active {
+  color: red;
+  font-size: 12px;
+  padding-left: 0.5rem;
+}
+.form__fields > * {
+  width: 30rem;
+  margin: 0.5rem 0;
+}
+.errors_list {
+  columns: 2;
 }
